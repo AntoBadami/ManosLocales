@@ -3,6 +3,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -54,4 +55,23 @@ fun LinkText(text: String,
         modifier = Modifier
             .clickable{onClick()},
         text = text,)
+}
+
+/**
+ * Botón personalizado reutilizable con tamaño fijo.
+ *
+ * @param onClick Acción a ejecutar al hacer clic.
+ * @param text Texto que se mostrará dentro del botón.
+ */
+@Composable
+fun CustomButton(onClick: () -> Unit, text: String)
+{
+    Button(
+        modifier = Modifier
+            .height(48.dp)
+            .width(324.dp),
+        onClick = onClick
+    ) {
+        Text(text)
+    }
 }

@@ -3,10 +3,6 @@ package com.tecmov2025.manoslocales
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -67,12 +63,6 @@ fun RegisterForm()
             "Repita Contraseña",
             true)
 
-        Button(
-            modifier = Modifier
-                .height(48.dp)
-                .width(324.dp),
-            onClick = {}) {
-            Text("Registrarse")
-        }
+       CustomButton({},"Registrarse")
     }
 }

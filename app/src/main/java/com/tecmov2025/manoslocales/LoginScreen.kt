@@ -57,14 +57,7 @@ fun Login(navController: NavHostController)
             "Contraseña",
             true)
 
-        Button(
-            modifier = Modifier
-                .height(48.dp)
-                .width(324.dp),
-            onClick = {LoginButtonAction(context)}
-        ) {
-            Text("Iniciar sesión")
-        }
+        CustomButton({LoginButtonAction(context)},"Iniciar Sesión")
 
         LinkText("No tenes cuenta? - Registrate", { navController.navigate("RegisterScreen") })
         LinkText("Recuperar contraseña",{})
