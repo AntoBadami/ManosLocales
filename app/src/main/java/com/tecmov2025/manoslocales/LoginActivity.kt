@@ -1,5 +1,6 @@
 package com.tecmov2025.manoslocales
 
+import android.content.Intent
 import android.os.Bundle
 import android.window.SplashScreen
 import androidx.activity.ComponentActivity
@@ -30,6 +31,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -42,6 +44,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.compose.ui.platform.LocalContext
 
 class LoginActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,8 +64,10 @@ class LoginActivity : ComponentActivity() {
             navController = navController,
             startDestination = "SplashScreen")
         {
-            composable("Login") { Login() }
+            val registerScreen = RegisterScreen()
+            composable("Login") { Login(navController) }
             composable("SplashScreen") { SplashScreen(navController) }
+            composable ("RegisterScreen"){ registerScreen.RegisterForm() }
         }
     }
 
@@ -84,8 +89,9 @@ class LoginActivity : ComponentActivity() {
     }
 
     @Composable
-    fun Login()
+    fun Login(navController: NavHostController)
     {
+        val context = LocalContext.current
         Column(
             modifier = Modifier
                 .fillMaxSize(),
@@ -119,11 +125,15 @@ class LoginActivity : ComponentActivity() {
                 modifier = Modifier
                     .height(48.dp)
                     .width(324.dp),
-                onClick = {}) {
+                onClick =
+                    {
+                        val intent = Intent(context, MainActivity::class.java)
+                        context.startActivity(intent)
+                    }) {
                 Text("Iniciar sesión")
             }
 
-            LinkText("No tenes cuenta? - Registrate", {})
+            LinkText("No tenes cuenta? - Registrate", { navController.navigate("RegisterScreen") })
             LinkText("Recuperar contraseña",{})
 
         }
