@@ -1,11 +1,13 @@
 package com.tecmov2025.manoslocales
 
+import android.content.Intent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -34,9 +36,27 @@ class RegisterScreen
                 .spacedBy(20.dp, alignment = Alignment.CenterVertically)
         )
         {
+            var name by remember { mutableStateOf("") }
+            var lastname by remember { mutableStateOf("") }
+            var mail by remember { mutableStateOf("") }
             var username by remember { mutableStateOf("") }
             var password by remember { mutableStateOf("") }
-            var password2 by remember { mutableStateOf("") }
+            var passwordControl by remember { mutableStateOf("") }
+
+            CustomTextField(
+                name,
+                { name = it },
+                "Nombre")
+
+            CustomTextField(
+                lastname,
+                { lastname = it },
+                "Apellido")
+
+            CustomTextField(
+                mail,
+                { mail = it },
+                "Correo electronico")
 
             CustomTextField(
                 username,
@@ -50,10 +70,18 @@ class RegisterScreen
                 true)
 
             CustomTextField(
-                password2,
-                { password = it },
+                passwordControl,
+                { passwordControl = it },
                 "Repita Contraseña",
                 true)
+
+            Button(
+                modifier = Modifier
+                    .height(48.dp)
+                    .width(324.dp),
+                onClick = {}) {
+                Text("Registrarse")
+            }
         }
     }
 
