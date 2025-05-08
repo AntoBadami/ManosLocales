@@ -3,6 +3,7 @@ package com.tecmov2025.manoslocales
 import android.content.Context
 import android.content.Intent
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,6 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -30,7 +32,8 @@ fun Login(navController: NavHostController)
     val context = LocalContext.current
     Column(
         modifier = Modifier
-            .fillMaxSize(),
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background),
         horizontalAlignment = Alignment
             .CenterHorizontally,
         verticalArrangement = Arrangement
@@ -41,7 +44,7 @@ fun Login(navController: NavHostController)
 
         Image (
             modifier = Modifier
-                .size(150.dp),
+                .size(250.dp),
             painter = painterResource(R.drawable.logo),
             contentDescription = "Logo",
             contentScale = ContentScale.Fit
@@ -60,7 +63,7 @@ fun Login(navController: NavHostController)
         CustomButton({LoginButtonAction(context)},"Iniciar Sesión")
 
         LinkText("No tenes cuenta? - Registrate", { navController.navigate("RegisterScreen") })
-        LinkText("Recuperar contraseña",{})
+        LinkText("Recuperar contraseña",{ navController.navigate("PasswordScreen") })
 
     }
 }

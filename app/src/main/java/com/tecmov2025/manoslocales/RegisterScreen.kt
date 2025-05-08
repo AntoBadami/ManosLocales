@@ -3,6 +3,11 @@ package com.tecmov2025.manoslocales
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -11,19 +16,27 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 @Composable
 fun RegisterForm()
 {
     Column (
         modifier = Modifier
-            .fillMaxSize(),
+            .fillMaxSize()
+            .padding(24.dp),
         horizontalAlignment = Alignment
             .CenterHorizontally,
         verticalArrangement = Arrangement
             .spacedBy(20.dp, alignment = Alignment.CenterVertically)
     )
     {
+        Text(
+            text = "Registro",
+            style = MaterialTheme.typography.headlineLarge,
+            modifier = Modifier.padding(bottom = 16.dp)
+        )
+
         var name by remember { mutableStateOf("") }
         var lastname by remember { mutableStateOf("") }
         var mail by remember { mutableStateOf("") }
@@ -31,37 +44,87 @@ fun RegisterForm()
         var password by remember { mutableStateOf("") }
         var passwordControl by remember { mutableStateOf("") }
 
-        CustomTextField(
-            name,
-            { name = it },
-            "Nombre")
+        val fieldModifier = Modifier
+            .widthIn(max = 400.dp)
+            .align(Alignment.CenterHorizontally)
 
-        CustomTextField(
-            lastname,
-            { lastname = it },
-            "Apellido")
+        Column(fieldModifier) {
+            Text(
+                text = "Nombre",
+                fontSize = 16.sp,
+                modifier = Modifier.padding(bottom = 4.dp)
+            )
+            CustomTextField(
+                value = name,
+                onValueChange = { name = it },
+                label = "Nombre"
+            )
+        }
 
-        CustomTextField(
-            mail,
-            { mail = it },
-            "Correo electronico")
+        Column(fieldModifier) {
+            Text(
+                text = "Apellido",
+                fontSize = 16.sp,
+                modifier = Modifier.padding(bottom = 4.dp)
+            )
+            CustomTextField(
+                value = lastname,
+                onValueChange = { lastname = it },
+                label = "Apellido"
+            )
+        }
 
-        CustomTextField(
-            username,
-            { username = it },
-            "Usuario")
+        Column(fieldModifier) {
+            Text(
+                text = "Correo electrónico",
+                fontSize = 16.sp,
+                modifier = Modifier.padding(bottom = 4.dp)
+            )
+            CustomTextField(
+                value = mail,
+                onValueChange = { mail = it },
+                label = "Correo electrónico"
+            )
+        }
 
-        CustomTextField(
-            password,
-            { password = it },
-            "Contraseña",
-            true)
+        Column(fieldModifier) {
+            Text(
+                text = "Usuario",
+                fontSize = 16.sp,
+                modifier = Modifier.padding(bottom = 4.dp)
+            )
+            CustomTextField(
+                value = username,
+                onValueChange = { username = it },
+                label = "Usuario"
+            )
+        }
 
-        CustomTextField(
-            passwordControl,
-            { passwordControl = it },
-            "Repita Contraseña",
-            true)
+        Column(fieldModifier) {
+            Text(
+                text = "Contraseña",
+                fontSize = 16.sp,
+                modifier = Modifier.padding(bottom = 4.dp)
+            )
+            CustomTextField(
+                value = password,
+                onValueChange = { password = it },
+                label = "Contraseña"
+            )
+        }
+
+        Column(fieldModifier) {
+            Text(
+                text = "Repetir Contraseña",
+                fontSize = 16.sp,
+                modifier = Modifier.padding(bottom = 4.dp)
+            )
+            CustomTextField(
+                value = passwordControl,
+                onValueChange = { passwordControl = it },
+                label = "Repetir Contraseña"
+            )
+        }
 
        CustomButton({},"Registrarse")
     }

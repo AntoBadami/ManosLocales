@@ -9,6 +9,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.tecmov2025.manoslocales.ui.theme.ManosLocalesTheme
 
 
 class LoginActivity : ComponentActivity() {
@@ -16,15 +17,16 @@ class LoginActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            val navController = rememberNavController()
-            Nav(navController)
+            ManosLocalesTheme {
+                val navController = rememberNavController()
+                Nav(navController)
+            }
         }
     }
 
     @Composable
     fun Nav(navController: NavHostController)
     {
-
         NavHost(
             navController = navController,
             startDestination = "SplashScreen")
@@ -32,6 +34,7 @@ class LoginActivity : ComponentActivity() {
             composable("Login") { Login(navController) }
             composable("SplashScreen") { SplashScreen(navController) }
             composable ("RegisterScreen"){ RegisterForm() }
+            composable ("PasswordScreen"){ PasswordForm() }
         }
     }
 
