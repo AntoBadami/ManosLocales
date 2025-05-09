@@ -19,13 +19,13 @@ class LoginActivity : ComponentActivity() {
         setContent {
             ManosLocalesTheme {
                 val navController = rememberNavController()
-                Nav(navController)
+                LoginNav(navController)
             }
         }
     }
 
     @Composable
-    fun Nav(navController: NavHostController)
+    fun LoginNav(navController: NavHostController)
     {
         NavHost(
             navController = navController,

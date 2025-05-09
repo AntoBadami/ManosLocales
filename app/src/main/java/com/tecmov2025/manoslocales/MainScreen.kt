@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,6 +21,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 
@@ -27,7 +29,7 @@ import androidx.navigation.NavHostController
 data class Producto(val nombre: String, val descripcion: String)
 
 @Composable
-fun FavoritoScreen(navController: NavHostController) {
+fun MainScreen(paddingBarraDeBusqueda: PaddingValues) {
     //lista de productos
     val productosMock = List(30) { index ->
         Producto(
@@ -48,7 +50,7 @@ fun FavoritoScreen(navController: NavHostController) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(8.dp),
+                    .padding(paddingBarraDeBusqueda),
                 horizontalArrangement = Arrangement.spacedBy(8.dp) //espacio entre productos
             ) {
                 //primer producto
@@ -64,48 +66,6 @@ fun FavoritoScreen(navController: NavHostController) {
             }
         }
     }
-    /*LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
-    ){
-        items(30) { index ->
-            Card(
-                modifier = Modifier.fillMaxWidth(),
-                colors = CardDefaults.cardColors(containerColor = Color.LightGray),
-                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
-            ) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp)
-                ) {
-                    // Cuadro para la imagen del producto
-                    Box(
-                        modifier = Modifier
-                            .size(64.dp)
-                            .background(Color.DarkGray)
-                    )
-
-                    // Espacio entre imagen y texto
-                    Spacer(modifier = Modifier.width(16.dp))
-
-                    // Texto descriptivo
-                    Column {
-                        Text(
-                            text = "Producto $index",
-                            style = MaterialTheme.typography.titleMedium
-                        )
-                        Text(
-                            text = "Descripcion del producto $index",
-                            style = MaterialTheme.typography.bodyMedium
-                        )
-                    }
-                }
-            }
-        }
-    }*/
 
 }
 @Composable
