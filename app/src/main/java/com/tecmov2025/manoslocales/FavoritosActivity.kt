@@ -35,7 +35,9 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.graphics.Color
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material3.*
+import androidx.compose.ui.Alignment
 
 
 class FavoritosActivity : ComponentActivity() {
@@ -64,43 +66,62 @@ class FavoritosActivity : ComponentActivity() {
     @Composable
     fun FavoritoScreen(navController: NavHostController) {
 
-        LazyColumn(
+        Box(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
-        ){
-            items(30) { index ->
-                Card(
-                    modifier = Modifier.fillMaxWidth(),
-                    colors = CardDefaults.cardColors(containerColor = Color.LightGray),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+            contentAlignment = Alignment.Center
+        )
+        {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = "Productos Favoritos",
+                    style = MaterialTheme.typography.headlineMedium,
+                    color = MaterialTheme.colorScheme.primary
+                )
+
+                Spacer(modifier = Modifier.height(24.dp))
+
+                LazyRow(
+                    horizontalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp)
-                    ) {
-                        // Cuadro para la imagen del producto
-                        Box(
+                    items(30) { index ->
+                        Card(
                             modifier = Modifier
-                                .size(64.dp)
-                                .background(Color.DarkGray)
-                        )
+                                .width(300.dp)
+                                .height(250.dp),
+                            colors = CardDefaults.cardColors(containerColor = Color.LightGray),
+                            elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
+                        ) {
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(16.dp)
+                            ) {
+                                // Cuadro para la imagen del producto
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .height(140.dp)
+                                        .background(Color.DarkGray)
+                                )
 
-                        // Espacio entre imagen y texto
-                        Spacer(modifier = Modifier.width(16.dp))
+                                // Espacio entre imagen y texto
+                                Spacer(modifier = Modifier.width(12.dp))
 
-                        // Texto descriptivo
-                        Column {
-                            Text(
-                                text = "Producto $index",
-                                style = MaterialTheme.typography.titleMedium
-                            )
-                            Text(
-                                text = "Descripcion del producto $index",
-                                style = MaterialTheme.typography.bodyMedium
-                            )
+                                // Texto descriptivo
+                                Text(
+                                    text = "Producto $index",
+                                    style = MaterialTheme.typography.titleMedium
+                                )
+                                Text(
+                                    text = "Descripcion del producto $index",
+                                    style = MaterialTheme.typography.bodyMedium
+                                )
+
+                            }
                         }
                     }
                 }

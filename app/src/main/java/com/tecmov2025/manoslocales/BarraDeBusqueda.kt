@@ -37,36 +37,42 @@ fun CustomScaffold()
 fun CustomTopAppBar(coroutineScope: CoroutineScope, scaffoldState: ScaffoldState, context : Context)
 {
     var textoBusqueda by remember { mutableStateOf("") }
-    TopAppBar (
-        //Buscador
-        title = {
-            TextField(
-                value = textoBusqueda,
-                onValueChange = { textoBusqueda = it },
-                placeholder = { Text("Buscar...") },
-                singleLine = true,
-                modifier = Modifier.fillMaxWidth()
-            )
-        },
-        navigationIcon = {
-            IconButton(
-            modifier = Modifier
-                .size(10.dp)
-                .background(Color.Red),
-            onClick = {
-                coroutineScope.launch {
-                    scaffoldState.drawerState.open()
-                } }
-            ){}},
-        actions = {
-            IconButton(
-                modifier = Modifier
-                    .size(10.dp)
-                    .background(Color.Yellow),
-                onClick = { FavotitosIconButtonAction(context = context)}
-            ) { }
-        }
-    )
+    Column {
+        // Agregar un espacio para la barra de estado
+        Spacer(modifier = Modifier.height(24.dp))
+        TopAppBar(
+            //Buscador
+            title = {
+                TextField(
+                    value = textoBusqueda,
+                    onValueChange = { textoBusqueda = it },
+                    placeholder = { Text("Buscar...") },
+                    singleLine = true,
+                    modifier = Modifier.fillMaxWidth()
+                )
+            },
+            navigationIcon = {
+                IconButton(
+                    modifier = Modifier
+                        .size(10.dp)
+                        .background(Color.Red),
+                    onClick = {
+                        coroutineScope.launch {
+                            scaffoldState.drawerState.open()
+                        }
+                    }
+                ) {}
+            },
+            actions = {
+                IconButton(
+                    modifier = Modifier
+                        .size(10.dp)
+                        .background(Color.Yellow),
+                    onClick = { FavotitosIconButtonAction(context = context) }
+                ) { }
+            }
+        )
+    }
 }
 @Composable
 fun CustomDrawer()
