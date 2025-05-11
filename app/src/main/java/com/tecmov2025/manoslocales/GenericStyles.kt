@@ -1,13 +1,17 @@
 package com.tecmov2025.manoslocales
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -26,18 +30,29 @@ fun CustomTextField(
     value: String,
     onValueChange: (String) -> Unit,
     label: String,
-    isPassword: Boolean = false
+    isPassword: Boolean = false,
+    visualTransformation: VisualTransformation = VisualTransformation.None
 )
 {
-    TextField (
-        modifier = Modifier
-            .width(324.dp)
-            .height(48.dp),
+    OutlinedTextField(
         value = value,
         onValueChange = onValueChange,
         label = { Text(label) },
-        visualTransformation = if (isPassword) PasswordVisualTransformation() else VisualTransformation.None,
-        keyboardOptions = if (isPassword)  KeyboardOptions(keyboardType = KeyboardType.Password) else KeyboardOptions.Default
+        singleLine = true,
+        modifier = Modifier
+            .width(324.dp)
+            .height(64.dp),
+        visualTransformation = if (isPassword) PasswordVisualTransformation() else visualTransformation,
+        colors = OutlinedTextFieldDefaults.colors(
+            focusedTextColor = Color.DarkGray,
+            unfocusedTextColor = Color.DarkGray,
+            focusedLabelColor = Color.DarkGray,
+            unfocusedLabelColor = Color.DarkGray,
+            cursorColor = Color.DarkGray,
+            focusedBorderColor = Color.DarkGray,
+            unfocusedBorderColor = Color.Gray
+        ),
+        keyboardOptions = if (isPassword) KeyboardOptions(keyboardType = KeyboardType.Password) else KeyboardOptions.Default
     )
 }
 
