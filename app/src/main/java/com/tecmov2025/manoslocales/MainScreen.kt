@@ -25,16 +25,14 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 
-// Clase Producto
-data class Producto(val nombre: String, val descripcion: String)
-
 @Composable
 fun MainScreen(paddingBarraDeBusqueda: PaddingValues) {
     //lista de productos
     val productosMock = List(30) { index ->
         Producto(
             nombre = "Producto $index",
-            descripcion = "Descripción del producto $index"
+            descripcion = "Descripción del producto $index",
+            precio = index * 3.0
         )
     }
     //productos en pares

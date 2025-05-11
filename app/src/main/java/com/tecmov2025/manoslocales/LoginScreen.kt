@@ -49,19 +49,11 @@ fun Login(navController: NavHostController)
             contentDescription = "Logo",
             contentScale = ContentScale.Fit
         )
-        CustomTextField(
-            username,
-            { username = it },
-            "Usuario")
+        CustomTextField(username, { username = it }, "Usuario")
 
-        CustomTextField(
-            password,
-            { password = it },
-            "Contraseña",
-            true)
+        CustomTextField(password, { password = it }, "Contraseña", true)
 
         CustomButton({LoginButtonAction(context)},"Iniciar Sesión")
-
         LinkText("No tenes cuenta? - Registrate", { navController.navigate("RegisterScreen") })
         LinkText("Recuperar contraseña",{ navController.navigate("PasswordScreen") })
 

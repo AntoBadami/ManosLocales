@@ -40,35 +40,8 @@ fun PasswordForm()
         var mail by remember { mutableStateOf("") }
         var username by remember { mutableStateOf("") }
 
-        val fieldModifier = Modifier
-            .widthIn(max = 400.dp)
-            .align(Alignment.CenterHorizontally)
-
-        Column(fieldModifier) {
-            Text(
-                text = "Usuario",
-                fontSize = 16.sp,
-                modifier = Modifier.padding(bottom = 4.dp)
-            )
-            CustomTextField(
-                value = username,
-                onValueChange = { username = it },
-                label = "Usuario"
-            )
-        }
-
-        Column(fieldModifier) {
-            Text(
-                text = "Correo electrónico",
-                fontSize = 16.sp,
-                modifier = Modifier.padding(bottom = 4.dp)
-            )
-            CustomTextField(
-                value = mail,
-                onValueChange = { mail = it },
-                label = "Correo electrónico"
-            )
-        }
+        CustomTitledInput(username, {username = it},"Usuario")
+        CustomTitledInput(mail,{mail = it},"Correo electronico")
 
         CustomButton({},"Recuperar")
     }

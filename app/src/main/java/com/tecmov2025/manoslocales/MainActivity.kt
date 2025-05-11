@@ -22,12 +22,25 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            val navController = rememberNavController()
             ManosLocalesTheme {
-               CustomScaffold()
+                val navController = rememberNavController()
+                MainNav(navController)
            }
         }
     }
 
+    @Composable
+    fun MainNav(navController: NavHostController)
+    {
+        NavHost(
+            navController = navController,
+            startDestination = "MainScreen")
+        {
+            composable("PerfilScreen"){ PerfilForm()}
+            composable("MainScreen") { CustomScaffold(navController)
+        }
+    }
+
+    }
 }
 

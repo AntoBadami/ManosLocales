@@ -25,7 +25,7 @@ fun SplashScreen(navController: NavHostController)
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
-            .wrapContentSize() //centra imagen en la box
+            .wrapContentSize()
     )
     {
         Image (

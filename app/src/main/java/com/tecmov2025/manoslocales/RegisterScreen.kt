@@ -3,9 +3,7 @@ package com.tecmov2025.manoslocales
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -44,88 +42,12 @@ fun RegisterForm()
         var password by remember { mutableStateOf("") }
         var passwordControl by remember { mutableStateOf("") }
 
-        val fieldModifier = Modifier
-            .widthIn(max = 400.dp)
-            .align(Alignment.CenterHorizontally)
-
-        Column(fieldModifier) {
-            Text(
-                text = "Nombre",
-                fontSize = 16.sp,
-                modifier = Modifier.padding(bottom = 4.dp)
-            )
-            CustomTextField(
-                value = name,
-                onValueChange = { name = it },
-                label = "Nombre"
-            )
-        }
-
-        Column(fieldModifier) {
-            Text(
-                text = "Apellido",
-                fontSize = 16.sp,
-                modifier = Modifier.padding(bottom = 4.dp)
-            )
-            CustomTextField(
-                value = lastname,
-                onValueChange = { lastname = it },
-                label = "Apellido"
-            )
-        }
-
-        Column(fieldModifier) {
-            Text(
-                text = "Correo electrónico",
-                fontSize = 16.sp,
-                modifier = Modifier.padding(bottom = 4.dp)
-            )
-            CustomTextField(
-                value = mail,
-                onValueChange = { mail = it },
-                label = "Correo electrónico"
-            )
-        }
-
-        Column(fieldModifier) {
-            Text(
-                text = "Usuario",
-                fontSize = 16.sp,
-                modifier = Modifier.padding(bottom = 4.dp)
-            )
-            CustomTextField(
-                value = username,
-                onValueChange = { username = it },
-                label = "Usuario"
-            )
-        }
-
-        Column(fieldModifier) {
-            Text(
-                text = "Contraseña",
-                fontSize = 16.sp,
-                modifier = Modifier.padding(bottom = 4.dp)
-            )
-            CustomTextField(
-                value = password,
-                onValueChange = { password = it },
-                label = "Contraseña"
-            )
-        }
-
-        Column(fieldModifier) {
-            Text(
-                text = "Repetir Contraseña",
-                fontSize = 16.sp,
-                modifier = Modifier.padding(bottom = 4.dp)
-            )
-            CustomTextField(
-                value = passwordControl,
-                onValueChange = { passwordControl = it },
-                label = "Repetir Contraseña"
-            )
-        }
-
+        CustomTitledInput(value = name, onValueChange = { name = it }, label = "Nombre")
+        CustomTitledInput(value = lastname, onValueChange = { lastname = it }, label = "Apellido")
+        CustomTitledInput(value = mail, onValueChange = { mail = it }, label = "Correo electrónico")
+        CustomTitledInput(value = username, onValueChange = { username = it }, label = "Usuario")
+        CustomTitledInput(value = password, onValueChange = { password = it }, label = "Contraseña")
+        CustomTitledInput(value = passwordControl, onValueChange = { passwordControl = it }, label = "Repetir Contraseña")
        CustomButton({},"Registrarse")
     }
 }
