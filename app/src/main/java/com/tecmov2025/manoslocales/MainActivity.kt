@@ -34,7 +34,8 @@ class MainActivity : ComponentActivity() {
     {
         NavHost(
             navController = navController,
-            startDestination = "MainScreen")
+            startDestination = "MainScreen"
+        )
         {
             composable("PerfilScreen"){ PerfilForm()}
             composable("MainScreen") { CustomScaffold(navController)

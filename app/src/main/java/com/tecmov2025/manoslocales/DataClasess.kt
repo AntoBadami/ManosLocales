@@ -4,7 +4,8 @@ package com.tecmov2025.manoslocales
 data class Producto(val nombre: String,
                     val descripcion: String,
                     val precio : Double,
-                    val image : Int = R.drawable.ic_launcher_foreground)
+                    val ubicacion : String,
+                    val images: List<String>  )
 
 /** Opcion del drawer en la barra de busqueda*/
 data class Opcion (val text: String, val onclicick : ()-> Unit)

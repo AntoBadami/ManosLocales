@@ -1,9 +1,13 @@
 package com.tecmov2025.manoslocales
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Phone
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -20,6 +24,7 @@ class LoginActivity : ComponentActivity() {
             ManosLocalesTheme {
                 val navController = rememberNavController()
                 LoginNav(navController)
+
             }
         }
     }
