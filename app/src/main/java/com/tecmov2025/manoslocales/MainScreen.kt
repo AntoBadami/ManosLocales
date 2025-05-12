@@ -42,28 +42,33 @@ fun MainScreen(paddingBarraDeBusqueda: PaddingValues) {
     }
     //productos en pares
     val productosAgrupados = productosMock.chunked(2)
-
-    LazyColumn(
+    Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
+            .background(MaterialTheme.colorScheme.background)
     ) {
-        items(productosAgrupados) { grupo ->
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(paddingBarraDeBusqueda),
-                horizontalArrangement = Arrangement.spacedBy(8.dp) //espacio entre productos
-            ) {
-                //primer producto
-                Box(modifier = Modifier.weight(1f)) {
-                    ProductoCard(producto = grupo[0])
-                }
-                //segundo producto
-                if (grupo.size > 1) {
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            items(productosAgrupados) { grupo ->
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(paddingBarraDeBusqueda),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp) //espacio entre productos
+                ) {
+                    //primer producto
                     Box(modifier = Modifier.weight(1f)) {
-                        ProductoCard(producto = grupo[1])
+                        ProductoCard(producto = grupo[0])
+                    }
+                    //segundo producto
+                    if (grupo.size > 1) {
+                        Box(modifier = Modifier.weight(1f)) {
+                            ProductoCard(producto = grupo[1])
+                        }
                     }
                 }
             }

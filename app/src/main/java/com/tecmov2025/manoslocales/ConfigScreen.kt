@@ -1,10 +1,13 @@
 package com.tecmov2025.manoslocales
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
@@ -21,26 +24,33 @@ fun ConfigScreen(navController: NavController)
         Opcion("Registrar historial de busqueda", tipo = TipoOpcion.SWITCH),
         Opcion("Tiempo de notificaciones")
     )
-    Column(modifier = Modifier
-        .fillMaxSize()
-        .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp))
-    {
-        CustomTitleText("Configuraciones")
-
-        LazyColumn(
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+    ) {
+        Column(
             modifier = Modifier
-                .padding(top = 40.dp)
                 .fillMaxSize()
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         )
         {
-            items(opciones.size) { i ->
-                when(opciones[i].tipo)
-                {
-                    TipoOpcion.SWITCH -> OptionSwitchCard(opciones[i],switchesState,i)
-                    else -> OptionCard(opciones[i])
-                }
+            CustomTitleText("Configuraciones")
 
+            LazyColumn(
+                modifier = Modifier
+                    .padding(top = 40.dp)
+                    .fillMaxSize()
+            )
+            {
+                items(opciones.size) { i ->
+                    when (opciones[i].tipo) {
+                        TipoOpcion.SWITCH -> OptionSwitchCard(opciones[i], switchesState, i)
+                        else -> OptionCard(opciones[i])
+                    }
+
+                }
             }
         }
     }

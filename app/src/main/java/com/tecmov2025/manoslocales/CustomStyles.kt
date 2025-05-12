@@ -104,7 +104,10 @@ fun CustomButton(onClick: () -> Unit, text: String)
             .width(324.dp),
         onClick = onClick
     ) {
-        Text(text)
+        Text(
+            text,
+            color = MaterialTheme.colorScheme.background
+        )
     }
 }
 

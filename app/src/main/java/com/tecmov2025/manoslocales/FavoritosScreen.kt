@@ -28,7 +28,8 @@ fun FavoritosScreen(navController: NavHostController) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .padding(16.dp)
+            .background(MaterialTheme.colorScheme.background),
         contentAlignment = Alignment.Center
     )
     {

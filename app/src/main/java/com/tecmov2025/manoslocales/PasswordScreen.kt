@@ -1,6 +1,8 @@
 package com.tecmov2025.manoslocales
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -21,23 +23,29 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun PasswordForm()
 {
-    Column (
+    Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(24.dp),
-        horizontalAlignment = Alignment
-            .CenterHorizontally,
-        verticalArrangement = Arrangement
-            .spacedBy(20.dp, alignment = Alignment.CenterVertically)
-    )
-    {
-        var mail by remember { mutableStateOf("") }
-        var username by remember { mutableStateOf("") }
+            .background(MaterialTheme.colorScheme.background)
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(24.dp),
+            horizontalAlignment = Alignment
+                .CenterHorizontally,
+            verticalArrangement = Arrangement
+                .spacedBy(20.dp, alignment = Alignment.CenterVertically)
+        )
+        {
+            var mail by remember { mutableStateOf("") }
+            var username by remember { mutableStateOf("") }
 
-        CustomTitleText("Recuperar Contraseña")
-        CustomTitledInput(username, {username = it},"Usuario")
-        CustomTitledInput(mail,{mail = it},"Correo electronico")
+            CustomTitleText("Recuperar Contraseña")
+            CustomTitledInput(username, { username = it }, "Usuario")
+            CustomTitledInput(mail, { mail = it }, "Correo electronico")
 
-        CustomButton({},"Recuperar")
+            CustomButton({}, "Recuperar")
+        }
     }
 }

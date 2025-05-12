@@ -1,6 +1,8 @@
 package com.tecmov2025.manoslocales
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -34,6 +36,7 @@ import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.launch
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.VisualTransformation
@@ -74,42 +77,51 @@ fun PerfilForm()
         }
     ) { padding ->
         val scrollState = rememberScrollState()
-        Column(
+        Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(padding)
-                .padding(24.dp)
-                .verticalScroll(scrollState),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(20.dp)
+                .background(MaterialTheme.colorScheme.background)
         ) {
-            val fieldModifier = Modifier
-                .widthIn(max = 400.dp)
-                .align(Alignment.CenterHorizontally)
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(padding)
+                    .padding(24.dp)
+                    .verticalScroll(scrollState),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(20.dp)
+            ) {
+                val fieldModifier = Modifier
+                    .widthIn(max = 400.dp)
+                    .align(Alignment.CenterHorizontally)
 
-            PerfilField("Nombre", name, editable, fieldModifier) { name = it }
-            PerfilField("Apellido", lastname, editable, fieldModifier) { lastname = it }
-            PerfilField("Correo electrónico", mail, editable, fieldModifier) { mail = it }
-            PerfilField("Usuario", username, editable, fieldModifier) { username = it }
+                PerfilField("Nombre", name, editable, fieldModifier) { name = it }
+                PerfilField("Apellido", lastname, editable, fieldModifier) { lastname = it }
+                PerfilField("Correo electrónico", mail, editable, fieldModifier) { mail = it }
+                PerfilField("Usuario", username, editable, fieldModifier) { username = it }
 
-            PerfilField("Contraseña", password, editable, fieldModifier, isPassword = true) {
-                password = it
-            }
-            if (editable.value) {
-                PerfilField(
-                    "Repetir Contraseña",
-                    passwordControl,
-                    editable,
-                    fieldModifier,
-                    isPassword = true
-                ) {
-                    passwordControl = it
+                PerfilField("Contraseña", password, editable, fieldModifier, isPassword = true) {
+                    password = it
                 }
-            }
-            if (editable.value) { CustomButton(onClick = {
-                perfilFormControl(name, lastname,mail,username,password,
-                    passwordControl,coroutineScope,snackbarHostState,editable)
-                                                   }, text = "Guardar cambios")
+                if (editable.value) {
+                    PerfilField(
+                        "Repetir Contraseña",
+                        passwordControl,
+                        editable,
+                        fieldModifier,
+                        isPassword = true
+                    ) {
+                        passwordControl = it
+                    }
+                }
+                if (editable.value) {
+                    CustomButton(onClick = {
+                        perfilFormControl(
+                            name, lastname, mail, username, password,
+                            passwordControl, coroutineScope, snackbarHostState, editable
+                        )
+                    }, text = "Guardar cambios")
+                }
             }
         }
     }

@@ -43,7 +43,12 @@ fun ProductScreen(producto: Producto, contactIcons: List<ImageVector>)
     // Estado para el favorito
     var isFavorite by remember { mutableStateOf(false) }
 
-    Column(modifier = Modifier.fillMaxSize()) {
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+    ) {
         Column(
             modifier = Modifier
                 .padding(16.dp)
