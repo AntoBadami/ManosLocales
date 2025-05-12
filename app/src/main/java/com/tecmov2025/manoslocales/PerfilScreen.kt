@@ -16,12 +16,10 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -36,14 +34,16 @@ import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.launch
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.VisualTransformation
+import kotlinx.coroutines.CoroutineScope
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PerfilForm()
 {
-    var editable by remember { mutableStateOf(false) }
+    var editable = remember { mutableStateOf(false) }
 
     //datos de ejemplo
     var name by remember { mutableStateOf("Juan") }
@@ -63,10 +63,10 @@ fun PerfilForm()
                 title = { Text("Perfil de Usuario", color = Color.DarkGray) },
                 navigationIcon = {},
                 actions = {
-                    IconButton(onClick = { editable = !editable }) {
+                    IconButton(onClick = { editable.value = !editable.value }) {
                         Icon(
-                            imageVector = if (editable) Icons.Default.Close else Icons.Default.Edit,
-                            contentDescription = if (editable) "Cancelar edición" else "Editar perfil"
+                            imageVector = if (editable.value) Icons.Default.Close else Icons.Default.Edit,
+                            contentDescription = if (editable.value) "Cancelar edición" else "Editar perfil"
                         )
                     }
                 }
@@ -95,7 +95,7 @@ fun PerfilForm()
             PerfilField("Contraseña", password, editable, fieldModifier, isPassword = true) {
                 password = it
             }
-            if (editable) {
+            if (editable.value) {
                 PerfilField(
                     "Repetir Contraseña",
                     passwordControl,
@@ -106,24 +106,10 @@ fun PerfilForm()
                     passwordControl = it
                 }
             }
-
-            if (editable) {
-                CustomButton(onClick = {
-                    if (name.isEmpty() || lastname.isEmpty() || mail.isEmpty() || username.isEmpty() || password.isEmpty() || passwordControl.isEmpty()) {
-                        coroutineScope.launch {
-                            snackbarHostState.showSnackbar("Por favor, complete todos los campos.")
-                        }
-                    }else if (password != passwordControl) {
-                        coroutineScope.launch {
-                            snackbarHostState.showSnackbar("Las contraseñas no coinciden")
-                        }
-                    } else {
-                        editable = false
-                        coroutineScope.launch {
-                            snackbarHostState.showSnackbar("Cambios guardados correctamente")
-                        }
-                    }
-                }, text = "Guardar cambios")
+            if (editable.value) { CustomButton(onClick = {
+                perfilFormControl(name, lastname,mail,username,password,
+                    passwordControl,coroutineScope,snackbarHostState,editable)
+                                                   }, text = "Guardar cambios")
             }
         }
     }
@@ -133,7 +119,7 @@ fun PerfilForm()
 fun PerfilField(
     label: String,
     value: String,
-    editable: Boolean,
+    editable: MutableState<Boolean>,
     modifier: Modifier,
     isPassword: Boolean = false,
     onValueChange: (String) -> Unit
@@ -145,7 +131,7 @@ fun PerfilField(
             modifier = Modifier.padding(bottom = 4.dp),
             color = Color.DarkGray
         )
-        if (editable) {
+        if (editable.value) {
             CustomTextField(
                 value = value,
                 onValueChange = onValueChange,
@@ -158,7 +144,7 @@ fun PerfilField(
                     .fillMaxWidth()
                     .padding(vertical = 8.dp)
                     .height(56.dp),
-                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp), // Corrigiendo elevación
+                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
                 colors = CardDefaults.cardColors(containerColor = Color(0xFFF5F5F5))
             ) {
                 Text(
@@ -168,6 +154,26 @@ fun PerfilField(
                     modifier = Modifier.padding(horizontal = 16.dp, vertical = 16.dp)
                 )
             }
+        }
+    }
+}
+
+fun perfilFormControl(name: String, lastname : String, mail: String,
+                      username: String,password: String,passwordControl: String,
+                      coroutineScope: CoroutineScope,snackbarHostState: SnackbarHostState,editable: MutableState<Boolean>)
+{
+    if (name.isEmpty() || lastname.isEmpty() || mail.isEmpty() || username.isEmpty() || password.isEmpty() || passwordControl.isEmpty()) {
+        coroutineScope.launch {
+            snackbarHostState.showSnackbar("Por favor, complete todos los campos.")
+        }
+    }else if (password != passwordControl) {
+        coroutineScope.launch {
+            snackbarHostState.showSnackbar("Las contraseñas no coinciden")
+        }
+    } else {
+        editable.value = false
+        coroutineScope.launch {
+            snackbarHostState.showSnackbar("Cambios guardados correctamente")
         }
     }
 }

@@ -31,7 +31,7 @@ fun CustomScaffold(navController: NavController)
 
     Scaffold(
         scaffoldState = scaffoldState,
-        drawerContent ={ CustomDrawer(navController)},
+        drawerContent ={ CustomDrawer(navController,context)},
         topBar = { CustomTopAppBar(coroutineScope,scaffoldState,context)},
         content = { paddingValues -> MainScreen(paddingValues)}
     )
@@ -80,11 +80,12 @@ fun CustomTopAppBar(coroutineScope: CoroutineScope, scaffoldState: ScaffoldState
 
 
 @Composable
-fun CustomDrawer(navController: NavController)
+fun CustomDrawer(navController: NavController,context: Context)
 {
-    val opciones = listOf(
-        Opcion("Mi perfil",{navController.navigate("PerfilScreen")})
-    )
+    val opciones = listOf<Opcion>(
+            Opcion("Mi perfil",{navController.navigate("PerfilScreen")}),
+            Opcion("Configuracion",{navController.navigate("ConfigScreen")}),
+            Opcion("Cerrar Sesion",{ context.startActivity(Intent(context, LoginActivity::class.java))}))
 
     LazyColumn(
         modifier = Modifier
@@ -100,17 +101,7 @@ fun CustomDrawer(navController: NavController)
 
 
 
-@Composable
-fun OptionCard(opcion :Opcion)
-{
-    Row (modifier = Modifier
-        .fillMaxWidth()
-        .clickable{opcion.onclicick},
-        verticalAlignment = Alignment.CenterVertically)
-    {
-        Text(fontSize = 20.sp, text = opcion.text)
-    }
-}
+
 fun FavotitosIconButtonAction(context: Context)
 {
     val intent = Intent(context, FavoritosActivity::class.java)

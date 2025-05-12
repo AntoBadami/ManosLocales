@@ -1,6 +1,9 @@
 package com.tecmov2025.manoslocales
+import android.content.Context
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -8,11 +11,20 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -119,6 +131,69 @@ fun CustomTitledInput(value: String, onValueChange: (String)-> Unit, label: Stri
             value = value,
             onValueChange =onValueChange,
             label = label
+        )
+    }
+}
+
+/**
+ * Composable que muestra un título de texto estilizado con el tema de Material.
+ *
+ * @param text El texto que se mostrará como título.
+ *
+ * Este componente utiliza el estilo `headlineLarge` definido en el tema actual
+ * y aplica un `padding` inferior para separación visual con otros elementos.
+ */
+@Composable
+fun CustomTitleText(text: String)
+{
+    Text(
+        text = text,
+        style = MaterialTheme.typography.headlineLarge,
+        modifier = Modifier.padding(bottom = 16.dp))
+}
+
+/**
+ * Composable que representa una tarjeta de opción clickeable.
+ *
+ * @param opcion Objeto de tipo `Opcion` que contiene el texto a mostrar y la acción a ejecutar al hacer clic.
+ *
+ * Este componente muestra una fila (`Row`) que ocupa todo el ancho disponible y
+ * ejecuta la función `onclicick` de `opcion` al hacer clic.
+ */
+@Composable
+fun OptionCard(opcion :Opcion)
+{
+    Row (modifier = Modifier
+        .fillMaxWidth()
+        .clickable{opcion.onclicick()},
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically)
+    {
+        Text(fontSize = 20.sp, text = opcion.text)
+    }
+}
+/**
+ * Muestra una opción de configuración con un interruptor (Switch) que puede ser activado o desactivado.
+ *
+ * @param opcion La opción a mostrar, contiene el texto y el tipo.
+ * @param switchesMutableListOf Lista mutable de estados booleanos para los switches.
+ * @param index Índice de esta opción en la lista, usado para acceder al estado correspondiente.
+ */
+@Composable
+fun OptionSwitchCard(opcion :Opcion,switchesMutableListOf : MutableList<Boolean>,
+                     index : Int)
+{
+    Row (modifier = Modifier
+        .fillMaxWidth()
+        .clickable{},
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween)
+    {
+        Text(fontSize = 20.sp, text = opcion.text)
+
+        Switch(
+            checked = switchesMutableListOf[index],
+            onCheckedChange = { switchesMutableListOf[index] = it }
         )
     }
 }

@@ -8,4 +8,5 @@ data class Producto(val nombre: String,
                     val images: List<String>  )
 
 /** Opcion del drawer en la barra de busqueda*/
-data class Opcion (val text: String, val onclicick : ()-> Unit)
+data class Opcion (val text: String, val onclicick : ()-> Unit = {},val tipo : TipoOpcion = TipoOpcion.NORMAL)
+enum class TipoOpcion{NORMAL,SWITCH,LIST}

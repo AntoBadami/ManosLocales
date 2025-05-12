@@ -37,6 +37,7 @@ class MainActivity : ComponentActivity() {
             startDestination = "MainScreen"
         )
         {
+            composable("ConfigScreen"){ConfigScreen(navController)}
             composable("PerfilScreen"){ PerfilForm()}
             composable("MainScreen") { CustomScaffold(navController)
         }

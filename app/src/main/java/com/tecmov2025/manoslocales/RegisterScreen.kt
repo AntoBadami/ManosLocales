@@ -29,11 +29,6 @@ fun RegisterForm()
             .spacedBy(20.dp, alignment = Alignment.CenterVertically)
     )
     {
-        Text(
-            text = "Registro",
-            style = MaterialTheme.typography.headlineLarge,
-            modifier = Modifier.padding(bottom = 16.dp)
-        )
 
         var name by remember { mutableStateOf("") }
         var lastname by remember { mutableStateOf("") }
@@ -42,6 +37,7 @@ fun RegisterForm()
         var password by remember { mutableStateOf("") }
         var passwordControl by remember { mutableStateOf("") }
 
+        CustomTitleText("Registro")
         CustomTitledInput(value = name, onValueChange = { name = it }, label = "Nombre")
         CustomTitledInput(value = lastname, onValueChange = { lastname = it }, label = "Apellido")
         CustomTitledInput(value = mail, onValueChange = { mail = it }, label = "Correo electrónico")

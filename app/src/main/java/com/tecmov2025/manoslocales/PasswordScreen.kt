@@ -31,15 +31,10 @@ fun PasswordForm()
             .spacedBy(20.dp, alignment = Alignment.CenterVertically)
     )
     {
-        Text(
-            text = "Recuperar Contraseña",
-            style = MaterialTheme.typography.headlineLarge,
-            modifier = Modifier.padding(bottom = 16.dp)
-        )
-
         var mail by remember { mutableStateOf("") }
         var username by remember { mutableStateOf("") }
 
+        CustomTitleText("Recuperar Contraseña")
         CustomTitledInput(username, {username = it},"Usuario")
         CustomTitledInput(mail,{mail = it},"Correo electronico")
 
