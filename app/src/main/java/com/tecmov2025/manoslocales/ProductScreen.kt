@@ -36,7 +36,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import kotlinx.coroutines.launch
 
 @Composable
 fun ProductScreen(viewModel: ProductViewModel)
@@ -59,21 +61,51 @@ fun ProductScreen(viewModel: ProductViewModel)
             verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterVertically),
             horizontalAlignment = Alignment.CenterHorizontally
         ){
-            Text(text = producto.nombre, style = MaterialTheme.typography.headlineSmall)
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp)
+                    .padding(top = 4.dp)
+            ) {
+                Text(
+                    text = producto.nombre,
+                    style = MaterialTheme.typography.headlineSmall.copy(
+                        fontSize = 32.sp
+                    ),
+                    modifier = Modifier.align(Alignment.Center)
+                )
+                //boton favorito
+                IconButton(
+                    onClick = {
+                        isFavorite.value = !isFavorite.value
+                        producto.favoritoState = isFavorite.value },
+                    modifier = Modifier
+                        .align(Alignment.CenterEnd)
+                        .size(48.dp)
+                ) {
+                    //si está favorito, muestra el ícono relleno
+                    val heartIcon = if (isFavorite.value) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder
+                    Icon(
+                        imageVector = heartIcon,
+                        contentDescription = "Marcar como favorito",
+                        tint = MaterialTheme.colorScheme.primary
+                    )
+                }
+            }
             Text(text = "Ubicación: ${producto.ubicacion}", style = MaterialTheme.typography.bodyMedium)
 
             LazyRow(
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(200.dp)
+                    .height(400.dp)
             ) {
                 items(producto.images.size) { index ->
                     AsyncImage(
                         model = producto.images[index],
                         contentDescription = null,
                         modifier = Modifier
-                            .height(350.dp)
+                            .height(400.dp)
                             .width(350.dp),
                         contentScale = ContentScale.Crop
                     )
@@ -82,6 +114,43 @@ fun ProductScreen(viewModel: ProductViewModel)
 
 
             Text(text = "Precio: $${String.format("%.2f", producto.precio)}", style = MaterialTheme.typography.titleMedium)
+
+            // estado de la cantidad seleccionada
+            var cantidad by remember { mutableStateOf(1) }
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                modifier = Modifier.padding(top = 8.dp)
+            ) {
+                Text(text = "Cantidad:", style = MaterialTheme.typography.titleMedium)
+
+                // disminuir
+                IconButton(
+                    onClick = {
+                        if (cantidad > 1) cantidad--
+                    }
+                ) {
+                    Text("-", style = MaterialTheme.typography.headlineMedium)
+                }
+
+                Text(text = cantidad.toString(), style = MaterialTheme.typography.titleMedium)
+
+                // aumentar
+                IconButton(
+                    onClick = {
+                        cantidad++
+                    }
+                ) {
+                    Text("+", style = MaterialTheme.typography.headlineMedium)
+                }
+            }
+
+            CustomButton(
+                onClick = { },
+                text = "Comprar"
+            )
+
             Text(text = "Descripción:", style = MaterialTheme.typography.titleMedium)
             Text(text = producto.descripcion, style = MaterialTheme.typography.bodyLarge)
 
@@ -90,27 +159,17 @@ fun ProductScreen(viewModel: ProductViewModel)
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
                 modifier = Modifier.align(Alignment.CenterHorizontally)
             ) {
-                    IconButton(onClick = { /* Acción email */ }) {
+                    IconButton(onClick = { }) {
                         Icon(imageVector = Icons.Default.Email, contentDescription = "Email")
                     }
-                    IconButton(onClick = { /* Acción teléfono */ }) {
+                    IconButton(onClick = { }) {
                         Icon(imageVector = Icons.Default.Phone, contentDescription = "Teléfono")
                     }
-                    IconButton(onClick = { /* Acción compartir */ }) {
+                    IconButton(onClick = { }) {
                         Icon(imageVector = Icons.Default.Share, contentDescription = "Compartir")
                     }
             }
-            //boton favorito
-            IconButton(
-                onClick = {
-                    isFavorite.value = !isFavorite.value
-                    producto.favoritoState = isFavorite.value},
-                modifier = Modifier.size(48.dp) // Tamaño del botón de corazón
-            ) {
-                // Ícono de corazón: si está favorito, mostramos el ícono relleno
-                val heartIcon = if (isFavorite.value) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder
-                Icon(imageVector = heartIcon, contentDescription = "Marcar como favorito", tint = MaterialTheme.colorScheme.primary)
-            }
+
         }
 
     }

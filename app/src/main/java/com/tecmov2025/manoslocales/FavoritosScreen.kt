@@ -22,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
@@ -34,7 +35,6 @@ fun FavoritosScreen(navController: NavController,viewModel: ProductViewModel) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp)
             .background(MaterialTheme.colorScheme.background),
         contentAlignment = Alignment.Center
     )
@@ -44,22 +44,29 @@ fun FavoritosScreen(navController: NavController,viewModel: ProductViewModel) {
         ) {
             Text(
                 text = "Productos Favoritos",
-                style = MaterialTheme.typography.headlineMedium,
+                style = MaterialTheme.typography.headlineSmall.copy(
+                    fontSize = 32.sp
+                ),
                 color = MaterialTheme.colorScheme.primary
             )
 
             Spacer(modifier = Modifier.height(24.dp))
 
             LazyRow(
-                horizontalArrangement = Arrangement.spacedBy(16.dp)
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp)
             ) {
                 items(productos.size) { index ->
                     if(productos[index].favoritoState)
                     {
                         Box(modifier = Modifier
-                            .weight(1f))
+                            .height(350.dp)
+                            .width(300.dp)
+                        )
                         {
-                            ProductoCard(productos[index],viewModel,navController)
+                            ProductoCard(productos[index],viewModel,navController, true)
                         }
                     }
                 }
