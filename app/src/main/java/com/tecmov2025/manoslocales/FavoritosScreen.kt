@@ -9,8 +9,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.material.ModalDrawer
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
@@ -20,11 +22,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 
 @Composable
-fun FavoritosScreen(navController: NavHostController) {
+fun FavoritosScreen(navController: NavController,viewModel: ProductViewModel) {
 
+    //productos ejemplo
+    val productos = ExampleProductList().productosList
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -47,40 +53,13 @@ fun FavoritosScreen(navController: NavHostController) {
             LazyRow(
                 horizontalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                items(30) { index ->
-                    Card(
-                        modifier = Modifier
-                            .width(300.dp)
-                            .height(250.dp),
-                        colors = CardDefaults.cardColors(containerColor = Color.LightGray),
-                        elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
-                    ) {
-                        Column(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(16.dp)
-                        ) {
-                            // Cuadro para la imagen del producto
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .height(140.dp)
-                                    .background(Color.DarkGray)
-                            )
-
-                            // Espacio entre imagen y texto
-                            Spacer(modifier = Modifier.width(12.dp))
-
-                            // Texto descriptivo
-                            Text(
-                                text = "Producto $index",
-                                style = MaterialTheme.typography.titleMedium
-                            )
-                            Text(
-                                text = "Descripcion del producto $index",
-                                style = MaterialTheme.typography.bodyMedium
-                            )
-
+                items(productos.size) { index ->
+                    if(productos[index].favoritoState)
+                    {
+                        Box(modifier = Modifier
+                            .weight(1f))
+                        {
+                            ProductoCard(productos[index],viewModel,navController)
                         }
                     }
                 }

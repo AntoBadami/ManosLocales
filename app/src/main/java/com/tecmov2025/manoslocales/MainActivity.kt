@@ -24,22 +24,24 @@ class MainActivity : ComponentActivity() {
         setContent {
             ManosLocalesTheme {
                 val navController = rememberNavController()
-                MainNav(navController)
+                val viewModel = ProductViewModel()
+                MainNav(navController, viewModel)
            }
         }
     }
 
     @Composable
-    fun MainNav(navController: NavHostController)
+    fun MainNav(navController: NavHostController, viewModel: ProductViewModel)
     {
         NavHost(
             navController = navController,
             startDestination = "MainScreen"
         )
         {
+            composable("ProductoScreen") {ProductScreen(viewModel)}
             composable("ConfigScreen"){ConfigScreen(navController)}
             composable("PerfilScreen"){ PerfilForm()}
-            composable("MainScreen") { CustomScaffold(navController)
+            composable("MainScreen") { CustomScaffold(navController,viewModel)
         }
     }
 

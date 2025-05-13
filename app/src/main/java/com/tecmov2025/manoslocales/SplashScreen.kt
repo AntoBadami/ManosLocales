@@ -21,12 +21,10 @@ import kotlinx.coroutines.delay
 @Composable
 fun SplashScreen(navController: NavHostController)
 {
-    Box(
-        modifier = Modifier
+    Box(modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
-            .wrapContentSize()
-    )
+            .wrapContentSize())
     {
         Image (
             modifier = Modifier

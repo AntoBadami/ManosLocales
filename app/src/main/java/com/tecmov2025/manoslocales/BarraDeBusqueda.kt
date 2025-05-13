@@ -2,7 +2,6 @@ package com.tecmov2025.manoslocales
 import android.content.Context
 import android.content.Intent
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
@@ -12,18 +11,16 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @Composable
-fun CustomScaffold(navController: NavController)
+fun CustomScaffold(navController: NavController,viewModel: ProductViewModel)
 {
     val context = LocalContext.current
     val scaffoldState = rememberScaffoldState()
@@ -33,7 +30,7 @@ fun CustomScaffold(navController: NavController)
         scaffoldState = scaffoldState,
         drawerContent ={ CustomDrawer(navController,context)},
         topBar = { CustomTopAppBar(coroutineScope,scaffoldState,context)},
-        content = { paddingValues -> MainScreen(paddingValues)}
+        content = { paddingValues -> MainScreen(paddingValues,viewModel = viewModel, navController = navController)}
     )
 }
 
@@ -73,8 +70,7 @@ fun CustomTopAppBar(coroutineScope: CoroutineScope, scaffoldState: ScaffoldState
                         .background(Color.Yellow),
                     onClick = { FavotitosIconButtonAction(context = context) }
                 ) { }
-            }
-        )
+            })
     }
 }
 

@@ -23,89 +23,40 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 
 @Composable
-fun MainScreen(paddingBarraDeBusqueda: PaddingValues) {
-    //lista de productos
-    val productosMock = List(30) { index ->
-        Producto(
-            nombre = "Producto $index",
-            descripcion = "Descripción del producto $index",
-            precio = index * 3.0 ,
-            ubicacion = "Córdoba, Argentina",
-            images = listOf(
-                "https://acdn-us.mitiendanube.com/stores/001/640/893/products/sorteo-ms-5-70852b318a3a38277f17279601997418-640-0.webp",
-                "https://acdn-us.mitiendanube.com/stores/001/640/893/products/9c663a0f-7169-4ce0-9079-84a0dc7594d21-07f82bdece7591b8ed16753829200230-640-0.webp"
-            )
-        )
-    }
+fun MainScreen(paddingBarraDeBusqueda: PaddingValues, viewModel: ProductViewModel,navController: NavController) {
+    val productos = ExampleProductList().productosList
     //productos en pares
-    val productosAgrupados = productosMock.chunked(2)
-    Box(
+    val productosAgrupados = productos.chunked(2)
+
+    LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
+            .padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
-            items(productosAgrupados) { grupo ->
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(paddingBarraDeBusqueda),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp) //espacio entre productos
-                ) {
-                    //primer producto
+        items(productosAgrupados) { grupo ->
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(paddingBarraDeBusqueda),
+                horizontalArrangement = Arrangement.spacedBy(8.dp) //espacio entre productos
+            ) {
+                //primer producto
+                Box(modifier = Modifier.weight(1f)) {
+                    ProductoCard(producto = grupo[0],viewModel,navController)
+                }
+                //segundo producto
+                if (grupo.size > 1) {
                     Box(modifier = Modifier.weight(1f)) {
-                        ProductoCard(producto = grupo[0])
-                    }
-                    //segundo producto
-                    if (grupo.size > 1) {
-                        Box(modifier = Modifier.weight(1f)) {
-                            ProductoCard(producto = grupo[1])
-                        }
+                        ProductoCard(producto = grupo[1],viewModel,navController)
                     }
                 }
             }
         }
     }
 
-}
-@Composable
-fun ProductoCard(producto: Producto) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth(),
-        colors = CardDefaults.cardColors(containerColor = Color.LightGray),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-        ) {
-            //espacio para la imagen del producto
-            Box(
-                modifier = Modifier
-                    .size(64.dp)
-                    .background(Color.DarkGray)
-            )
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            Text(
-                text = producto.nombre,
-                style = MaterialTheme.typography.titleMedium
-            )
-            Text(
-                text = producto.descripcion,
-                style = MaterialTheme.typography.bodyMedium
-            )
-        }
-    }
 }

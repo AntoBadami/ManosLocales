@@ -18,6 +18,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Phone
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -38,10 +39,12 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 
 @Composable
-fun ProductScreen(producto: Producto, contactIcons: List<ImageVector>)
+fun ProductScreen(viewModel: ProductViewModel)
 {
+    var producto = viewModel.productoSeleccionado!!
     // Estado para el favorito
-    var isFavorite by remember { mutableStateOf(false) }
+    var isFavorite = remember { mutableStateOf(false) }
+    isFavorite.value = producto.favoritoState
 
 
     Column(
@@ -87,19 +90,25 @@ fun ProductScreen(producto: Producto, contactIcons: List<ImageVector>)
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
                 modifier = Modifier.align(Alignment.CenterHorizontally)
             ) {
-                contactIcons.forEach { icon ->
-                    IconButton (onClick = { /* acción */ }) {
-                        Icon(imageVector = icon, contentDescription = null)
+                    IconButton(onClick = { /* Acción email */ }) {
+                        Icon(imageVector = Icons.Default.Email, contentDescription = "Email")
                     }
-                }
+                    IconButton(onClick = { /* Acción teléfono */ }) {
+                        Icon(imageVector = Icons.Default.Phone, contentDescription = "Teléfono")
+                    }
+                    IconButton(onClick = { /* Acción compartir */ }) {
+                        Icon(imageVector = Icons.Default.Share, contentDescription = "Compartir")
+                    }
             }
             //boton favorito
             IconButton(
-                onClick = { isFavorite = !isFavorite },
+                onClick = {
+                    isFavorite.value = !isFavorite.value
+                    producto.favoritoState = isFavorite.value},
                 modifier = Modifier.size(48.dp) // Tamaño del botón de corazón
             ) {
                 // Ícono de corazón: si está favorito, mostramos el ícono relleno
-                val heartIcon = if (isFavorite) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder
+                val heartIcon = if (isFavorite.value) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder
                 Icon(imageVector = heartIcon, contentDescription = "Marcar como favorito", tint = MaterialTheme.colorScheme.primary)
             }
         }
