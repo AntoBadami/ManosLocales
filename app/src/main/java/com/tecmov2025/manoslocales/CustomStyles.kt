@@ -20,6 +20,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Switch
+import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -170,7 +171,9 @@ fun CustomTitleText(text: String)
 fun OptionCard(opcion :Opcion)
 {
     Card(modifier = Modifier
-        .fillMaxSize(),
+        .fillMaxSize()
+        .padding(top = 5.dp)
+        .height(60.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp))
     {
@@ -198,7 +201,9 @@ fun OptionSwitchCard(opcion :Opcion,switchesMutableListOf : MutableList<Boolean>
                      index : Int)
 {
     Card(modifier = Modifier
-        .fillMaxWidth(),
+        .fillMaxWidth()
+        .padding(top = 5.dp)
+        .height(60.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp))
     {
@@ -212,8 +217,14 @@ fun OptionSwitchCard(opcion :Opcion,switchesMutableListOf : MutableList<Boolean>
             Text(fontSize = 20.sp, text = opcion.text, color = Color.DarkGray)
 
             Switch(
+                modifier = Modifier
+                .fillMaxWidth()
+                .padding(3.dp),
                 checked = switchesMutableListOf[index],
-                onCheckedChange = { switchesMutableListOf[index] = it }
+                onCheckedChange = { switchesMutableListOf[index] = it },
+                colors = SwitchDefaults.colors(
+                    checkedThumbColor = Color.White
+                )
             )
         }
     }

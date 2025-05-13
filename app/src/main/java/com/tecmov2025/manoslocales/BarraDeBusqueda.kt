@@ -44,7 +44,10 @@ fun CustomScaffold(navController: NavController,viewModel: ProductViewModel)
 fun CustomTopAppBar(coroutineScope: CoroutineScope, scaffoldState: ScaffoldState, context : Context)
 {
     var textoBusqueda by remember { mutableStateOf("") }
-    Column {
+    Column(
+        modifier = Modifier
+            .background(MaterialTheme.colorScheme.background)
+    ) {
         TopAppBar(
             modifier = Modifier
                 .padding(WindowInsets.statusBars.asPaddingValues())
@@ -118,12 +121,15 @@ fun CustomDrawer(navController: NavController,context: Context)
     {
         LazyColumn(
             modifier = Modifier
-                .padding(top = 40.dp)
+                .padding(top = 70.dp)
+                .padding(horizontal = 16.dp)
                 .fillMaxSize())
         {
             items(opciones.size) { i ->
                 Row(modifier = Modifier
-                    .height(50.dp))
+                    .height(60.dp)
+                    .padding(top = 5.dp)
+                )
                 {
                     OptionCard(opciones[i])
                 }

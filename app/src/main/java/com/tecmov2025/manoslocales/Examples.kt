@@ -1,7 +1,7 @@
 package com.tecmov2025.manoslocales
 
 class ExampleProductList(
-    val productosList: List<Producto> = List(10) { index ->
+    val productosList: List<Producto> = List(20) { index ->
         Producto(
             nombre = "Producto $index",
             descripcion = "Descripción del producto $index",

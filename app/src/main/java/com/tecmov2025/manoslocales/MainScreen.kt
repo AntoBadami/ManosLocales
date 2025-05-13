@@ -37,7 +37,8 @@ Column( modifier = Modifier
 {
     LazyColumn(
         modifier = Modifier
-            .fillMaxSize(),
+            .fillMaxSize()
+            .padding(horizontal = 16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         items(productosAgrupados) { grupo ->
