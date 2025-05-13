@@ -32,7 +32,7 @@ fun ProductoCard(producto: Producto, viewModel: ProductViewModel, navController:
         modifier = Modifier
             .fillMaxWidth()
             .fillMaxSize(),
-        colors = CardDefaults.cardColors(containerColor = Color.LightGray),
+        colors = CardDefaults.cardColors(containerColor = Color.White),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         onClick = {
             viewModel.seleccionarProducto(producto)
@@ -60,11 +60,13 @@ fun ProductoCard(producto: Producto, viewModel: ProductViewModel, navController:
 
             Text(
                 text = producto.nombre,
-                style = titleStyle
+                style = titleStyle,
+                color = Color.DarkGray
             )
             Text(
                 text = producto.descripcion,
-                style = bodyStyle
+                style = bodyStyle,
+                color = Color.DarkGray
             )
         }
     }

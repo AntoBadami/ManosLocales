@@ -31,11 +31,13 @@ fun MainScreen(paddingBarraDeBusqueda: PaddingValues, viewModel: ProductViewMode
     val productos = ExampleProductList().productosList
     //productos en pares
     val productosAgrupados = productos.chunked(2)
-
+Column( modifier = Modifier
+    .fillMaxSize()
+    .background(MaterialTheme.colorScheme.background))
+{
     LazyColumn(
         modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
+            .fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         items(productosAgrupados) { grupo ->
@@ -58,5 +60,7 @@ fun MainScreen(paddingBarraDeBusqueda: PaddingValues, viewModel: ProductViewMode
             }
         }
     }
+}
+
 
 }

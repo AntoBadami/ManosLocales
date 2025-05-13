@@ -4,7 +4,13 @@ import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -41,36 +47,60 @@ fun CustomTopAppBar(coroutineScope: CoroutineScope, scaffoldState: ScaffoldState
     Column {
         TopAppBar(
             modifier = Modifier
-                .padding(WindowInsets.statusBars.asPaddingValues()),
+                .padding(WindowInsets.statusBars.asPaddingValues())
+                .fillMaxWidth()
+                .height(80.dp),
             title = {
                 TextField(
                     value = textoBusqueda,
                     onValueChange = { textoBusqueda = it },
                     placeholder = { Text("Buscar...") },
                     singleLine = true,
-                    modifier = Modifier.fillMaxWidth()
-                )
+                    leadingIcon = {
+                        Icon(
+                            imageVector = Icons.Default.Search,  // Ícono de lupa por defecto
+                            contentDescription = "Buscar",
+                            tint = Color.Gray  // Color del ícono
+                        )},
+                    modifier =Modifier
+                        .heightIn(min = 48.dp)
+                        .fillMaxWidth()
+                        .background(MaterialTheme.colorScheme.background,
+                    shape = RoundedCornerShape(50.dp)),
+                    colors = TextFieldDefaults.textFieldColors(
+                        textColor = Color.DarkGray,
+                        cursorColor = MaterialTheme.colorScheme.primary,  // Color del cursor (primario)
+                        backgroundColor = Color.Transparent,  // Importante: hace visible el color del Modifier.background
+                        focusedIndicatorColor = MaterialTheme.colorScheme.primary,  // Elimina borde inferior
+                        unfocusedIndicatorColor = Color.Transparent
+                    )
+                    )// Borde redondeado
             },
             navigationIcon = {
                 IconButton(
                     modifier = Modifier
-                        .size(10.dp)
-                        .background(Color.Red),
+                        .size(48.dp),
                     onClick = {
                         coroutineScope.launch {
                             scaffoldState.drawerState.open()
                         }
                     }
-                ) {}
+                ) {Icon(imageVector = Icons.Default.Menu,
+                    contentDescription = "Menu",
+                    tint = MaterialTheme.colorScheme.background)}
             },
             actions = {
                 IconButton(
                     modifier = Modifier
-                        .size(10.dp)
-                        .background(Color.Yellow),
+                        .size(48.dp),
                     onClick = { FavotitosIconButtonAction(context = context) }
-                ) { }
-            })
+                ) {
+                    Icon(imageVector = Icons.Default.Favorite,
+                    contentDescription = "Favoritos",
+                    tint = MaterialTheme.colorScheme.background) }
+            },
+            backgroundColor = MaterialTheme.colorScheme.primary
+        )
     }
 }
 
@@ -82,18 +112,26 @@ fun CustomDrawer(navController: NavController,context: Context)
             Opcion("Mi perfil",{navController.navigate("PerfilScreen")}),
             Opcion("Configuracion",{navController.navigate("ConfigScreen")}),
             Opcion("Cerrar Sesion",{ context.startActivity(Intent(context, LoginActivity::class.java))}))
-
-    LazyColumn(
-        modifier = Modifier
-        .padding(top = 40.dp)
-        .fillMaxSize())
+    Column(modifier = Modifier
+        .fillMaxSize()
+        .background(MaterialTheme.colorScheme.background))
+    {
+        LazyColumn(
+            modifier = Modifier
+                .padding(top = 40.dp)
+                .fillMaxSize())
         {
             items(opciones.size) { i ->
-                OptionCard(opciones[i])
+                Row(modifier = Modifier
+                    .height(50.dp))
+                {
+                    OptionCard(opciones[i])
+                }
             }
         }
 
-        }
+    }
+    }
 
 
 

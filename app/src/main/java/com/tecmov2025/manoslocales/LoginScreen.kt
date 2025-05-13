@@ -108,15 +108,15 @@ fun LoginButtonAction(
     onError: () -> Unit
 )
 {
-    if (username.isNotBlank() && password.isNotBlank()) {
+    //if (username.isNotBlank() && password.isNotBlank()) {
         // Navegar a MainActivity
         val intent = Intent(context, MainActivity::class.java)
         context.startActivity(intent)
         // Cierra LoginActivity para no volver atras
-        if (context is android.app.Activity) {
-            context.finish()
-        }
-    } else {
-        onError()
-    }
+        //if (context is android.app.Activity) {
+          //  context.finish()
+        //}
+    //} else {
+     //   onError()
+    //}
 }

@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -11,6 +12,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.MaterialTheme
@@ -166,14 +169,22 @@ fun CustomTitleText(text: String)
 @Composable
 fun OptionCard(opcion :Opcion)
 {
-    Row (modifier = Modifier
-        .fillMaxWidth()
-        .clickable{opcion.onclicick()},
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically)
+    Card(modifier = Modifier
+        .fillMaxSize(),
+        colors = CardDefaults.cardColors(containerColor = Color.White),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp))
     {
-        Text(fontSize = 20.sp, text = opcion.text)
+        Row (modifier = Modifier
+            .fillMaxSize()
+            .clickable{opcion.onclicick() }
+            .padding(start = 30.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically)
+        {
+            Text(fontSize = 20.sp, text = opcion.text, color = Color.DarkGray)
+        }
     }
+
 }
 /**
  * Muestra una opción de configuración con un interruptor (Switch) que puede ser activado o desactivado.
@@ -186,17 +197,24 @@ fun OptionCard(opcion :Opcion)
 fun OptionSwitchCard(opcion :Opcion,switchesMutableListOf : MutableList<Boolean>,
                      index : Int)
 {
-    Row (modifier = Modifier
-        .fillMaxWidth()
-        .clickable{},
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween)
+    Card(modifier = Modifier
+        .fillMaxWidth(),
+        colors = CardDefaults.cardColors(containerColor = Color.White),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp))
     {
-        Text(fontSize = 20.sp, text = opcion.text)
+        Row (modifier = Modifier
+            .fillMaxSize()
+            .clickable{}
+            .padding(start = 30.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween)
+        {
+            Text(fontSize = 20.sp, text = opcion.text, color = Color.DarkGray)
 
-        Switch(
-            checked = switchesMutableListOf[index],
-            onCheckedChange = { switchesMutableListOf[index] = it }
-        )
+            Switch(
+                checked = switchesMutableListOf[index],
+                onCheckedChange = { switchesMutableListOf[index] = it }
+            )
+        }
     }
 }
