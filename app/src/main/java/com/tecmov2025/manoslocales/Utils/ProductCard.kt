@@ -9,12 +9,15 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
@@ -38,7 +41,7 @@ fun ProductoCard(producto: Producto, viewModel: ProductViewModel, navController:
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp)
+                .padding(3.dp)
         ) {
             val imageSize = if (isFavoritoView) 150.dp else 64.dp
             val spacerSize = if (isFavoritoView) 20.dp else 8.dp
@@ -48,14 +51,16 @@ fun ProductoCard(producto: Producto, viewModel: ProductViewModel, navController:
             //espacio para la imagen del producto
             Box(
                 modifier = Modifier
-                    .size(imageSize)
+                    .fillMaxWidth()
+                    .weight(1f)
                     .background(Color.Transparent)
             ){
                 AsyncImage(
                     model = producto.images[0],
-                        contentDescription = null,
+                        contentDescription = "Product image",
                     modifier = Modifier
-                        .size(imageSize),
+                        .fillMaxSize()
+                        .clip(RoundedCornerShape(16.dp)),
                     contentScale = ContentScale.Crop
                 )
 
