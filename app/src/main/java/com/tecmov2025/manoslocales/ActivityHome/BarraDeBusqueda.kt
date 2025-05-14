@@ -7,9 +7,13 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -117,10 +121,10 @@ fun CustomTopAppBar(coroutineScope: CoroutineScope, scaffoldState: ScaffoldState
 fun CustomDrawer(navController: NavController,context: Context)
 {
     val opciones = listOf<Opcion>(
-        Opcion("Mi perfil", { navController.navigate("PerfilScreen") }),
-        Opcion("Configuracion", { navController.navigate("ConfigScreen") }),
+        Opcion("Mi perfil", { navController.navigate("PerfilScreen") }, icon = Icons.Default.Person),
+        Opcion("Configuracion", { navController.navigate("ConfigScreen") }, icon = Icons.Default.Settings),
         Opcion("Cerrar Sesion",
-            { context.startActivity(Intent(context, LoginActivity::class.java)) })
+            { context.startActivity(Intent(context, LoginActivity::class.java)) }, icon = Icons.Default.Close)
     )
     Column(modifier = Modifier
         .fillMaxSize()
