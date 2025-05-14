@@ -1,4 +1,4 @@
-package com.tecmov2025.manoslocales
+package com.tecmov2025.manoslocales.ActivityHome
 import android.content.Context
 import android.content.Intent
 import androidx.compose.foundation.background
@@ -22,6 +22,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
+import com.tecmov2025.manoslocales.ActivityLogin.LoginActivity
+import com.tecmov2025.manoslocales.ActivityFavoritos.FavoritosActivity
+import com.tecmov2025.manoslocales.Utils.Opcion
+import com.tecmov2025.manoslocales.Utils.OptionCard
+import com.tecmov2025.manoslocales.Utils.ProductViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -112,9 +117,11 @@ fun CustomTopAppBar(coroutineScope: CoroutineScope, scaffoldState: ScaffoldState
 fun CustomDrawer(navController: NavController,context: Context)
 {
     val opciones = listOf<Opcion>(
-            Opcion("Mi perfil",{navController.navigate("PerfilScreen")}),
-            Opcion("Configuracion",{navController.navigate("ConfigScreen")}),
-            Opcion("Cerrar Sesion",{ context.startActivity(Intent(context, LoginActivity::class.java))}))
+        Opcion("Mi perfil", { navController.navigate("PerfilScreen") }),
+        Opcion("Configuracion", { navController.navigate("ConfigScreen") }),
+        Opcion("Cerrar Sesion",
+            { context.startActivity(Intent(context, LoginActivity::class.java)) })
+    )
     Column(modifier = Modifier
         .fillMaxSize()
         .background(MaterialTheme.colorScheme.background))

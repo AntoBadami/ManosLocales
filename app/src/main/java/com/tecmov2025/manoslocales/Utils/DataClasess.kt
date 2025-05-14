@@ -1,6 +1,4 @@
-package com.tecmov2025.manoslocales
-
-import androidx.compose.runtime.MutableState
+package com.tecmov2025.manoslocales.Utils
 
 /** Clase producto*/
 data class Producto(val nombre: String,

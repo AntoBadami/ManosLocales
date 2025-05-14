@@ -1,23 +1,18 @@
-package com.tecmov2025.manoslocales
+package com.tecmov2025.manoslocales.ActivityLogin
 
 import android.content.Context
-import android.content.Context.MODE_PRIVATE
 import android.content.Intent
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -31,6 +26,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.tecmov2025.manoslocales.Utils.CustomButton
+import com.tecmov2025.manoslocales.Utils.CustomTextField
+import com.tecmov2025.manoslocales.Utils.LinkText
+import com.tecmov2025.manoslocales.ActivityHome.MainActivity
+import com.tecmov2025.manoslocales.R
 import kotlinx.coroutines.launch
 
 @Composable
@@ -91,7 +91,7 @@ fun Login(navController: NavHostController)
             LinkText("Recuperar contraseña", { navController.navigate("PasswordScreen") })
 
         }
-        androidx.compose.material3.SnackbarHost(
+        SnackbarHost(
             hostState = snackbarHostState,
             modifier = Modifier
                 .align(Alignment.BottomCenter)

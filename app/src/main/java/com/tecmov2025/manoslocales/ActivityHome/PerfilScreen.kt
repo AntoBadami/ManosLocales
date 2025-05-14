@@ -1,4 +1,4 @@
-package com.tecmov2025.manoslocales
+package com.tecmov2025.manoslocales.ActivityHome
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -40,6 +40,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.VisualTransformation
+import com.tecmov2025.manoslocales.Utils.CustomButton
+import com.tecmov2025.manoslocales.Utils.CustomTextField
 import kotlinx.coroutines.CoroutineScope
 
 @OptIn(ExperimentalMaterial3Api::class)

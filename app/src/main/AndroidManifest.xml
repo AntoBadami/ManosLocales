@@ -15,16 +15,16 @@
         android:theme="@style/Theme.ManosLocales"
         tools:targetApi="31">
         <activity
-            android:name=".FavoritosActivity"
+            android:name=".ActivityFavoritos.FavoritosActivity"
             android:exported="false"
             android:theme="@style/Theme.ManosLocales">
 
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".ActivityHome.MainActivity"
             android:exported="false"/>
         <activity
-            android:name=".LoginActivity"
+            android:name=".ActivityLogin.LoginActivity"
             android:exported="true"
             android:theme="@style/Theme.ManosLocales">
             <intent-filter>

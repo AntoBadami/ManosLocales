@@ -1,4 +1,4 @@
-package com.tecmov2025.manoslocales
+package com.tecmov2025.manoslocales.Utils
 
 class ExampleProductList(
     val productosList: List<Producto> = List(20) { index ->

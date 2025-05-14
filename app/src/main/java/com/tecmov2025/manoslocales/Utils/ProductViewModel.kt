@@ -1,4 +1,4 @@
-package com.tecmov2025.manoslocales
+package com.tecmov2025.manoslocales.Utils
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
