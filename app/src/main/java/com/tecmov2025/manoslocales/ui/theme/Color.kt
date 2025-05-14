@@ -11,5 +11,5 @@ val PurpleGrey40 = Color(0xFF625b71)
 val Pink40 = Color(0xFFEFB8C8)
 
 val BackgroundColor = Color(0xFFFDF7ED)
-val ButtonColor = Color(0xFFD9742A)
+val AppOrange = Color(0xFFD9742A)
 val SecondColor = Color(0xFF361A0C)
