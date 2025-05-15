@@ -8,6 +8,7 @@ data class Producto(val nombre: String,
                     val precio : Double,
                     val ubicacion : String,
                     val images: List<String>,
+                    val categoria: String,
                     var favoritoState : Boolean = false)
 
 /** Opcion del drawer en la barra de busqueda*/
