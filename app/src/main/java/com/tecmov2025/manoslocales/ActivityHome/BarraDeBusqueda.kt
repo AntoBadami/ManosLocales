@@ -34,9 +34,13 @@ import com.tecmov2025.manoslocales.Utils.ProductViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-// Scaffold personalizado para menu Home
+/**
+ * Barra de busqueda
+ * @param navController permite viajar entre las pantallas
+ * @param viewModel necesario para la seleccion de productos
+ */
 @Composable
-fun CustomScaffold(navController: NavController,viewModel: ProductViewModel)
+fun BarraDeBusqueda(navController: NavController, viewModel: ProductViewModel)
 {
     val context = LocalContext.current
     val scaffoldState = rememberScaffoldState()
@@ -50,7 +54,10 @@ fun CustomScaffold(navController: NavController,viewModel: ProductViewModel)
     )
 }
 
-// TopAppBar personalizada
+/**
+ * TopAppBar que contiene la barra de busqueda, el boton para
+ * acceder al Drawer lateral y el boton para acceder a favoritos
+ */
 @Composable
 fun CustomTopAppBar(coroutineScope: CoroutineScope, scaffoldState: ScaffoldState, context : Context)
 {
@@ -110,7 +117,11 @@ fun CustomTopAppBar(coroutineScope: CoroutineScope, scaffoldState: ScaffoldState
     }
 }
 
-// Barra lateral Drawer personalizada
+/**
+ * Barra lateral Drawer personalizada
+ * @param navController permite navegar a las pantallas de las respectivas opciones
+ * @param context permite iniciar activity Login por opcion "Cerrar Sesion"
+ */
 @Composable
 fun CustomDrawer(navController: NavController,context: Context)
 {
@@ -144,7 +155,11 @@ fun CustomDrawer(navController: NavController,context: Context)
 }
 
 
-// Accion de boton de favoritos
+/**
+ * Accion de boton de favoritos
+ * Utiliza intent para navegar a Activity Favoritos
+ * @param context para hacer la navegacion
+ */
 fun FavotitosIconButtonAction(context: Context)
 {
     val intent = Intent(context, FavoritosActivity::class.java)

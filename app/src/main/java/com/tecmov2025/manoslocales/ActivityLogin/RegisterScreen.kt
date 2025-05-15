@@ -4,10 +4,12 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -18,16 +20,25 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.tecmov2025.manoslocales.Utils.CustomButton
-import com.tecmov2025.manoslocales.Utils.CustomTitleText
+import com.tecmov2025.manoslocales.Utils.CustomScaffold
 import com.tecmov2025.manoslocales.Utils.CustomTitledInput
 
+/**
+ * Pantalla de registro en app
+ */
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RegisterForm()
+fun RegisterScreen()
+{ CustomScaffold("Registro"){ padding -> RegisterFormBody(padding)} }
+
+@Composable
+fun RegisterFormBody(padding: PaddingValues)
 {
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
+            .padding(padding)
     ) {
         val scrollState = rememberScrollState()
         Column(
@@ -49,7 +60,6 @@ fun RegisterForm()
             var password by remember { mutableStateOf("") }
             var passwordControl by remember { mutableStateOf("") }
 
-            CustomTitleText("Registro")
             CustomTitledInput(value = name, onValueChange = { name = it }, label = "Nombre")
             CustomTitledInput(
                 value = lastname,

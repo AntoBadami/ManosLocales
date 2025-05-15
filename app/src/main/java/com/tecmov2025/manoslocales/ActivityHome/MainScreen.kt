@@ -18,9 +18,6 @@ import androidx.compose.material.DropdownMenu
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExposedDropdownMenuBox
-import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -39,13 +36,19 @@ import com.tecmov2025.manoslocales.Utils.ProductViewModel
 import com.tecmov2025.manoslocales.Utils.Producto
 import com.tecmov2025.manoslocales.Utils.ProductoCard
 
-// Cuerpo de interfaz principal
+/**
+ * Cuerpo de interfaz principal
+ * @param paddingBarraDeBusqueda Dado por el scaffold que la contiene
+ * @param viewModel utilizado para seleccionar un producto
+ * @param navController utilizado para redirigir al ProductScreen
+ */
 @Composable
 fun MainScreen(paddingBarraDeBusqueda: PaddingValues, viewModel: ProductViewModel, navController: NavController)
 {
     val productos = ExampleProductList().productosList
 
-    val categorias = remember(productos) {
+    val categorias = remember(productos)
+    {
         buildList {
             add("Todas")
             addAll(productos.map { it.categoria }.distinct())
@@ -53,10 +56,12 @@ fun MainScreen(paddingBarraDeBusqueda: PaddingValues, viewModel: ProductViewMode
     }
     var categoriaSeleccionada by rememberSaveable { mutableStateOf("Todas") }
 
-    val productosFiltrados = remember(productos, categoriaSeleccionada) {
+    val productosFiltrados = remember(productos, categoriaSeleccionada)
+    {
         if (categoriaSeleccionada == "Todas") productos
         else productos.filter { it.categoria == categoriaSeleccionada }
     }
+
     //productos en pares
     val productosAgrupados = productosFiltrados.chunked(2)
 
@@ -83,25 +88,18 @@ fun MainScreen(paddingBarraDeBusqueda: PaddingValues, viewModel: ProductViewMode
                         .padding(paddingBarraDeBusqueda),
                     horizontalArrangement = Arrangement.spacedBy(8.dp) //espacio entre productos
                 ){
-                    val modifier = Modifier
-                        .weight(1f)
-                        .height(200.dp)
                     //primer producto
-                    ProductBox(modifier,producto = grupo[0], viewModel, navController)
+                    Box(modifier = Modifier
+                            .weight(1f)
+                            .height(200.dp)){ ProductoCard(grupo[0], viewModel, navController) }
                     //segundo producto
-                    if (grupo.size > 1) {
-                        ProductBox(modifier,producto = grupo[1], viewModel, navController)
-                    }
+                    if (grupo.size > 1)
+                        Box(modifier = Modifier
+                            .weight(1f)
+                            .height(200.dp)){ ProductoCard(grupo[1], viewModel, navController) }
                 }
             }
         }
-    }
-}
-@Composable
-fun ProductBox(modifier: Modifier,producto: Producto, viewModel: ProductViewModel,navController: NavController)
-{
-    Box(modifier){
-        ProductoCard(producto, viewModel, navController)
     }
 }
 

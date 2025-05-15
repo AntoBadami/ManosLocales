@@ -2,6 +2,7 @@ package com.tecmov2025.manoslocales.Utils
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,10 +17,13 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
@@ -238,4 +242,29 @@ fun OptionSwitchCard(opcion :Opcion,switchesMutableListOf : MutableList<Boolean>
             )
         }
     }
+}
+
+/**
+ * Scaffold basico para pestañas
+ * @param body funcion composable cuerpo de la pantalla en cuestion
+ * @param title titulo para la barra
+ */
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun CustomScaffold(title : String,body: @Composable (padding: PaddingValues) -> Unit)
+{
+    Scaffold(
+        topBar = {
+            CenterAlignedTopAppBar(
+                title = {
+                    Text(
+                        text = title,
+                        style = MaterialTheme.typography.headlineLarge,
+                        modifier = Modifier.padding(top = 15.dp)) },
+                navigationIcon = {},
+                actions = {}
+            )
+        }
+    ){ padding -> body(padding)}
+
 }

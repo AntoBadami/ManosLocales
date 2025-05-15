@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -41,25 +42,16 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.VisualTransformation
 import com.tecmov2025.manoslocales.Utils.CustomButton
+import com.tecmov2025.manoslocales.Utils.CustomScaffold
 import com.tecmov2025.manoslocales.Utils.CustomTextField
 import kotlinx.coroutines.CoroutineScope
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PerfilForm()
+fun PerfilScreen()
 {
     var editable = remember { mutableStateOf(false) }
-
-    //datos de ejemplo
-    var name by remember { mutableStateOf("Juan") }
-    var lastname by remember { mutableStateOf("Pérez") }
-    var mail by remember { mutableStateOf("juanperez@mail.com") }
-    var username by remember { mutableStateOf("juan123") }
-    var password by remember { mutableStateOf("123456") }
-    var passwordControl by remember { mutableStateOf("123456") }
-
     val snackbarHostState = remember { SnackbarHostState() }
-    val coroutineScope = rememberCoroutineScope()
 
     Scaffold(
         snackbarHost = { SnackbarHost(snackbarHostState) },
@@ -78,54 +70,74 @@ fun PerfilForm()
                 }
             )
         }
+    ){ padding -> PerfilFormBody(padding, editable, snackbarHostState) }
+}
+
+/**
+ *  TODO(Cambiar a implementacion usando clase perfil)
+ *
+ */
+@Composable
+fun PerfilFormBody(padding: PaddingValues, editable : MutableState<Boolean>, snackbarHostState: SnackbarHostState)
+{
+    //datos de ejemplo
+    var name by remember { mutableStateOf("Juan") }
+    var lastname by remember { mutableStateOf("Pérez") }
+    var mail by remember { mutableStateOf("juanperez@mail.com") }
+    var username by remember { mutableStateOf("juan123") }
+    var password by remember { mutableStateOf("123456") }
+    var passwordControl by remember { mutableStateOf("123456") }
+
+    val coroutineScope = rememberCoroutineScope()
+    val scrollState = rememberScrollState()
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
     ){
-        padding ->
-            val scrollState = rememberScrollState()
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(MaterialTheme.colorScheme.background)
-            ){
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(padding)
-                    .padding(24.dp)
-                    .verticalScroll(scrollState),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(20.dp)
-            ){
-                val fieldModifier = Modifier
-                        .widthIn(max = 400.dp)
-                        .align(Alignment.CenterHorizontally)
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(padding)
+                .padding(24.dp)
+                .verticalScroll(scrollState),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(20.dp)
+        ){
+            val fieldModifier = Modifier
+                .widthIn(max = 400.dp)
+                .align(Alignment.CenterHorizontally)
 
-                PerfilField("Nombre", name, editable, fieldModifier) { name = it }
-                PerfilField("Apellido", lastname, editable, fieldModifier) { lastname = it }
-                PerfilField("Correo electrónico", mail, editable, fieldModifier) { mail = it }
-                PerfilField("Usuario", username, editable, fieldModifier) { username = it }
-                PerfilField("Contraseña", password, editable, fieldModifier, isPassword = true) { password = it }
+            PerfilField("Nombre", name, editable, fieldModifier) { name = it }
+            PerfilField("Apellido", lastname, editable, fieldModifier) { lastname = it }
+            PerfilField("Correo electrónico", mail, editable, fieldModifier) { mail = it }
+            PerfilField("Usuario", username, editable, fieldModifier) { username = it }
+            PerfilField("Contraseña", password, editable, fieldModifier, isPassword = true) { password = it }
 
-                if (editable.value)
-                {
-                    PerfilField("Repetir Contraseña",passwordControl, editable, fieldModifier, isPassword = true)
-                        { passwordControl = it }
-                }
-                if (editable.value)
-                {
-                    CustomButton(
-                        onClick = {
-                            /* TODO(Cambiar funcion por objeto perfil)*/
-                            perfilFormControl(
+            if (editable.value)
+            {
+                PerfilField("Repetir Contraseña",passwordControl, editable, fieldModifier, isPassword = true)
+                { passwordControl = it }
+            }
+            if (editable.value)
+            {
+                CustomButton(
+                    onClick = {
+                        /* TODO(Cambiar funcion por objeto perfil)*/
+                        perfilFormControl(
                             name, lastname, mail, username, password,
                             passwordControl, coroutineScope, snackbarHostState, editable
                         )},
-                        text = "Guardar cambios")
-                }
+                    text = "Guardar cambios")
             }
         }
     }
 }
-//TODO(Cambiar a implementacion usando clase perfil)
+
+
+/**
+ * TODO(Cambiar a implementacion usando clase perfil)
+ */
 @Composable
 fun PerfilField(label: String, value: String, editable: MutableState<Boolean>, modifier: Modifier, isPassword: Boolean = false, onValueChange: (String) -> Unit)
 {

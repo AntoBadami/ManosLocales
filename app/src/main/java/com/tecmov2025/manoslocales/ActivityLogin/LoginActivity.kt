@@ -32,10 +32,10 @@ class LoginActivity : ComponentActivity() {
             startDestination = "SplashScreen"
         )
         {
-            composable("Login") { Login(navController) }
+            composable("Login") { LoginScreen(navController) }
             composable("SplashScreen") { SplashScreen(navController) }
-            composable("RegisterScreen") { RegisterForm() }
-            composable("PasswordScreen") { PasswordForm() }
+            composable("RegisterScreen") { RegisterScreen() }
+            composable("PasswordScreen") { PasswordScreen() }
         }
     }
 

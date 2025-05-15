@@ -7,6 +7,9 @@ import androidx.navigation.compose.rememberNavController
 import com.tecmov2025.manoslocales.Utils.ProductScreen
 import com.tecmov2025.manoslocales.Utils.ProductViewModel
 
+/**
+ * Gestinona la navegacion en la activity Main
+ */
 @Composable
 fun MainNavigation()
 {
@@ -19,7 +22,7 @@ fun MainNavigation()
     {
         composable(MainScreens.ProductoScreen.route) { ProductScreen(viewModel) }
         composable(MainScreens.ConfigScreen.route){ConfigScreen()}
-        composable(MainScreens.PerfilScreen.route){ PerfilForm()}
-        composable(MainScreens.MainScreen.route) { CustomScaffold(navController,viewModel) }
+        composable(MainScreens.PerfilScreen.route){ PerfilScreen()}
+        composable(MainScreens.MainScreen.route) { BarraDeBusqueda(navController,viewModel) }
     }
 }

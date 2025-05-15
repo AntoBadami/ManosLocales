@@ -8,44 +8,28 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.tecmov2025.manoslocales.Utils.CustomScaffold
 import com.tecmov2025.manoslocales.Utils.Opcion
 import com.tecmov2025.manoslocales.Utils.OptionCard
 import com.tecmov2025.manoslocales.Utils.OptionSwitchCard
 import com.tecmov2025.manoslocales.Utils.TipoOpcion
 
-// Scaffold de interfaz de configuraciones
-@OptIn(ExperimentalMaterial3Api::class)
+/**
+ * Pantalla de configuraciones
+ */
 @Composable
 fun ConfigScreen()
-{
-    Scaffold(
-        topBar = {
-            CenterAlignedTopAppBar(
-                title = {
-                    Text(
-                        text = "Configuracion",
-                        style = MaterialTheme.typography.headlineLarge,
-                        modifier = Modifier.padding(top = 15.dp)) },
-                navigationIcon = {},
-                actions = {}
-            )
-        }
-    ){ padding -> ConfiguracionesBody(padding)}
+{ CustomScaffold("Configuracion"){ padding -> ConfiguracionesBody(padding)} }
 
-
-}
-
-// Cuerpo de la interfaz de configuraciones
+/**
+ * Cuerpo de la interfaz de configuraciones
+ */
 @Composable
 fun ConfiguracionesBody(padding: PaddingValues)
 {
