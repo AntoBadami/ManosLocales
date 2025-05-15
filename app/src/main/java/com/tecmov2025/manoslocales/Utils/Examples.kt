@@ -1,7 +1,7 @@
 package com.tecmov2025.manoslocales.Utils
 
 class ExampleProductList(
-    val productosList: List<Producto> = List(18) { index ->
+    val productosList: List<Producto> = List(20) { index ->
         when(index) {
             0 -> Producto(
                 nombre = "Mate Calabaza Imperial",
@@ -15,7 +15,7 @@ class ExampleProductList(
                 if (index%2 == 0) true else false
             )
             1 -> Producto(
-                nombre = "Mate Algarrobo Ranchero",
+                nombre = "Mate Ranchero",
                 descripcion = "Mate de algarrobo estilo ranchero.",
                 precio = 3200.0,
                 ubicacion = "Córdoba, Argentina",
@@ -25,8 +25,8 @@ class ExampleProductList(
                 if (index%2 == 0) true else false
             )
             2 -> Producto(
-                nombre = "Mate Algarrobo Camionero",
-                descripcion = "Mate robusto de algarrobo para camioneros.",
+                nombre = "Mate Algarrobo",
+                descripcion = "Mate robusto de algarrobo camionero.",
                 precio = 3000.0,
                 ubicacion = "Córdoba, Argentina",
                 images = listOf("https://http2.mlstatic.com/D_NQ_NP_796078-MLA84126103516_052025-O.webp",
@@ -49,7 +49,9 @@ class ExampleProductList(
                 descripcion = "Vela decorativa con forma de burbujas.",
                 precio = 1800.0,
                 ubicacion = "Córdoba, Argentina",
-                images = listOf("https://http2.mlstatic.com/D_NQ_NP_796475-MLA83128788401_032025-O.webp"),
+                images = listOf("https://http2.mlstatic.com/D_NQ_NP_796475-MLA83128788401_032025-O.webp",
+                    "https://http2.mlstatic.com/D_NQ_NP_863085-MLA83128563407_032025-O.webp",
+                    "https://http2.mlstatic.com/D_NQ_NP_884664-MLA83128788405_032025-O.webp"),
                 categoria = "velas",
                 if (index%2 == 0) true else false
             )
@@ -58,7 +60,8 @@ class ExampleProductList(
                 descripcion = "Vela decorativa multicolor tipo arcoiris.",
                 precio = 1900.0,
                 ubicacion = "Córdoba, Argentina",
-                images = listOf("https://http2.mlstatic.com/D_NQ_NP_838803-MLA83527897558_042025-O.webp"),
+                images = listOf("https://http2.mlstatic.com/D_NQ_NP_838803-MLA83527897558_042025-O.webp",
+                    "https://http2.mlstatic.com/D_NQ_NP_686523-MLA83527858824_042025-O.webp"),
                 categoria = "velas",
                 if (index%2 == 0) true else false
             )
@@ -67,7 +70,8 @@ class ExampleProductList(
                 descripcion = "Vela en vaso de vidrio decorativo.",
                 precio = 1600.0,
                 ubicacion = "Córdoba, Argentina",
-                images = listOf("https://http2.mlstatic.com/D_NQ_NP_666956-MLA73037890347_112023-O.webp"),
+                images = listOf("https://http2.mlstatic.com/D_NQ_NP_666956-MLA73037890347_112023-O.webp",
+                    "https://http2.mlstatic.com/D_NQ_NP_736727-MLA72955537288_112023-O.webp"),
                 categoria = "velas",
                 if (index%2 == 0) true else false
             )
@@ -76,7 +80,9 @@ class ExampleProductList(
                 descripcion = "Canasto tejido en mimbre artesanal.",
                 precio = 4200.0,
                 ubicacion = "Córdoba, Argentina",
-                images = listOf("https://http2.mlstatic.com/D_NQ_NP_913630-MLA76516220482_052024-O.webp"),
+                images = listOf("https://http2.mlstatic.com/D_NQ_NP_913630-MLA76516220482_052024-O.webp",
+                    "https://http2.mlstatic.com/D_NQ_NP_705755-MLA76516220474_052024-O.webp",
+                    "https://http2.mlstatic.com/D_NQ_NP_676540-MLA76516220472_052024-O.webp"),
                 categoria = "canastos",
                 if (index%2 == 0) true else false
             )
@@ -85,7 +91,9 @@ class ExampleProductList(
                 descripcion = "Bandeja decorativa de madera.",
                 precio = 2800.0,
                 ubicacion = "Córdoba, Argentina",
-                images = listOf("https://http2.mlstatic.com/D_NQ_NP_805796-MLA69382627574_052023-O.webp"),
+                images = listOf("https://http2.mlstatic.com/D_NQ_NP_888031-MLA54654533373_032023-O.webp",
+                    "https://http2.mlstatic.com/D_NQ_NP_982313-MLA54657882390_032023-O.webp",
+                    "https://http2.mlstatic.com/D_NQ_NP_878091-MLA54657882382_032023-O.webp"),
                 categoria = "cocina",
                 if (index%2 == 0) true else false
             )
@@ -94,7 +102,8 @@ class ExampleProductList(
                 descripcion = "Canasto tejido mixto artesanal.",
                 precio = 4300.0,
                 ubicacion = "Córdoba, Argentina",
-                images = listOf("https://http2.mlstatic.com/D_NQ_NP_826850-MLA74889796049_032024-O.webp"),
+                images = listOf("https://http2.mlstatic.com/D_NQ_NP_826850-MLA74889796049_032024-O.webp",
+                    "https://http2.mlstatic.com/D_NQ_NP_730639-MLA74756686742_032024-O.webp"),
                 categoria = "canastos",
                 if (index%2 == 0) true else false
             )
@@ -103,7 +112,8 @@ class ExampleProductList(
                 descripcion = "Individual tejido para mesa.",
                 precio = 1200.0,
                 ubicacion = "Córdoba, Argentina",
-                images = listOf("https://http2.mlstatic.com/D_NQ_NP_640917-MLA83492666433_042025-O.webp"),
+                images = listOf("https://http2.mlstatic.com/D_NQ_NP_640917-MLA83492666433_042025-O.webp",
+                    "https://http2.mlstatic.com/D_NQ_NP_965545-MLA83492364483_042025-O.webp"),
                 categoria = "cocina",
                 if (index%2 == 0) true else false
             )
@@ -112,7 +122,8 @@ class ExampleProductList(
                 descripcion = "Cesto tejido en soga resistente.",
                 precio = 3900.0,
                 ubicacion = "Córdoba, Argentina",
-                images = listOf("https://http2.mlstatic.com/D_NQ_NP_841396-MLA83201067392_042025-O.webp"),
+                images = listOf("https://http2.mlstatic.com/D_NQ_NP_841396-MLA83201067392_042025-O.webp",
+                    "https://http2.mlstatic.com/D_NQ_NP_800709-MLA83492051403_042025-O.webp"),
                 categoria = "canastos",
                 if (index%2 == 0) true else false
             )
@@ -168,6 +179,27 @@ class ExampleProductList(
                 ubicacion = "Córdoba, Argentina",
                 images = listOf("https://http2.mlstatic.com/D_NQ_NP_711871-MLA69801153454_062023-O.webp"),
                 categoria = "plantas",
+                if (index%2 == 0) true else false
+            )
+            18 -> Producto(
+                nombre = "Vela Nudo",
+                descripcion = "Vela decorativa de soja estilo nudo.",
+                precio = 1800.0,
+                ubicacion = "Córdoba, Argentina",
+                images = listOf("https://http2.mlstatic.com/D_NQ_NP_878146-MLA76421431475_052024-O.webp",
+                    "https://http2.mlstatic.com/D_NQ_NP_782800-MLA76421451533_052024-O.webp",
+                    "https://http2.mlstatic.com/D_NQ_NP_778379-MLA77606078684_072024-O.webp"),
+                categoria = "velas",
+                if (index%2 == 0) true else false
+            )
+            19 -> Producto(
+                nombre = "Mate Camionero",
+                descripcion = "Mate tradicional de calabaza camionero.",
+                precio = 3100.0,
+                ubicacion = "Córdoba, Argentina",
+                images = listOf("https://http2.mlstatic.com/D_NQ_NP_651718-MLA83434823010_042025-O.webp",
+                    "https://http2.mlstatic.com/D_NQ_NP_742857-MLA83435057022_042025-O.webp"),
+                categoria = "mates",
                 if (index%2 == 0) true else false
             )
             else -> Producto(

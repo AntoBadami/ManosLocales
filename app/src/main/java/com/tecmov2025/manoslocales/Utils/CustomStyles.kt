@@ -1,4 +1,5 @@
 package com.tecmov2025.manoslocales.Utils
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -284,10 +285,11 @@ fun OptionDropdownCard(
 
             DropdownMenu(
                 modifier = Modifier
-                    .align(Alignment.TopEnd),
+                    .align(Alignment.TopEnd)
+                    .background(Color.White),
                 expanded = expanded.value,
                 onDismissRequest = { expanded.value = false },
-                offset = DpOffset(x = 270.dp, y = 0.dp),
+                offset = DpOffset(x = 270.dp, y = -10.dp)
             ) {
                 opcionesLista.forEach { texto ->
                     DropdownMenuItem(
