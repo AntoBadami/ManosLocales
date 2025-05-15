@@ -9,6 +9,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Person
@@ -128,6 +129,7 @@ fun CustomDrawer(navController: NavController,context: Context)
     val opciones = listOf<Opcion>(
         Opcion("Mi perfil", { navController.navigate("PerfilScreen") }, icon = Icons.Default.Person),
         Opcion("Configuracion", { navController.navigate("ConfigScreen") }, icon = Icons.Default.Settings),
+        Opcion("Enviar mail al desarrollador", {  }, icon = Icons.Default.Email),
         Opcion("Cerrar Sesion", {context.startActivity(Intent(context, LoginActivity::class.java)) }, icon = Icons.Default.Close)
     )
     Column(

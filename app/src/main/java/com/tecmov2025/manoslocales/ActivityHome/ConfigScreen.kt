@@ -11,12 +11,14 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.tecmov2025.manoslocales.Utils.CustomScaffold
 import com.tecmov2025.manoslocales.Utils.Opcion
 import com.tecmov2025.manoslocales.Utils.OptionCard
+import com.tecmov2025.manoslocales.Utils.OptionDropdownCard
 import com.tecmov2025.manoslocales.Utils.OptionSwitchCard
 import com.tecmov2025.manoslocales.Utils.TipoOpcion
 
@@ -39,6 +41,9 @@ fun ConfiguracionesBody(padding: PaddingValues)
         Opcion("Tiempo de notificaciones")
     )
 
+    val opcionesNotificacion = listOf("6 horas", "1 día", "2 días", "1 sem", "Nunca")
+    val seleccionNotificacion = remember { mutableStateOf(opcionesNotificacion[1]) }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -60,7 +65,12 @@ fun ConfiguracionesBody(padding: PaddingValues)
                     i ->
                         when (opciones[i].tipo) {
                             TipoOpcion.SWITCH -> OptionSwitchCard(opciones[i], switchesState, i)
-                            else -> OptionCard(opciones[i])
+                            else -> OptionDropdownCard(
+                                opcion = opciones[i],
+                                opcionesLista = opcionesNotificacion,
+                                seleccion = seleccionNotificacion.value,
+                                onSeleccion = { seleccionNotificacion.value = it }
+                            )
                         }
 
                 }
