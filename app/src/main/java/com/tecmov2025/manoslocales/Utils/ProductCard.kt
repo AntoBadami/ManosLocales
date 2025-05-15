@@ -16,6 +16,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -36,23 +37,21 @@ fun ProductoCard(producto: Producto, viewModel: ProductViewModel, navController:
         onClick = {
             viewModel.seleccionarProducto(producto)
             navController.navigate("ProductoScreen")
-            }
-    ) {
+        }
+    ){
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(3.dp)
+                .padding(3.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            val imageSize = if (isFavoritoView) 150.dp else 64.dp
-            val spacerSize = if (isFavoritoView) 20.dp else 8.dp
             val titleStyle = if (isFavoritoView) MaterialTheme.typography.titleLarge else MaterialTheme.typography.titleMedium
             val bodyStyle = if (isFavoritoView) MaterialTheme.typography.bodyLarge else MaterialTheme.typography.bodyMedium
 
-            //espacio para la imagen del producto
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .weight(1f)
+                    .weight(2f)
                     .background(Color.Transparent)
             ){
                 AsyncImage(
@@ -65,19 +64,22 @@ fun ProductoCard(producto: Producto, viewModel: ProductViewModel, navController:
                 )
 
             }
+            Column(modifier = Modifier
+                    .weight(1f)
+                    .padding(start = 3.dp, top = if (isFavoritoView) 20.dp else 5.dp))
+            {
+                Text(
+                    text = producto.nombre,
+                    style = titleStyle,
+                    color = Color.DarkGray
+                )
+                Text(
+                    text = "Precio: $${String.format("%.2f", producto.precio)}",
+                    style = bodyStyle,
+                    color = Color.DarkGray
+                )
+            }
 
-            Spacer(modifier = Modifier.height(spacerSize))
-
-            Text(
-                text = producto.nombre,
-                style = titleStyle,
-                color = Color.DarkGray
-            )
-            Text(
-                text = "Precio: $${String.format("%.2f", producto.precio)}",
-                style = bodyStyle,
-                color = Color.DarkGray
-            )
         }
     }
 }

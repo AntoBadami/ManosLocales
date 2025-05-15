@@ -26,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import com.tecmov2025.manoslocales.ActivityLogin.LoginActivity
 import com.tecmov2025.manoslocales.ActivityFavoritos.FavoritosActivity
@@ -41,7 +42,9 @@ import kotlinx.coroutines.launch
  * @param viewModel necesario para la seleccion de productos
  */
 @Composable
-fun BarraDeBusqueda(navController: NavController, viewModel: ProductViewModel)
+fun BarraDeBusqueda(navController: NavController, viewModel: ProductViewModel,
+                    body : @Composable (padding : PaddingValues, viewModel : ProductViewModel,
+                                        navController: NavController) -> Unit)
 {
     val context = LocalContext.current
     val scaffoldState = rememberScaffoldState()
@@ -50,9 +53,8 @@ fun BarraDeBusqueda(navController: NavController, viewModel: ProductViewModel)
     Scaffold(
         scaffoldState = scaffoldState,
         drawerContent ={ CustomDrawer(navController,context)},
-        topBar = { CustomTopAppBar(coroutineScope,scaffoldState,context)},
-        content = { paddingValues -> MainScreen(paddingValues,viewModel = viewModel, navController = navController)}
-    )
+        topBar = { CustomTopAppBar(coroutineScope,scaffoldState,context)}
+    ){ paddingValues -> body(paddingValues,viewModel,navController)}
 }
 
 /**

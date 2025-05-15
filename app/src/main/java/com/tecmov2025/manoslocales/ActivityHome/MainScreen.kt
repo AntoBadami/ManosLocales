@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.DropdownMenu
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
@@ -43,7 +44,15 @@ import com.tecmov2025.manoslocales.Utils.ProductoCard
  * @param navController utilizado para redirigir al ProductScreen
  */
 @Composable
-fun MainScreen(paddingBarraDeBusqueda: PaddingValues, viewModel: ProductViewModel, navController: NavController)
+fun MainScreen(viewModel: ProductViewModel, navController: NavController)
+{
+    BarraDeBusqueda(viewModel = viewModel,navController = navController)
+    { padding, viewModel, navController ->
+        MainScreenBody(padding,viewModel,navController)
+    }
+}
+@Composable
+fun MainScreenBody(paddingBarraDeBusqueda: PaddingValues, viewModel: ProductViewModel, navController: NavController)
 {
     val productos = ExampleProductList().productosList
 

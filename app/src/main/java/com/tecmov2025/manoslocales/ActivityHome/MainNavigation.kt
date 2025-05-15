@@ -23,6 +23,6 @@ fun MainNavigation()
         composable(MainScreens.ProductoScreen.route) { ProductScreen(viewModel) }
         composable(MainScreens.ConfigScreen.route){ConfigScreen()}
         composable(MainScreens.PerfilScreen.route){ PerfilScreen()}
-        composable(MainScreens.MainScreen.route) { BarraDeBusqueda(navController,viewModel) }
+        composable(MainScreens.MainScreen.route) { MainScreen(viewModel, navController) }
     }
 }

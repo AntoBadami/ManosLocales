@@ -18,7 +18,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.tecmov2025.manoslocales.Utils.CustomButton
 import com.tecmov2025.manoslocales.Utils.CustomScaffold
-import com.tecmov2025.manoslocales.Utils.CustomTitleText
 import com.tecmov2025.manoslocales.Utils.CustomTitledInput
 
 @Composable
@@ -38,7 +37,7 @@ fun PasswordScreenBody(padding : PaddingValues)
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(24.dp),
+                .padding(20.dp),
             horizontalAlignment = Alignment
                 .CenterHorizontally,
             verticalArrangement = Arrangement

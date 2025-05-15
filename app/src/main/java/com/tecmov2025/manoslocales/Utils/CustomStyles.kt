@@ -150,22 +150,6 @@ fun CustomTitledInput(value: String, onValueChange: (String)-> Unit, label: Stri
     }
 }
 
-/**
- * Composable que muestra un título de texto estilizado con el tema de Material.
- *
- * @param text El texto que se mostrará como título.
- *
- * Este componente utiliza el estilo `headlineLarge` definido en el tema actual
- * y aplica un `padding` inferior para separación visual con otros elementos.
- */
-@Composable
-fun CustomTitleText(text: String)
-{
-    Text(
-        text = text,
-        style = MaterialTheme.typography.headlineLarge,
-        modifier = Modifier.padding(bottom = 16.dp))
-}
 
 /**
  * Composable que representa una tarjeta de opción clickeable.

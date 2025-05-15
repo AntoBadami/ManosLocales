@@ -4,10 +4,12 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
@@ -19,53 +21,62 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.tecmov2025.manoslocales.ActivityHome.BarraDeBusqueda
 import com.tecmov2025.manoslocales.Utils.ExampleProductList
 import com.tecmov2025.manoslocales.Utils.ProductViewModel
 import com.tecmov2025.manoslocales.Utils.ProductoCard
 
+/**
+ * Pantalla de favoritos
+ * @param padding dado por la barra de busqueda
+ * @param viewmodel necesario para seleccionar productos
+ */
 @Composable
 fun FavoritosScreen(navController: NavController,viewModel: ProductViewModel) {
 
+    BarraDeBusqueda(navController,viewModel){ padding,viewModel,navController ->
+        FavoritosScreenBody(padding,viewModel,navController) }
+
+
+}
+/**
+ * Cuerpo de favoritos
+ * @param padding dado por la barra de busqueda
+ * @param viewmodel necesario para seleccionar productos
+ * @param navController necesario para navegacion
+ */
+@Composable
+fun FavoritosScreenBody(padding: PaddingValues, viewModel: ProductViewModel, navController: NavController)
+{
     //productos ejemplo
     val productos = ExampleProductList().productosList
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background),
-        contentAlignment = Alignment.Center
-    )
-    {
+            .background(MaterialTheme.colorScheme.background)
+            .padding(padding),
+    ){
         Column(
+            modifier = Modifier
+                .padding(top = 25.dp),
             horizontalAlignment = Alignment.CenterHorizontally
-        ) {
+        ){
             Text(
                 text = "Productos Favoritos",
-                style = MaterialTheme.typography.headlineSmall.copy(
-                    fontSize = 32.sp
-                ),
+                style = MaterialTheme.typography.headlineSmall.copy(fontSize = 32.sp),
                 color = MaterialTheme.colorScheme.primary
             )
-
             Spacer(modifier = Modifier.height(24.dp))
-
             LazyRow(
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
-            ) {
-                items(productos.size) { index ->
-                    if(productos[index].favoritoState)
-                    {
-                        Box(modifier = Modifier
-                            .height(350.dp)
-                            .width(300.dp)
-                        )
-                        {
-                            ProductoCard(productos[index], viewModel, navController, true)
-                        }
-                    }
-                }
+                    .height(450.dp),
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
+            ){
+                items(productos.size) {
+                    index ->
+                        if(productos[index].favoritoState)
+                        { ProductoCard(productos[index], viewModel, navController, true) }}
             }
         }
     }
