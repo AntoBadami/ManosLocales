@@ -5,10 +5,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Person
@@ -34,6 +34,7 @@ import com.tecmov2025.manoslocales.Utils.ProductViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
+// Scaffold personalizado para menu Home
 @Composable
 fun CustomScaffold(navController: NavController,viewModel: ProductViewModel)
 {
@@ -49,14 +50,13 @@ fun CustomScaffold(navController: NavController,viewModel: ProductViewModel)
     )
 }
 
+// TopAppBar personalizada
 @Composable
 fun CustomTopAppBar(coroutineScope: CoroutineScope, scaffoldState: ScaffoldState, context : Context)
 {
     var textoBusqueda by remember { mutableStateOf("") }
-    Column(
-        modifier = Modifier
-            .background(MaterialTheme.colorScheme.background)
-    ) {
+
+    Column(modifier = Modifier.background(MaterialTheme.colorScheme.background)) {
         TopAppBar(
             modifier = Modifier
                 .padding(WindowInsets.statusBars.asPaddingValues())
@@ -64,95 +64,87 @@ fun CustomTopAppBar(coroutineScope: CoroutineScope, scaffoldState: ScaffoldState
                 .height(80.dp),
             title = {
                 TextField(
+                    modifier =Modifier
+                        .heightIn(min = 48.dp)
+                        .fillMaxWidth()
+                        .background(MaterialTheme.colorScheme.background,
+                                    shape = RoundedCornerShape(50.dp)),
                     value = textoBusqueda,
                     onValueChange = { textoBusqueda = it },
                     placeholder = { Text("Buscar...") },
                     singleLine = true,
                     leadingIcon = {
                         Icon(
-                            imageVector = Icons.Default.Search,  // Ícono de lupa por defecto
+                            imageVector = Icons.Default.Search,
                             contentDescription = "Buscar",
-                            tint = Color.Gray  // Color del ícono
+                            tint = Color.Gray
                         )},
-                    modifier =Modifier
-                        .heightIn(min = 48.dp)
-                        .fillMaxWidth()
-                        .background(MaterialTheme.colorScheme.background,
-                    shape = RoundedCornerShape(50.dp)),
-                    colors = TextFieldDefaults.textFieldColors(
-                        textColor = Color.DarkGray,
-                        cursorColor = MaterialTheme.colorScheme.primary,  // Color del cursor (primario)
-                        backgroundColor = Color.Transparent,  // Importante: hace visible el color del Modifier.background
-                        focusedIndicatorColor = MaterialTheme.colorScheme.primary,  // Elimina borde inferior
-                        unfocusedIndicatorColor = Color.Transparent
+                    colors = TextFieldDefaults
+                        .textFieldColors(textColor = Color.DarkGray,
+                                        cursorColor = MaterialTheme.colorScheme.primary,
+                                        backgroundColor = Color.Transparent,
+                                        focusedIndicatorColor = MaterialTheme.colorScheme.primary,
+                                        unfocusedIndicatorColor = Color.Transparent
+                        )
                     )
-                    )// Borde redondeado
             },
             navigationIcon = {
                 IconButton(
-                    modifier = Modifier
-                        .size(48.dp),
-                    onClick = {
-                        coroutineScope.launch {
-                            scaffoldState.drawerState.open()
-                        }
-                    }
+                    modifier = Modifier.size(48.dp),
+                    onClick = { coroutineScope.launch { scaffoldState.drawerState.open()} }
                 ) {Icon(imageVector = Icons.Default.Menu,
                     contentDescription = "Menu",
                     tint = MaterialTheme.colorScheme.background)}
             },
             actions = {
                 IconButton(
-                    modifier = Modifier
-                        .size(48.dp),
+                    modifier = Modifier.size(48.dp),
                     onClick = { FavotitosIconButtonAction(context = context) }
                 ) {
                     Icon(imageVector = Icons.Default.Favorite,
-                    contentDescription = "Favoritos",
-                    tint = MaterialTheme.colorScheme.background) }
+                        contentDescription = "Favoritos",
+                        tint = MaterialTheme.colorScheme.background) }
             },
             backgroundColor = MaterialTheme.colorScheme.primary
         )
     }
 }
 
-
+// Barra lateral Drawer personalizada
 @Composable
 fun CustomDrawer(navController: NavController,context: Context)
 {
     val opciones = listOf<Opcion>(
         Opcion("Mi perfil", { navController.navigate("PerfilScreen") }, icon = Icons.Default.Person),
         Opcion("Configuracion", { navController.navigate("ConfigScreen") }, icon = Icons.Default.Settings),
-        Opcion("Cerrar Sesion",
-            { context.startActivity(Intent(context, LoginActivity::class.java)) }, icon = Icons.Default.Close)
+        Opcion("Cerrar Sesion", {context.startActivity(Intent(context, LoginActivity::class.java)) }, icon = Icons.Default.Close)
     )
-    Column(modifier = Modifier
-        .fillMaxSize()
-        .background(MaterialTheme.colorScheme.background))
-    {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+    ){
         LazyColumn(
             modifier = Modifier
                 .padding(top = 70.dp)
                 .padding(horizontal = 16.dp)
-                .fillMaxSize())
-        {
-            items(opciones.size) { i ->
-                Row(modifier = Modifier
-                    .height(60.dp)
-                    .padding(top = 5.dp)
-                )
-                {
-                    OptionCard(opciones[i])
-                }
+                .fillMaxSize()
+        ){
+            items(opciones.size) {
+                i ->
+                Row(
+                    modifier = Modifier
+                        .height(60.dp)
+                        .padding(top = 5.dp)
+                ){ OptionCard(opciones[i]) }
             }
         }
 
     }
-    }
+}
 
 
-
-
+// Accion de boton de favoritos
 fun FavotitosIconButtonAction(context: Context)
 {
     val intent = Intent(context, FavoritosActivity::class.java)

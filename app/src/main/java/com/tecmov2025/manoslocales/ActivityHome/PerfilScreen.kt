@@ -68,7 +68,8 @@ fun PerfilForm()
                 title = { Text("Perfil de Usuario", color = Color.DarkGray) },
                 navigationIcon = {},
                 actions = {
-                    IconButton(onClick = { editable.value = !editable.value }) {
+                    IconButton(onClick = { editable.value = !editable.value })
+                    {
                         Icon(
                             imageVector = if (editable.value) Icons.Default.Close else Icons.Default.Edit,
                             contentDescription = if (editable.value) "Cancelar edición" else "Editar perfil"
@@ -77,13 +78,14 @@ fun PerfilForm()
                 }
             )
         }
-    ) { padding ->
-        val scrollState = rememberScrollState()
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.background)
-        ) {
+    ){
+        padding ->
+            val scrollState = rememberScrollState()
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(MaterialTheme.colorScheme.background)
+            ){
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -92,67 +94,58 @@ fun PerfilForm()
                     .verticalScroll(scrollState),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(20.dp)
-            ) {
+            ){
                 val fieldModifier = Modifier
-                    .widthIn(max = 400.dp)
-                    .align(Alignment.CenterHorizontally)
+                        .widthIn(max = 400.dp)
+                        .align(Alignment.CenterHorizontally)
 
                 PerfilField("Nombre", name, editable, fieldModifier) { name = it }
                 PerfilField("Apellido", lastname, editable, fieldModifier) { lastname = it }
                 PerfilField("Correo electrónico", mail, editable, fieldModifier) { mail = it }
                 PerfilField("Usuario", username, editable, fieldModifier) { username = it }
+                PerfilField("Contraseña", password, editable, fieldModifier, isPassword = true) { password = it }
 
-                PerfilField("Contraseña", password, editable, fieldModifier, isPassword = true) {
-                    password = it
+                if (editable.value)
+                {
+                    PerfilField("Repetir Contraseña",passwordControl, editable, fieldModifier, isPassword = true)
+                        { passwordControl = it }
                 }
-                if (editable.value) {
-                    PerfilField(
-                        "Repetir Contraseña",
-                        passwordControl,
-                        editable,
-                        fieldModifier,
-                        isPassword = true
-                    ) {
-                        passwordControl = it
-                    }
-                }
-                if (editable.value) {
-                    CustomButton(onClick = {
-                        perfilFormControl(
+                if (editable.value)
+                {
+                    CustomButton(
+                        onClick = {
+                            /* TODO(Cambiar funcion por objeto perfil)*/
+                            perfilFormControl(
                             name, lastname, mail, username, password,
                             passwordControl, coroutineScope, snackbarHostState, editable
-                        )
-                    }, text = "Guardar cambios")
+                        )},
+                        text = "Guardar cambios")
                 }
             }
         }
     }
 }
-
+//TODO(Cambiar a implementacion usando clase perfil)
 @Composable
-fun PerfilField(
-    label: String,
-    value: String,
-    editable: MutableState<Boolean>,
-    modifier: Modifier,
-    isPassword: Boolean = false,
-    onValueChange: (String) -> Unit
-) {
+fun PerfilField(label: String, value: String, editable: MutableState<Boolean>, modifier: Modifier, isPassword: Boolean = false, onValueChange: (String) -> Unit)
+{
     Column(modifier) {
         Text(
+            modifier = Modifier.padding(bottom = 4.dp),
             text = label,
             fontSize = 16.sp,
-            modifier = Modifier.padding(bottom = 4.dp),
             color = Color.DarkGray
         )
-        if (editable.value) {
+        if (editable.value)
+        {
             CustomTextField(
                 value = value,
                 onValueChange = onValueChange,
                 label = label,
                 visualTransformation = if (isPassword) PasswordVisualTransformation() else VisualTransformation.None
             )
-        } else {
+        } else
+        {
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -160,34 +153,34 @@ fun PerfilField(
                     .height(56.dp),
                 elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
                 colors = CardDefaults.cardColors(containerColor = Color(0xFFF5F5F5))
-            ) {
+            ){
                 Text(
+                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 16.dp),
                     text = if (isPassword) "•".repeat(value.length) else value,
                     fontSize = 16.sp,
-                    color = Color.DarkGray,
-                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 16.dp)
+                    color = Color.DarkGray
                 )
             }
         }
     }
 }
 
+/**
+ * Funcion auxiliar para validacion de campos en formulario
+ */
 fun perfilFormControl(name: String, lastname : String, mail: String,
                       username: String,password: String,passwordControl: String,
                       coroutineScope: CoroutineScope,snackbarHostState: SnackbarHostState,editable: MutableState<Boolean>)
 {
-    if (name.isEmpty() || lastname.isEmpty() || mail.isEmpty() || username.isEmpty() || password.isEmpty() || passwordControl.isEmpty()) {
-        coroutineScope.launch {
-            snackbarHostState.showSnackbar("Por favor, complete todos los campos.")
-        }
-    }else if (password != passwordControl) {
-        coroutineScope.launch {
-            snackbarHostState.showSnackbar("Las contraseñas no coinciden")
-        }
-    } else {
+    if (name.isEmpty() || lastname.isEmpty() || mail.isEmpty() || username.isEmpty() || password.isEmpty() || passwordControl.isEmpty())
+    {
+        coroutineScope.launch { snackbarHostState.showSnackbar("Por favor, complete todos los campos.") }
+    }else if (password != passwordControl)
+    {
+        coroutineScope.launch { snackbarHostState.showSnackbar("Las contraseñas no coinciden") }
+    } else
+    {
         editable.value = false
-        coroutineScope.launch {
-            snackbarHostState.showSnackbar("Cambios guardados correctamente")
-        }
+        coroutineScope.launch { snackbarHostState.showSnackbar("Cambios guardados correctamente") }
     }
 }

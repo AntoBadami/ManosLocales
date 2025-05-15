@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
@@ -219,10 +220,14 @@ fun OptionSwitchCard(opcion :Opcion,switchesMutableListOf : MutableList<Boolean>
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween)
         {
-            Text(fontSize = 20.sp, text = opcion.text, color = Color.DarkGray)
+            Text(
+                modifier = Modifier
+                    .wrapContentHeight(Alignment.Bottom)
+                    .weight(3f),
+                fontSize = 20.sp, text = opcion.text, color = Color.DarkGray)
 
             Switch(
-                modifier = Modifier
+                modifier = Modifier.weight(1f)
                 .fillMaxWidth()
                 .padding(3.dp),
                 checked = switchesMutableListOf[index],

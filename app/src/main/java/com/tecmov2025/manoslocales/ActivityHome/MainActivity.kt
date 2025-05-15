@@ -13,34 +13,13 @@ import com.tecmov2025.manoslocales.Utils.ProductScreen
 import com.tecmov2025.manoslocales.Utils.ProductViewModel
 import com.tecmov2025.manoslocales.ui.theme.ManosLocalesTheme
 
-class MainActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
+class MainActivity : ComponentActivity()
+{
+    override fun onCreate(savedInstanceState: Bundle?)
+    {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContent {
-            ManosLocalesTheme {
-                val navController = rememberNavController()
-                val viewModel = ProductViewModel()
-                MainNav(navController, viewModel)
-           }
-        }
-    }
-
-    @Composable
-    fun MainNav(navController: NavHostController, viewModel: ProductViewModel)
-    {
-        NavHost(
-            navController = navController,
-            startDestination = "MainScreen"
-        )
-        {
-            composable("ProductoScreen") { ProductScreen(viewModel) }
-            composable("ConfigScreen"){ConfigScreen(navController)}
-            composable("PerfilScreen"){ PerfilForm()}
-            composable("MainScreen") { CustomScaffold(navController,viewModel)
-        }
-    }
-
+        setContent { ManosLocalesTheme { MainNavigation()} }
     }
 }
 
