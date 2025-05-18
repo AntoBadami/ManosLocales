@@ -34,7 +34,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.tecmov2025.manoslocales.Utils.ExampleProductList
 import com.tecmov2025.manoslocales.Utils.ProductViewModel
-import com.tecmov2025.manoslocales.Utils.Producto
 import com.tecmov2025.manoslocales.Utils.ProductoCard
 
 /**
