@@ -88,7 +88,7 @@ class ExampleProductList(
             )
             8 -> Producto(
                 nombre = "Bandeja",
-                descripcion = "Bandeja decorativa de madera.",
+                descripcion = "Bandeja tejida de mimbre.",
                 precio = 2800.0,
                 ubicacion = "Córdoba, Argentina",
                 images = listOf("https://http2.mlstatic.com/D_NQ_NP_888031-MLA54654533373_032023-O.webp",
@@ -132,7 +132,8 @@ class ExampleProductList(
                 descripcion = "Tabla de madera natural para cocina.",
                 precio = 2200.0,
                 ubicacion = "Córdoba, Argentina",
-                images = listOf("https://http2.mlstatic.com/D_NQ_NP_822415-MLA81750594763_012025-O.webp"),
+                images = listOf("https://http2.mlstatic.com/D_NQ_NP_885418-MLA81480407816_012025-O.webp",
+                    "https://http2.mlstatic.com/D_NQ_NP_822415-MLA81750594763_012025-O.webp"),
                 categoria = "cocina",
                 if (index%2 == 0) true else false
             )
@@ -141,7 +142,9 @@ class ExampleProductList(
                 descripcion = "Tabla redonda de madera natural.",
                 precio = 2100.0,
                 ubicacion = "Córdoba, Argentina",
-                images = listOf("https://http2.mlstatic.com/D_NQ_NP_813221-MLA74154125737_012024-O.webp"),
+                images = listOf("https://http2.mlstatic.com/D_NQ_NP_791190-MLA83132520721_032025-O.webp",
+                    "https://http2.mlstatic.com/D_NQ_NP_996127-MLA83132715279_032025-O.webp",
+                    "https://http2.mlstatic.com/D_NQ_NP_745331-MLA83132462777_032025-O.webp"),
                 categoria = "cocina",
                 if (index%2 == 0) true else false
             )
@@ -150,7 +153,9 @@ class ExampleProductList(
                 descripcion = "Molinillo tradicional de madera.",
                 precio = 1700.0,
                 ubicacion = "Córdoba, Argentina",
-                images = listOf("https://http2.mlstatic.com/D_NQ_NP_981155-MLU75794679206_042024-O.webp"),
+                images = listOf("https://http2.mlstatic.com/D_NQ_NP_981155-MLU75794679206_042024-O.webp",
+                    "https://http2.mlstatic.com/D_NQ_NP_759951-MLA83997334793_042025-O.webp",
+                    "https://http2.mlstatic.com/D_NQ_NP_857109-MLA83703925972_042025-O.webp"),
                 categoria = "cocina",
                 if (index%2 == 0) true else false
             )
@@ -159,7 +164,9 @@ class ExampleProductList(
                 descripcion = "Suculentas en maceta decorativa.",
                 precio = 2500.0,
                 ubicacion = "Córdoba, Argentina",
-                images = listOf("https://http2.mlstatic.com/D_NQ_NP_883338-MLA26983317675_032018-O.webp"),
+                images = listOf("https://http2.mlstatic.com/D_NQ_NP_693544-MLA44198155927_112020-O.webp",
+                    "https://http2.mlstatic.com/D_NQ_NP_629589-MLA44198185017_112020-O.webp",
+                    "https://http2.mlstatic.com/D_NQ_NP_808972-MLA44198155842_112020-O.webp"),
                 categoria = "plantas",
                 if (index%2 == 0) true else false
             )
@@ -168,7 +175,8 @@ class ExampleProductList(
                 descripcion = "Cactus decorativo en maceta.",
                 precio = 2400.0,
                 ubicacion = "Córdoba, Argentina",
-                images = listOf("https://http2.mlstatic.com/D_NQ_NP_610921-MLA45788870073_052021-O.webp"),
+                images = listOf("https://http2.mlstatic.com/D_NQ_NP_610921-MLA45788870073_052021-O.webp",
+                    "https://http2.mlstatic.com/D_NQ_NP_879753-MLA45788839458_052021-O.webp"),
                 categoria = "plantas",
                 if (index%2 == 0) true else false
             )
@@ -177,7 +185,9 @@ class ExampleProductList(
                 descripcion = "Bonsai decorativo para interiores.",
                 precio = 3500.0,
                 ubicacion = "Córdoba, Argentina",
-                images = listOf("https://http2.mlstatic.com/D_NQ_NP_711871-MLA69801153454_062023-O.webp"),
+                images = listOf("https://http2.mlstatic.com/D_NQ_NP_606165-MLA75763221754_042024-O.webp",
+                    "https://http2.mlstatic.com/D_NQ_NP_640068-MLA75763349024_042024-O.webp",
+                    "https://http2.mlstatic.com/D_NQ_NP_750521-MLA75763161676_042024-O.webp"),
                 categoria = "plantas",
                 if (index%2 == 0) true else false
             )
