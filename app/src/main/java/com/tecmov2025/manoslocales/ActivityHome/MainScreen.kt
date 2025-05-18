@@ -32,6 +32,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.tecmov2025.manoslocales.Utils.BarraDeBusqueda
 import com.tecmov2025.manoslocales.Utils.ExampleProductList
 import com.tecmov2025.manoslocales.Utils.ProductViewModel
 import com.tecmov2025.manoslocales.Utils.ProductoCard
@@ -45,9 +46,9 @@ import com.tecmov2025.manoslocales.Utils.ProductoCard
 @Composable
 fun MainScreen(viewModel: ProductViewModel, navController: NavController)
 {
-    BarraDeBusqueda(viewModel = viewModel,navController = navController)
+    BarraDeBusqueda(viewModel = viewModel, navController = navController)
     { padding, viewModel, navController ->
-        MainScreenBody(padding,viewModel,navController)
+        MainScreenBody(padding, viewModel, navController)
     }
 }
 @Composable

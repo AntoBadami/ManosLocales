@@ -16,27 +16,9 @@ class LoginActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            ManosLocalesTheme {
-                val navController = rememberNavController()
-                LoginNav(navController)
-
-            }
+            ManosLocalesTheme {LoginNavigation()}
         }
     }
 
-    @Composable
-    fun LoginNav(navController: NavHostController)
-    {
-        NavHost(
-            navController = navController,
-            startDestination = "SplashScreen"
-        )
-        {
-            composable("Login") { LoginScreen(navController) }
-            composable("SplashScreen") { SplashScreen(navController) }
-            composable("RegisterScreen") { RegisterScreen() }
-            composable("PasswordScreen") { PasswordScreen() }
-        }
-    }
 
 }

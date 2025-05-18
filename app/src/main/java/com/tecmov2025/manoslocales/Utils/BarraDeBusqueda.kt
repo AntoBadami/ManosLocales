@@ -1,4 +1,4 @@
-package com.tecmov2025.manoslocales.ActivityHome
+package com.tecmov2025.manoslocales.Utils
 import android.content.Context
 import android.content.Intent
 import androidx.compose.foundation.background
@@ -26,13 +26,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import com.tecmov2025.manoslocales.ActivityLogin.LoginActivity
 import com.tecmov2025.manoslocales.ActivityFavoritos.FavoritosActivity
-import com.tecmov2025.manoslocales.Utils.Opcion
-import com.tecmov2025.manoslocales.Utils.OptionCard
-import com.tecmov2025.manoslocales.Utils.ProductViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -129,8 +125,8 @@ fun CustomTopAppBar(coroutineScope: CoroutineScope, scaffoldState: ScaffoldState
 fun CustomDrawer(navController: NavController,context: Context)
 {
     val opciones = listOf<Opcion>(
-        Opcion("Mi perfil", { navController.navigate("PerfilScreen") }, icon = Icons.Default.Person),
-        Opcion("Configuracion", { navController.navigate("ConfigScreen") }, icon = Icons.Default.Settings),
+        Opcion("Mi perfil", { navController.navigate(Screens.PerfilScreen.route) }, icon = Icons.Default.Person),
+        Opcion("Configuracion", { navController.navigate(Screens.ConfigScreen.route) }, icon = Icons.Default.Settings),
         Opcion("Enviar mail al desarrollador", {  }, icon = Icons.Default.Email),
         Opcion("Cerrar Sesion", {context.startActivity(Intent(context, LoginActivity::class.java)) }, icon = Icons.Default.Close)
     )

@@ -30,6 +30,7 @@ import com.tecmov2025.manoslocales.Utils.CustomTextField
 import com.tecmov2025.manoslocales.Utils.LinkText
 import com.tecmov2025.manoslocales.ActivityHome.MainActivity
 import com.tecmov2025.manoslocales.R
+import com.tecmov2025.manoslocales.Utils.Screens
 
 /**
  * Login Screen
@@ -74,8 +75,8 @@ fun LoginScreen(navController: NavController)
                 text = "Iniciar Sesión"
             )
 
-            LinkText("No tenes cuenta? - Registrate", { navController.navigate("RegisterScreen") })
-            LinkText("Recuperar contraseña", { navController.navigate("PasswordScreen") })
+            LinkText("No tenes cuenta? - Registrate", { navController.navigate(Screens.RegisterScreen.route) })
+            LinkText("Recuperar contraseña", { navController.navigate(Screens.PasswordScreen.route) })
 
         }
         SnackbarHost(
@@ -92,4 +93,6 @@ fun LoginButtonAction(context: Context)
 {
         val intent = Intent(context, MainActivity::class.java)
         context.startActivity(intent)
+        if (context is android.app.Activity)
+            context.finish()
 }

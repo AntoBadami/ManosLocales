@@ -6,6 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.tecmov2025.manoslocales.Utils.ProductScreen
 import com.tecmov2025.manoslocales.Utils.ProductViewModel
+import com.tecmov2025.manoslocales.Utils.Screens
 
 /**
  * Gestinona la navegacion en la activity Main
@@ -17,12 +18,12 @@ fun MainNavigation()
     val viewModel = ProductViewModel()
     NavHost(
         navController = navController,
-        startDestination = MainScreens.MainScreen.route
+        startDestination = Screens.MainScreen.route
     )
     {
-        composable(MainScreens.ProductoScreen.route) { ProductScreen(viewModel) }
-        composable(MainScreens.ConfigScreen.route){ConfigScreen()}
-        composable(MainScreens.PerfilScreen.route){ PerfilScreen()}
-        composable(MainScreens.MainScreen.route) { MainScreen(viewModel, navController) }
+        composable(Screens.ProductoScreen.route) { ProductScreen(viewModel) }
+        composable(Screens.ConfigScreen.route){ConfigScreen()}
+        composable(Screens.PerfilScreen.route){ PerfilScreen()}
+        composable(Screens.MainScreen.route) { MainScreen(viewModel, navController) }
     }
 }
