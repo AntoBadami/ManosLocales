@@ -2,6 +2,7 @@ package com.tecmov2025.manoslocales.Utils
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -66,19 +67,20 @@ fun ProductScreenBody(producto: Producto, padding: PaddingValues, isFavorite: Mu
         verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterVertically),
         horizontalAlignment = Alignment.CenterHorizontally
     ){
-        Row(modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp, top = 25.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 24.dp, vertical = 8.dp)
         ){
             Text(
                 text = producto.nombre,
-                style = MaterialTheme.typography.headlineSmall.copy(fontSize = 32.sp)
+                style = MaterialTheme.typography.headlineSmall.copy(fontSize = 32.sp),
+                modifier = Modifier.align(Alignment.Center)
             )
             //boton favorito
             IconButton(
                 modifier = Modifier
+                    .align(Alignment.CenterEnd)
                     .size(48.dp),
                 onClick = {
                     isFavorite.value = !isFavorite.value

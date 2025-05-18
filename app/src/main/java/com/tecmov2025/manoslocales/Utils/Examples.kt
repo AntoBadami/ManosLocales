@@ -4,7 +4,7 @@ class ExampleProductList(
     val productosList: List<Producto> = List(20) { index ->
         when(index) {
             0 -> Producto(
-                nombre = "Mate Calabaza Imperial",
+                nombre = "Mate Imperial",
                 descripcion = "Mate tradicional de calabaza imperial.",
                 precio = 3500.0,
                 ubicacion = "Córdoba, Argentina",
