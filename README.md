@@ -2,6 +2,7 @@
 <p align="center">
 <img src="/app/src/main/res/drawable/logo.png" alt="Icono" width="150"/>
 </p>
+
 **Trabajo Práctico Integrador - Tecnologías Móviles 2025**
 
 ## 🧭 Descripción
@@ -33,6 +34,8 @@ Incluye:
 - Pantalla de registro.
 - Pantalla principal con contenido estático.
 - Pantalla de configuración.
+- Pantalla de favoritos
+- Pantalla de producto
 - Navegación funcional entre pantallas.
 
 ## 📸 Capturas / Gif
