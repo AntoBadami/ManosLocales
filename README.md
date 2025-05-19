@@ -1,6 +1,7 @@
 # Manos Locales
+<p align="center">
 <img src="/app/src/main/res/drawable/logo.png" alt="Icono" width="150"/>
-
+</p>
 **Trabajo Práctico Integrador - Tecnologías Móviles 2025**
 
 ## 🧭 Descripción
