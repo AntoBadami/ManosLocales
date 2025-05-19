@@ -40,8 +40,7 @@ Incluye:
 
 ## 📸 Capturas / Gif
 
-_Agregar aquí un gif o imágenes mostrando la navegación de la app_  
-(Ejemplo: `splash -> login -> pantalla principal -> productos favoritos -> producto`)
+![Muestra de la app](https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExcXJhaDg0cm0xNWpoeGhvODI3d3YydzFmMHdlMXBpMWFidXB6Y3ZibiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/9kRcLYlFMpWAGsuiHs/giphy.gif)
 
 ## 📦 APK
 
