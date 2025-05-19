@@ -49,7 +49,7 @@ _Agregar aquí un gif o imágenes mostrando la navegación de la app_
 
 ## 👨‍💻 Autores
 
-- **Benjamín Vargas** - bvargas161@alumno.iua.edu.ar  
+- **Benjamín Vargas** - bvargas161@alumnos.iua.edu.ar  
 - **Antonella Badami** - cbadami845@alumnos.iua.edu.ar  
 
 ---
