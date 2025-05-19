@@ -1,6 +1,5 @@
 # Manos Locales
-
-![Icono de la App](/app/src/main/res/drawable/logo.png)
+<img src="/app/src/main/res/drawable/logo.png" alt="Icono" width="150"/>
 
 **Trabajo Práctico Integrador - Tecnologías Móviles 2025**
 
@@ -42,7 +41,7 @@ _Agregar aquí un gif o imágenes mostrando la navegación de la app_
 
 ## 📦 APK
 
-[Descargar APK](/app/release/manosLocalesv1_0.apk)  
+[Descargar APK](https://github.com/AntoBadami/ManosLocales/releases/tag/apk) 
 
 ## 👨‍💻 Autores
 
