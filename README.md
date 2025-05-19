@@ -41,7 +41,7 @@ Incluye:
 ## 📸 Capturas / Gif
 
 _Agregar aquí un gif o imágenes mostrando la navegación de la app_  
-(Ejemplo: `splash -> login -> registro -> pantalla principal -> productos favoritos -> producto`)
+(Ejemplo: `splash -> login -> pantalla principal -> productos favoritos -> producto`)
 
 ## 📦 APK
 
