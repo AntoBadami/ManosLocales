@@ -1,5 +1,6 @@
 package com.tecmov2025.manoslocales.ActivityLogin
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import androidx.compose.foundation.Image
@@ -31,6 +32,9 @@ import com.tecmov2025.manoslocales.Utils.LinkText
 import com.tecmov2025.manoslocales.ActivityHome.MainActivity
 import com.tecmov2025.manoslocales.R
 import com.tecmov2025.manoslocales.Utils.Screens
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 
 /**
  * Login Screen
@@ -71,7 +75,14 @@ fun LoginScreen(navController: NavController)
             CustomTextField(password, { password = it }, "Contraseña", true)
 
             CustomButton(
-                onClick = { LoginButtonAction(context) },
+                onClick = {
+                    LoginButtonAction(
+                        context,
+                        username = username,
+                        password = password,
+                        snackbarHostState = snackbarHostState
+                    )
+                },
                 text = "Iniciar Sesión"
             )
 
@@ -88,11 +99,24 @@ fun LoginScreen(navController: NavController)
     }
 }
 
-
-fun LoginButtonAction(context: Context)
+fun LoginButtonAction(
+    context: Context,
+    username: String,
+    password: String,
+    snackbarHostState: SnackbarHostState
+)
 {
+    val scope: CoroutineScope = MainScope()
+
+    if (username.isBlank() || password.isBlank()) {
+        scope.launch {
+            snackbarHostState.showSnackbar("Por favor, completa todos los campos.")
+        }
+    } else {
         val intent = Intent(context, MainActivity::class.java)
         context.startActivity(intent)
-        if (context is android.app.Activity)
+        if (context is Activity) {
             context.finish()
+        }
+    }
 }

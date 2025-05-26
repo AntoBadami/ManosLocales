@@ -127,7 +127,7 @@ fun CustomDrawer(navController: NavController,context: Context)
     val opciones = listOf<Opcion>(
         Opcion("Mi perfil", { navController.navigate(Screens.PerfilScreen.route) }, icon = Icons.Default.Person),
         Opcion("Configuracion", { navController.navigate(Screens.ConfigScreen.route) }, icon = Icons.Default.Settings),
-        Opcion("Enviar mail al desarrollador", {  }, icon = Icons.Default.Email),
+        Opcion("Enviar mail al desarrollador", { EnviarMailAlDesarrollador(context)  }, icon = Icons.Default.Email),
         Opcion("Cerrar Sesion", {context.startActivity(Intent(context, LoginActivity::class.java)) }, icon = Icons.Default.Close)
     )
     Column(
@@ -154,7 +154,6 @@ fun CustomDrawer(navController: NavController,context: Context)
     }
 }
 
-
 /**
  * Accion de boton de favoritos
  * Utiliza intent para navegar a Activity Favoritos
@@ -165,3 +164,26 @@ fun FavotitosIconButtonAction(context: Context)
     val intent = Intent(context, FavoritosActivity::class.java)
     context.startActivity(intent)
 }
+/**
+ * Accion de boton de enviar mail al desarrollador
+ * Utiliza intent
+ */
+fun EnviarMailAlDesarrollador(context: Context) {
+    val intent = Intent(Intent.ACTION_SEND).apply {
+        type = "message/rfc822"
+        putExtra(Intent.EXTRA_EMAIL, arrayOf("desarrollador@example.com"))
+        putExtra(Intent.EXTRA_SUBJECT, "Consulta desde la app Manos Locales")
+        putExtra(Intent.EXTRA_TEXT, "Hola, quería hacer una consulta sobre la app...")
+    }
+
+    try {
+        context.startActivity(Intent.createChooser(intent, "Enviar mail con..."))
+    } catch (e: android.content.ActivityNotFoundException) {
+        android.widget.Toast.makeText(
+            context,
+            "No se encontró una aplicación de correo instalada.",
+            android.widget.Toast.LENGTH_LONG
+        ).show()
+    }
+}
+
