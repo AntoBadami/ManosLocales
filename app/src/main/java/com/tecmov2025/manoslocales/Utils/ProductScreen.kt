@@ -1,5 +1,8 @@
 package com.tecmov2025.manoslocales.Utils
 
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -35,12 +38,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 
 @Composable
-fun ProductScreen(viewModel: ProductViewModel)
+fun ProductScreen(viewModel: ProductViewModel, navController: NavController)
 {
     var producto = viewModel.productoSeleccionado!!
     // Estado para el favorito
@@ -50,13 +55,23 @@ fun ProductScreen(viewModel: ProductViewModel)
     Scaffold()
     {
         padding ->
-        ProductScreenBody(producto,padding,isFavorite)
+        ProductScreenBody(producto,padding,isFavorite, viewModel, navController)
     }
 }
 @Composable
-fun ProductScreenBody(producto: Producto, padding: PaddingValues, isFavorite: MutableState<Boolean>)
+fun ProductScreenBody(
+    producto: Producto,
+    padding: PaddingValues,
+    isFavorite: MutableState<Boolean>,
+    viewModel: ProductViewModel,
+    navController: NavController
+)
 {
     val scrollState = rememberScrollState()
+    val context = LocalContext.current
+    //filtra los productos del vendedor. excepto el producto actual
+    val productosMismoVendedor = ExampleProductList().productosList
+        .filter { it.vendedor == producto.vendedor && it.nombre != producto.nombre }
 
     Column(
         modifier = Modifier
@@ -135,7 +150,13 @@ fun ProductScreenBody(producto: Producto, padding: PaddingValues, isFavorite: Mu
                 onClick = { cantidad++ }
             ){ Text("+", style = MaterialTheme.typography.headlineMedium) }
         }
-        CustomButton(onClick = { }, text = "Comprar")
+        CustomButton(
+            onClick = {
+                contactarVendedor(context, producto)
+            },
+            text = "Contactar al vendedor"
+        )
+
         Text(text = "Descripción:", style = MaterialTheme.typography.titleMedium)
         Text(text = producto.descripcion, style = MaterialTheme.typography.bodyLarge)
         //contactos
@@ -148,9 +169,53 @@ fun ProductScreenBody(producto: Producto, padding: PaddingValues, isFavorite: Mu
             IconButton(onClick = { }) { Icon(imageVector = Icons.Default.Share, contentDescription = "Compartir") }
         }
 
+        //seccion productos del vendedor
+        if (productosMismoVendedor.isNotEmpty()) {
+            Text(
+                text = "Más productos de ${producto.vendedor}:",
+                style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier
+                    .padding(start = 16.dp, top = 24.dp)
+                    .align(Alignment.Start)
+            )
+
+            LazyRow(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                items(productosMismoVendedor.size) { index ->
+                    Box(
+                        modifier = Modifier
+                            .width(180.dp)
+                            .height(220.dp)
+                    ) {
+                        ProductoCard(
+                            producto = productosMismoVendedor[index],
+                            viewModel = viewModel,
+                            navController = navController
+                        )
+                    }
+                }
+            }
+        }
+
     }
 
 }
 
-
-
+fun contactarVendedor(context: Context, producto: Producto) {
+    if (producto.telefono.isNotEmpty()) {
+        val uri = Uri.parse("https://wa.me/${producto.telefono}")
+        val intent = Intent(Intent.ACTION_VIEW, uri)
+        context.startActivity(intent)
+    } else if (producto.email.isNotEmpty()) {
+        val intent = Intent(Intent.ACTION_SENDTO).apply {
+            data = Uri.parse("mailto:${producto.email}")
+            putExtra(Intent.EXTRA_SUBJECT, "Consulta sobre ${producto.nombre}")
+            putExtra(Intent.EXTRA_TEXT, "Hola ${producto.vendedor}, me interesa tu producto.")
+        }
+        context.startActivity(intent)
+    }
+}

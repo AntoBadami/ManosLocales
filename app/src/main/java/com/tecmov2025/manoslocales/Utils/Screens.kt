@@ -7,7 +7,7 @@ package com.tecmov2025.manoslocales.Utils
 sealed class Screens(val route: String)
 {
     object PerfilScreen: Screens("PerfilScreen")
-    object ProductoScreen: Screens("ProductoScreen")
+    object ProductoScreen: Screens("ProductoScreen/{nombre}")
     object ConfigScreen: Screens("ConfigScreen")
     object MainScreen: Screens("MainScreen")
     object FavoritosScreen: Screens("FavoritosScreen")

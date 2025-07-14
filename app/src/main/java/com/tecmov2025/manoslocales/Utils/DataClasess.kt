@@ -9,7 +9,11 @@ data class Producto(val nombre: String,
                     val ubicacion : String,
                     val images: List<String>,
                     val categoria: String,
-                    var favoritoState : Boolean = false)
+                    val vendedor: String,
+                    var favoritoState : Boolean = false,
+                    val email: String,
+                    val telefono: String
+    )
 
 /** Opcion del drawer en la barra de busqueda*/
 data class Opcion (

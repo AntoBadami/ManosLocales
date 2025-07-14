@@ -25,7 +25,7 @@ fun FavoritosNavigation()
         startDestination = Screens.FavoritosScreen.route
     )
     {
-        composable(Screens.ProductoScreen.route) { ProductScreen(viewModel) }
+        composable(Screens.ProductoScreen.route) { ProductScreen(viewModel, navController) }
         composable(Screens.FavoritosScreen.route){ FavoritosScreen(viewModel = viewModel, navController = navController) }
         composable(Screens.ConfigScreen.route) {ConfigScreen()}
         composable(Screens.PerfilScreen.route){PerfilScreen()}

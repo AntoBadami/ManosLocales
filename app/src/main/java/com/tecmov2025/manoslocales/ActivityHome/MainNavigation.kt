@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.tecmov2025.manoslocales.Utils.ExampleProductList
 import com.tecmov2025.manoslocales.Utils.ProductScreen
 import com.tecmov2025.manoslocales.Utils.ProductViewModel
 import com.tecmov2025.manoslocales.Utils.Screens
@@ -21,9 +22,23 @@ fun MainNavigation()
         startDestination = Screens.MainScreen.route
     )
     {
-        composable(Screens.ProductoScreen.route) { ProductScreen(viewModel) }
         composable(Screens.ConfigScreen.route){ConfigScreen()}
         composable(Screens.PerfilScreen.route){ PerfilScreen()}
         composable(Screens.MainScreen.route) { MainScreen(viewModel, navController) }
+        composable(
+            route = "ProductoScreen/{nombre}"
+        ) { backStackEntry ->
+            val nombreProducto = backStackEntry.arguments?.getString("nombre") ?: return@composable
+
+            // Buscá el producto en la lista
+            val producto = ExampleProductList().productosList.find { it.nombre == nombreProducto }
+
+            // Si lo encuentra, lo seleccionás en el viewModel
+            producto?.let {
+                viewModel.seleccionarProducto(it)
+                ProductScreen(viewModel, navController)
+            }
+        }
+
     }
 }

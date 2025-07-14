@@ -56,6 +56,14 @@ fun MainScreenBody(paddingBarraDeBusqueda: PaddingValues, viewModel: ProductView
 {
     val productos = ExampleProductList().productosList
 
+    val vendedores = remember(productos) {
+        buildList {
+            add("Todos")
+            addAll(productos.map { it.vendedor }.distinct())
+        }
+    }
+    var vendedorSeleccionado by rememberSaveable { mutableStateOf("Todos") }
+
     val categorias = remember(productos)
     {
         buildList {
@@ -65,10 +73,12 @@ fun MainScreenBody(paddingBarraDeBusqueda: PaddingValues, viewModel: ProductView
     }
     var categoriaSeleccionada by rememberSaveable { mutableStateOf("Todas") }
 
-    val productosFiltrados = remember(productos, categoriaSeleccionada)
+    val productosFiltrados = remember(productos, categoriaSeleccionada, vendedorSeleccionado)
     {
-        if (categoriaSeleccionada == "Todas") productos
-        else productos.filter { it.categoria == categoriaSeleccionada }
+        productos.filter {
+            (categoriaSeleccionada == "Todas" || it.categoria == categoriaSeleccionada) &&
+                    (vendedorSeleccionado == "Todos" || it.vendedor == vendedorSeleccionado)
+        }
     }
 
     //productos en pares
@@ -79,11 +89,26 @@ fun MainScreenBody(paddingBarraDeBusqueda: PaddingValues, viewModel: ProductView
                 .background(MaterialTheme.colorScheme.background)
                 .padding(top = 3.dp)
     ){
-        CategoriaFilter(
-            categorias = categorias,
-            categoriaSeleccionada = categoriaSeleccionada,
-            onCategoriaSeleccionada = { categoriaSeleccionada = it }
-        )
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = 8.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            CategoriaFilter(
+                categorias = categorias,
+                categoriaSeleccionada = categoriaSeleccionada,
+                onCategoriaSeleccionada = { categoriaSeleccionada = it },
+                modifier = Modifier.weight(1f)
+            )
+            VendedorFilter(
+                vendedores = vendedores,
+                vendedorSeleccionado = vendedorSeleccionado,
+                onVendedorSeleccionado = { vendedorSeleccionado = it },
+                modifier = Modifier.weight(1f)
+            )
+        }
+
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
@@ -113,17 +138,61 @@ fun MainScreenBody(paddingBarraDeBusqueda: PaddingValues, viewModel: ProductView
 }
 
 @Composable
-fun CategoriaFilter(
-    categorias: List<String>,
-    categoriaSeleccionada: String,
-    onCategoriaSeleccionada: (String) -> Unit
+fun VendedorFilter(
+    vendedores: List<String>,
+    vendedorSeleccionado: String,
+    onVendedorSeleccionado: (String) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     var expanded by remember { mutableStateOf(false) }
 
     Box(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp)
+    ) {
+        TextField(
+            value = vendedorSeleccionado,
+            onValueChange = {},
+            readOnly = true,
+            label = { Text("Vendedor") },
+            trailingIcon = {
+                IconButton(onClick = { expanded = !expanded }) {
+                    Icon(Icons.Default.ArrowDropDown, contentDescription = "Abrir vendedores")
+                }
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable { expanded = true }
+        )
+
+        DropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            vendedores.forEach { vendedor ->
+                DropdownMenuItem(
+                    text = { Text(vendedor) },
+                    onClick = {
+                        onVendedorSeleccionado(vendedor)
+                        expanded = false
+                    }
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun CategoriaFilter(
+    categorias: List<String>,
+    categoriaSeleccionada: String,
+    onCategoriaSeleccionada: (String) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    var expanded by remember { mutableStateOf(false) }
+
+    Box(
+        modifier = modifier
     ) {
         TextField(
             value = categoriaSeleccionada,
@@ -160,4 +229,3 @@ fun CategoriaFilter(
         }
     }
 }
-

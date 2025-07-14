@@ -12,7 +12,10 @@ class ExampleProductList(
                     "https://http2.mlstatic.com/D_NQ_NP_2X_720669-MLA73262929367_122023-F.webp",
                     "https://http2.mlstatic.com/D_NQ_NP_810338-MLA73177838120_122023-O.webp"),
                 categoria = "mates",
-                if (index%2 == 0) true else false
+                vendedor = "Artesanias Cordoba",
+                if (index%2 == 0) true else false,
+                email = "manoslocales@gmail.com",
+                telefono = "5491122334455"
             )
             1 -> Producto(
                 nombre = "Mate Ranchero",
@@ -22,7 +25,10 @@ class ExampleProductList(
                 images = listOf("https://http2.mlstatic.com/D_NQ_NP_737986-MLA84088296586_052025-O.webp",
                     "https://http2.mlstatic.com/D_NQ_NP_848919-MLA83470753618_042025-O.webp"),
                 categoria = "mates",
-                if (index%2 == 0) true else false
+                vendedor = "Artesanias Cordoba",
+                if (index%2 == 0) true else false,
+                email = "manoslocales@gmail.com",
+                telefono = "5491122334455"
             )
             2 -> Producto(
                 nombre = "Mate Algarrobo",
@@ -32,7 +38,10 @@ class ExampleProductList(
                 images = listOf("https://http2.mlstatic.com/D_NQ_NP_796078-MLA84126103516_052025-O.webp",
                     "https://http2.mlstatic.com/D_NQ_NP_712385-MLA84422424103_052025-O.webp"),
                 categoria = "mates",
-                if (index%2 == 0) true else false
+                vendedor = "Artesanias Cordoba",
+                if (index%2 == 0) true else false,
+                email = "manoslocales@gmail.com",
+                telefono = "5491122334455"
             )
             3 -> Producto(
                 nombre = "Dulce de Leche",
@@ -42,7 +51,10 @@ class ExampleProductList(
                 images = listOf("https://http2.mlstatic.com/D_NQ_NP_732813-MLA83587983311_042025-O.webp",
                     "https://http2.mlstatic.com/D_NQ_NP_872179-MLA83587953491_042025-O.webp"),
                 categoria = "alimentos",
-                if (index%2 == 0) true else false
+                vendedor = "Artesanias Cordoba",
+                if (index%2 == 0) true else false,
+                email = "manoslocales@gmail.com",
+                telefono = "5491122334455"
             )
             4 -> Producto(
                 nombre = "Vela Burbujas",
@@ -53,7 +65,10 @@ class ExampleProductList(
                     "https://http2.mlstatic.com/D_NQ_NP_863085-MLA83128563407_032025-O.webp",
                     "https://http2.mlstatic.com/D_NQ_NP_884664-MLA83128788405_032025-O.webp"),
                 categoria = "velas",
-                if (index%2 == 0) true else false
+                vendedor = "Artesanias Cordoba",
+                if (index%2 == 0) true else false,
+                email = "manoslocales@gmail.com",
+                telefono = "5491122334455"
             )
             5 -> Producto(
                 nombre = "Vela Arcoiris",
@@ -63,7 +78,10 @@ class ExampleProductList(
                 images = listOf("https://http2.mlstatic.com/D_NQ_NP_838803-MLA83527897558_042025-O.webp",
                     "https://http2.mlstatic.com/D_NQ_NP_686523-MLA83527858824_042025-O.webp"),
                 categoria = "velas",
-                if (index%2 == 0) true else false
+                vendedor = "Deco home",
+                if (index%2 == 0) true else false,
+                email = "manoslocales@gmail.com",
+                telefono = "5491122334455"
             )
             6 -> Producto(
                 nombre = "Vela Vaso",
@@ -73,7 +91,10 @@ class ExampleProductList(
                 images = listOf("https://http2.mlstatic.com/D_NQ_NP_666956-MLA73037890347_112023-O.webp",
                     "https://http2.mlstatic.com/D_NQ_NP_736727-MLA72955537288_112023-O.webp"),
                 categoria = "velas",
-                if (index%2 == 0) true else false
+                vendedor = "Deco home",
+                if (index%2 == 0) true else false,
+                email = "manoslocales@gmail.com",
+                telefono = "5491122334455"
             )
             7 -> Producto(
                 nombre = "Canasto Mimbre",
@@ -84,7 +105,10 @@ class ExampleProductList(
                     "https://http2.mlstatic.com/D_NQ_NP_705755-MLA76516220474_052024-O.webp",
                     "https://http2.mlstatic.com/D_NQ_NP_676540-MLA76516220472_052024-O.webp"),
                 categoria = "canastos",
-                if (index%2 == 0) true else false
+                vendedor = "Deco home",
+                if (index%2 == 0) true else false,
+                email = "manoslocales@gmail.com",
+                telefono = "5491122334455"
             )
             8 -> Producto(
                 nombre = "Bandeja",
@@ -95,7 +119,10 @@ class ExampleProductList(
                     "https://http2.mlstatic.com/D_NQ_NP_982313-MLA54657882390_032023-O.webp",
                     "https://http2.mlstatic.com/D_NQ_NP_878091-MLA54657882382_032023-O.webp"),
                 categoria = "cocina",
-                if (index%2 == 0) true else false
+                vendedor = "Deco home",
+                if (index%2 == 0) true else false,
+                email = "manoslocales@gmail.com",
+                telefono = "5491122334455"
             )
             9 -> Producto(
                 nombre = "Canasto Mixto",
@@ -105,7 +132,10 @@ class ExampleProductList(
                 images = listOf("https://http2.mlstatic.com/D_NQ_NP_826850-MLA74889796049_032024-O.webp",
                     "https://http2.mlstatic.com/D_NQ_NP_730639-MLA74756686742_032024-O.webp"),
                 categoria = "canastos",
-                if (index%2 == 0) true else false
+                vendedor = "Deco home",
+                if (index%2 == 0) true else false,
+                email = "manoslocales@gmail.com",
+                telefono = "5491122334455"
             )
             10 -> Producto(
                 nombre = "Individual",
@@ -115,7 +145,10 @@ class ExampleProductList(
                 images = listOf("https://http2.mlstatic.com/D_NQ_NP_640917-MLA83492666433_042025-O.webp",
                     "https://http2.mlstatic.com/D_NQ_NP_965545-MLA83492364483_042025-O.webp"),
                 categoria = "cocina",
-                if (index%2 == 0) true else false
+                vendedor = "Deco home",
+                if (index%2 == 0) true else false,
+                email = "manoslocales@gmail.com",
+                telefono = "5491122334455"
             )
             11 -> Producto(
                 nombre = "Cesto Soga",
@@ -125,7 +158,10 @@ class ExampleProductList(
                 images = listOf("https://http2.mlstatic.com/D_NQ_NP_841396-MLA83201067392_042025-O.webp",
                     "https://http2.mlstatic.com/D_NQ_NP_800709-MLA83492051403_042025-O.webp"),
                 categoria = "canastos",
-                if (index%2 == 0) true else false
+                vendedor = "Ganga home",
+                if (index%2 == 0) true else false,
+                email = "manoslocales@gmail.com",
+                telefono = "5491122334455"
             )
             12 -> Producto(
                 nombre = "Tabla de Madera",
@@ -135,7 +171,10 @@ class ExampleProductList(
                 images = listOf("https://http2.mlstatic.com/D_NQ_NP_885418-MLA81480407816_012025-O.webp",
                     "https://http2.mlstatic.com/D_NQ_NP_822415-MLA81750594763_012025-O.webp"),
                 categoria = "cocina",
-                if (index%2 == 0) true else false
+                vendedor = "Ganga home",
+                if (index%2 == 0) true else false,
+                email = "manoslocales@gmail.com",
+                telefono = "5491122334455"
             )
             13 -> Producto(
                 nombre = "Tabla Redonda",
@@ -146,7 +185,10 @@ class ExampleProductList(
                     "https://http2.mlstatic.com/D_NQ_NP_996127-MLA83132715279_032025-O.webp",
                     "https://http2.mlstatic.com/D_NQ_NP_745331-MLA83132462777_032025-O.webp"),
                 categoria = "cocina",
-                if (index%2 == 0) true else false
+                vendedor = "Ganga home",
+                if (index%2 == 0) true else false,
+                email = "manoslocales@gmail.com",
+                telefono = "5491122334455"
             )
             14 -> Producto(
                 nombre = "Molinillo",
@@ -157,7 +199,10 @@ class ExampleProductList(
                     "https://http2.mlstatic.com/D_NQ_NP_759951-MLA83997334793_042025-O.webp",
                     "https://http2.mlstatic.com/D_NQ_NP_857109-MLA83703925972_042025-O.webp"),
                 categoria = "cocina",
-                if (index%2 == 0) true else false
+                vendedor = "Ganga home",
+                if (index%2 == 0) true else false,
+                email = "manoslocales@gmail.com",
+                telefono = "5491122334455"
             )
             15 -> Producto(
                 nombre = "Suculentas",
@@ -168,7 +213,10 @@ class ExampleProductList(
                     "https://http2.mlstatic.com/D_NQ_NP_629589-MLA44198185017_112020-O.webp",
                     "https://http2.mlstatic.com/D_NQ_NP_808972-MLA44198155842_112020-O.webp"),
                 categoria = "plantas",
-                if (index%2 == 0) true else false
+                vendedor = "Ganga home",
+                if (index%2 == 0) true else false,
+                email = "manoslocales@gmail.com",
+                telefono = "5491122334455"
             )
             16 -> Producto(
                 nombre = "Cactus",
@@ -178,7 +226,10 @@ class ExampleProductList(
                 images = listOf("https://http2.mlstatic.com/D_NQ_NP_610921-MLA45788870073_052021-O.webp",
                     "https://http2.mlstatic.com/D_NQ_NP_879753-MLA45788839458_052021-O.webp"),
                 categoria = "plantas",
-                if (index%2 == 0) true else false
+                vendedor = "Ganga home",
+                if (index%2 == 0) true else false,
+                email = "manoslocales@gmail.com",
+                telefono = "5491122334455"
             )
             17 -> Producto(
                 nombre = "Bonsai",
@@ -189,7 +240,10 @@ class ExampleProductList(
                     "https://http2.mlstatic.com/D_NQ_NP_640068-MLA75763349024_042024-O.webp",
                     "https://http2.mlstatic.com/D_NQ_NP_750521-MLA75763161676_042024-O.webp"),
                 categoria = "plantas",
-                if (index%2 == 0) true else false
+                vendedor = "Craco",
+                if (index%2 == 0) true else false,
+                email = "manoslocales@gmail.com",
+                telefono = "5491122334455"
             )
             18 -> Producto(
                 nombre = "Vela Nudo",
@@ -200,7 +254,10 @@ class ExampleProductList(
                     "https://http2.mlstatic.com/D_NQ_NP_782800-MLA76421451533_052024-O.webp",
                     "https://http2.mlstatic.com/D_NQ_NP_778379-MLA77606078684_072024-O.webp"),
                 categoria = "velas",
-                if (index%2 == 0) true else false
+                vendedor = "Craco",
+                if (index%2 == 0) true else false,
+                email = "manoslocales@gmail.com",
+                telefono = "5491122334455"
             )
             19 -> Producto(
                 nombre = "Mate Camionero",
@@ -210,7 +267,10 @@ class ExampleProductList(
                 images = listOf("https://http2.mlstatic.com/D_NQ_NP_651718-MLA83434823010_042025-O.webp",
                     "https://http2.mlstatic.com/D_NQ_NP_742857-MLA83435057022_042025-O.webp"),
                 categoria = "mates",
-                if (index%2 == 0) true else false
+                vendedor = "Craco",
+                if (index%2 == 0) true else false,
+                email = "manoslocales@gmail.com",
+                telefono = "5491122334455"
             )
             else -> Producto(
                 nombre = "Producto $index",
@@ -222,7 +282,10 @@ class ExampleProductList(
                     "https://acdn-us.mitiendanube.com/stores/001/640/893/products/9c663a0f-7169-4ce0-9079-84a0dc7594d21-07f82bdece7591b8ed16753829200230-640-0.webp"
                 ),
                 categoria = "mates",
-                if (index%2 == 0) true else false
+                vendedor = "Craco",
+                if (index%2 == 0) true else false,
+                email = "manoslocales@gmail.com",
+                telefono = "5491122334455"
             )
         }
     }
