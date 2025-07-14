@@ -36,6 +36,11 @@ import com.tecmov2025.manoslocales.Utils.BarraDeBusqueda
 import com.tecmov2025.manoslocales.Utils.ExampleProductList
 import com.tecmov2025.manoslocales.Utils.ProductViewModel
 import com.tecmov2025.manoslocales.Utils.ProductoCard
+import androidx.compose.material3.*
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.material3.LocalTextStyle
 
 /**
  * Cuerpo de interfaz principal
@@ -84,10 +89,11 @@ fun MainScreenBody(paddingBarraDeBusqueda: PaddingValues, viewModel: ProductView
     //productos en pares
     val productosAgrupados = productosFiltrados.chunked(2)
 
-    Column( modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.background)
-                .padding(top = 3.dp)
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+            .padding(top = paddingBarraDeBusqueda.calculateTopPadding())
     ){
         Row(
             modifier = Modifier
@@ -118,25 +124,31 @@ fun MainScreenBody(paddingBarraDeBusqueda: PaddingValues, viewModel: ProductView
             items(productosAgrupados){ grupo ->
                 Row(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(paddingBarraDeBusqueda),
+                        .fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(8.dp) //espacio entre productos
                 ){
                     //primer producto
                     Box(modifier = Modifier
                             .weight(1f)
-                            .height(200.dp)){ ProductoCard(grupo[0], viewModel, navController) }
+                            .height(200.dp)
+                    ){
+                        ProductoCard(grupo[0], viewModel, navController)
+                    }
                     //segundo producto
                     if (grupo.size > 1)
                         Box(modifier = Modifier
                             .weight(1f)
-                            .height(200.dp)){ ProductoCard(grupo[1], viewModel, navController) }
+                            .height(200.dp)
+                        ){
+                            ProductoCard(grupo[1], viewModel, navController)
+                        }
                 }
             }
         }
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun VendedorFilter(
     vendedores: List<String>,
@@ -146,28 +158,27 @@ fun VendedorFilter(
 ) {
     var expanded by remember { mutableStateOf(false) }
 
-    Box(
-        modifier = Modifier
+    ExposedDropdownMenuBox(
+        expanded = expanded,
+        onExpandedChange = { expanded = !expanded },
+        modifier = modifier
     ) {
         TextField(
             value = vendedorSeleccionado,
             onValueChange = {},
             readOnly = true,
             label = { Text("Vendedor") },
-            trailingIcon = {
-                IconButton(onClick = { expanded = !expanded }) {
-                    Icon(Icons.Default.ArrowDropDown, contentDescription = "Abrir vendedores")
-                }
-            },
+            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
+            singleLine = true,
+            maxLines = 1,
             modifier = Modifier
+                .menuAnchor()
                 .fillMaxWidth()
-                .clickable { expanded = true }
         )
 
-        DropdownMenu(
+        ExposedDropdownMenu(
             expanded = expanded,
-            onDismissRequest = { expanded = false },
-            modifier = Modifier.fillMaxWidth()
+            onDismissRequest = { expanded = false }
         ) {
             vendedores.forEach { vendedor ->
                 DropdownMenuItem(
@@ -182,6 +193,7 @@ fun VendedorFilter(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CategoriaFilter(
     categorias: List<String>,
@@ -191,7 +203,9 @@ fun CategoriaFilter(
 ) {
     var expanded by remember { mutableStateOf(false) }
 
-    Box(
+    ExposedDropdownMenuBox(
+        expanded = expanded,
+        onExpandedChange = { expanded = !expanded },
         modifier = modifier
     ) {
         TextField(
@@ -199,23 +213,17 @@ fun CategoriaFilter(
             onValueChange = {},
             readOnly = true,
             label = { Text("Categoría") },
-            trailingIcon = {
-                IconButton (onClick = { expanded = !expanded }) {
-                    Icon(
-                        imageVector = Icons.Default.ArrowDropDown,
-                        contentDescription = "Abrir categorías"
-                    )
-                }
-            },
+            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
+            singleLine = true,
+            maxLines = 1,
             modifier = Modifier
+                .menuAnchor()
                 .fillMaxWidth()
-                .clickable { expanded = true }
         )
 
-        DropdownMenu(
+        ExposedDropdownMenu(
             expanded = expanded,
-            onDismissRequest = { expanded = false },
-            modifier = Modifier.fillMaxWidth()
+            onDismissRequest = { expanded = false }
         ) {
             categorias.forEach { categoria ->
                 DropdownMenuItem(
