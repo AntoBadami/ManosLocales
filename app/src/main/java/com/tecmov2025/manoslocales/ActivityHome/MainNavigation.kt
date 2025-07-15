@@ -25,6 +25,7 @@ fun MainNavigation()
         composable(Screens.ConfigScreen.route){ConfigScreen()}
         composable(Screens.PerfilScreen.route){ PerfilScreen()}
         composable(Screens.MainScreen.route) { MainScreen(viewModel, navController) }
+        composable(Screens.VendedoresScreen.route) { VendedoresScreen(viewModel, navController) }
         composable(
             route = "ProductoScreen/{nombre}"
         ) { backStackEntry ->

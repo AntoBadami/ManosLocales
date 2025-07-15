@@ -47,9 +47,16 @@ fun BarraDeBusqueda(navController: NavController, viewModel: ProductViewModel,
     val coroutineScope = rememberCoroutineScope()
 
     Scaffold(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.primary)
+            .navigationBarsPadding(),
         scaffoldState = scaffoldState,
         drawerContent ={ CustomDrawer(navController,context)},
-        topBar = { CustomTopAppBar(coroutineScope,scaffoldState,context)}
+        topBar = { CustomTopAppBar(coroutineScope,scaffoldState,context)},
+        bottomBar = { BottomNavigationBar(navController) },
+        backgroundColor = MaterialTheme.colorScheme.background
+
     ){ paddingValues -> body(paddingValues,viewModel,navController)}
 }
 
@@ -187,3 +194,51 @@ fun EnviarMailAlDesarrollador(context: Context) {
     }
 }
 
+@Composable
+fun BottomNavigationBar(navController: NavController) {
+    val currentRoute = remember { mutableStateOf(Screens.MainScreen.route) }
+
+    BottomAppBar(
+        backgroundColor = MaterialTheme.colorScheme.primary,
+        elevation = 8.dp,
+        modifier = Modifier
+            .fillMaxWidth()
+            .navigationBarsPadding()
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 8.dp),
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
+            TextButton(
+                onClick = {
+                    currentRoute.value = Screens.MainScreen.route
+                    navController.navigate(Screens.MainScreen.route)
+                }
+            ) {
+                Text(
+                    "Productos",
+                    color = if (currentRoute.value == Screens.MainScreen.route)
+                        MaterialTheme.colorScheme.onPrimary
+                    else
+                        MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.5f)
+                )
+            }
+            TextButton(
+                onClick = {
+                    currentRoute.value = Screens.VendedoresScreen.route
+                    navController.navigate(Screens.VendedoresScreen.route)
+                }
+            ) {
+                Text(
+                    "Vendedores",
+                    color = if (currentRoute.value == Screens.VendedoresScreen.route)
+                        MaterialTheme.colorScheme.onPrimary
+                    else
+                        MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.5f)
+                )
+            }
+        }
+    }
+}
