@@ -28,5 +28,7 @@ fun MainNavigation()
         composable(Screens.PerfilScreen.route){ PerfilScreen()}
         composable(Screens.MainScreen.route) { MainScreen(viewModel, navController) }
         composable(Screens.ProductoScreen.route){ProductScreen(viewModel, navController)}
+        composable(Screens.VendedoresScreen.route) { VendedoresScreen(viewModel, navController) }
+
     }
 }
