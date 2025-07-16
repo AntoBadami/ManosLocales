@@ -47,7 +47,7 @@ fun FavoritosScreen(navController: NavController,viewModel: ProductViewModel) {
 fun FavoritosScreenBody(padding: PaddingValues, viewModel: ProductViewModel, navController: NavController)
 {
     //productos ejemplo
-    val productos = ExampleProductList().productosList
+    val productos = viewModel.productos.value
     Box(
         modifier = Modifier
             .fillMaxSize()

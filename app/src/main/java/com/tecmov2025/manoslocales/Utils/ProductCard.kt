@@ -20,9 +20,10 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import com.tecmov2025.manoslocales.Networking.ProductoDTO
 
 @Composable
-fun ProductoCard(producto: Producto, viewModel: ProductViewModel, navController: NavController, isFavoritoView: Boolean = false) {
+fun ProductoCard(producto: ProductoDTO, viewModel: ProductViewModel, navController: NavController, isFavoritoView: Boolean = false) {
 
     Card(
         modifier = Modifier
@@ -31,7 +32,8 @@ fun ProductoCard(producto: Producto, viewModel: ProductViewModel, navController:
         colors = CardDefaults.cardColors(containerColor = Color.White),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         onClick = {
-            navController.navigate("ProductoScreen/${producto.nombre}")
+            viewModel.seleccionarProducto(producto)
+            navController.navigate(Screens.ProductoScreen.route)
         }
     ){
         Column(
