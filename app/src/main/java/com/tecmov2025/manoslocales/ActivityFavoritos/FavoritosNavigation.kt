@@ -8,6 +8,9 @@ import androidx.navigation.compose.rememberNavController
 import com.tecmov2025.manoslocales.ActivityHome.ConfigScreen
 import com.tecmov2025.manoslocales.ActivityHome.MainScreen
 import com.tecmov2025.manoslocales.ActivityHome.PerfilScreen
+import com.tecmov2025.manoslocales.Networking.ApiRepository
+import com.tecmov2025.manoslocales.Networking.ApiService
+import com.tecmov2025.manoslocales.Networking.RetrofitClient
 import com.tecmov2025.manoslocales.Utils.ProductScreen
 import com.tecmov2025.manoslocales.Utils.ProductViewModel
 import com.tecmov2025.manoslocales.Utils.Screens
@@ -19,7 +22,7 @@ import com.tecmov2025.manoslocales.Utils.Screens
 fun FavoritosNavigation()
 {
     val navController = rememberNavController()
-    val viewModel = ProductViewModel()
+    val viewModel = ProductViewModel(ApiRepository(RetrofitClient.apiService))
     NavHost(
         navController = navController,
         startDestination = Screens.FavoritosScreen.route
@@ -28,6 +31,6 @@ fun FavoritosNavigation()
         composable(Screens.ProductoScreen.route) { ProductScreen(viewModel, navController) }
         composable(Screens.FavoritosScreen.route){ FavoritosScreen(viewModel = viewModel, navController = navController) }
         composable(Screens.ConfigScreen.route) {ConfigScreen()}
-        composable(Screens.PerfilScreen.route){PerfilScreen()}
+        composable(Screens.PerfilScreen.route){ PerfilScreen() }
     }
 }

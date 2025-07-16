@@ -3,6 +3,7 @@ package com.tecmov2025.manoslocales.Utils
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -43,11 +44,29 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import com.tecmov2025.manoslocales.Networking.ProductoDTO
+import androidx.compose.material3.CircularProgressIndicator
+
 
 @Composable
 fun ProductScreen(viewModel: ProductViewModel, navController: NavController)
 {
-    var producto = viewModel.productoSeleccionado!!
+    var producto = viewModel.productoSeleccionado
+    if (producto == null) {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            CircularProgressIndicator()
+        }
+        return
+    }
+
+    BackHandler {
+        viewModel.desapilarProducto()
+
+    }
+
     // Estado para el favorito
     var isFavorite = remember { mutableStateOf(false) }
     isFavorite.value = producto.favoritoState
@@ -60,7 +79,7 @@ fun ProductScreen(viewModel: ProductViewModel, navController: NavController)
 }
 @Composable
 fun ProductScreenBody(
-    producto: Producto,
+    producto: ProductoDTO,
     padding: PaddingValues,
     isFavorite: MutableState<Boolean>,
     viewModel: ProductViewModel,
@@ -69,9 +88,8 @@ fun ProductScreenBody(
 {
     val scrollState = rememberScrollState()
     val context = LocalContext.current
-    //filtra los productos del vendedor. excepto el producto actual
-    val productosMismoVendedor = ExampleProductList().productosList
-        .filter { it.vendedor == producto.vendedor && it.nombre != producto.nombre }
+
+    val productosMismoVendedor = viewModel.productos.value
 
     Column(
         modifier = Modifier
@@ -169,14 +187,13 @@ fun ProductScreenBody(
             IconButton(onClick = { }) { Icon(imageVector = Icons.Default.Share, contentDescription = "Compartir") }
         }
 
-        //seccion productos del vendedor
-        if (productosMismoVendedor.isNotEmpty()) {
-            Text(
-                text = "Más productos de ${producto.vendedor}:",
-                style = MaterialTheme.typography.titleMedium,
-                modifier = Modifier
-                    .padding(start = 16.dp, top = 24.dp)
-                    .align(Alignment.Start)
+
+        Text(
+            text = "Más productos de ${producto.vendedor}:",
+            style = MaterialTheme.typography.titleMedium,
+            modifier = Modifier
+                .padding(start = 16.dp, top = 24.dp)
+                .align(Alignment.Start)
             )
 
             LazyRow(
@@ -199,13 +216,12 @@ fun ProductScreenBody(
                     }
                 }
             }
-        }
 
     }
 
 }
 
-fun contactarVendedor(context: Context, producto: Producto) {
+fun contactarVendedor(context: Context, producto: ProductoDTO) {
     if (producto.telefono.isNotEmpty()) {
         val uri = Uri.parse("https://wa.me/${producto.telefono}")
         val intent = Intent(Intent.ACTION_VIEW, uri)
