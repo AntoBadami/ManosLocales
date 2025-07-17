@@ -290,3 +290,16 @@ class ExampleProductList(
         }
     }
 )
+
+class  ExamplesVendedoresList
+{
+    val vendedoresList = listOf(
+        Vendedor(nombre = "Artesanias Cordoba",
+        descripcion = "Las mejores artesanias de todo Cordoba. Envios a todo el País",
+        email = "manoslocales@gmail.com",
+        telefono = "5491122334455",
+            ubicacion ="Cordoba",
+            perfilFoto = "https://tse1.mm.bing.net/th/id/OIP.7TiGc1kB1E6OvtLMiONAhwHaE8?r=0&w=1000&h=667&rs=1&pid=ImgDetMain&o=7&rm=3"))
+}
+
+

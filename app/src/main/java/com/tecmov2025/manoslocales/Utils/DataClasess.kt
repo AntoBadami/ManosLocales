@@ -14,6 +14,15 @@ data class Producto(val nombre: String,
                     val email: String,
                     val telefono: String
     )
+/** Clase vendedores ejemplos */
+
+data class Vendedor(val nombre: String,
+                    val descripcion: String,
+                    val perfilFoto: String,
+                    val email: String,
+                    val telefono: String,
+                    val ubicacion: String
+)
 
 /** Opcion del drawer en la barra de busqueda*/
 data class Opcion (
