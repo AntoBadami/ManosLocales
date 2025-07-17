@@ -49,23 +49,20 @@ import androidx.compose.material3.CircularProgressIndicator
 
 
 @Composable
-fun ProductScreen(viewModel: ProductViewModel, navController: NavController)
-{
+fun ProductScreen(viewModel: ProductViewModel, navController: NavController) {
     var producto = viewModel.productoSeleccionado
     if (producto == null) {
-        Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
-            CircularProgressIndicator()
-        }
+        navController.popBackStack()
         return
     }
-
-    BackHandler {
-        viewModel.desapilarProducto()
-
+    else
+    {
+        BackHandler {
+            viewModel.desapilarProducto()
+        }
     }
+
+
 
     // Estado para el favorito
     var isFavorite = remember { mutableStateOf(false) }
