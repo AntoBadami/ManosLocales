@@ -142,25 +142,7 @@ fun ProductScreenBody(
         }
 
         Text(text = "Precio: $${String.format("%.2f", producto.precio)}", style = MaterialTheme.typography.titleMedium)
-        // estado de la cantidad seleccionada
-        var cantidad by remember { mutableStateOf(1) }
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-            modifier = Modifier.padding(top = 8.dp)
-        ){
-            Text(text = "Cantidad:", style = MaterialTheme.typography.titleMedium)
-            // disminuir
-            IconButton(
-                onClick = { if (cantidad > 1) cantidad-- }
-            ){ Text("-", style = MaterialTheme.typography.headlineMedium) }
 
-            Text(text = cantidad.toString(), style = MaterialTheme.typography.titleMedium)
-            // aumentar
-            IconButton(
-                onClick = { cantidad++ }
-            ){ Text("+", style = MaterialTheme.typography.headlineMedium) }
-        }
         CustomButton(
             onClick = {
                 contactarVendedor(context, producto)

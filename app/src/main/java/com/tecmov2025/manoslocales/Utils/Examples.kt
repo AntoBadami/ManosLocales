@@ -299,7 +299,7 @@ class  ExamplesVendedoresList
         email = "manoslocales@gmail.com",
         telefono = "5491122334455",
             ubicacion ="Cordoba",
-            perfilFoto = "https://tse1.mm.bing.net/th/id/OIP.7TiGc1kB1E6OvtLMiONAhwHaE8?r=0&w=1000&h=667&rs=1&pid=ImgDetMain&o=7&rm=3"))
+            perfilFoto = "https://http2.mlstatic.com/D_NQ_NP_2X_856367-MLA80340685464_112024-F.webp"))
 }
 
 

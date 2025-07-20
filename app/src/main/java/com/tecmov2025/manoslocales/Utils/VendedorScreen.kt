@@ -5,9 +5,18 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -17,6 +26,8 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import java.net.URLDecoder
 import java.nio.charset.StandardCharsets
+import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material.icons.filled.NotificationsNone
 
 @Composable
 fun VendedorScreen(
@@ -70,6 +81,33 @@ fun VendedorScreen(
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
+
+                // Botones Seguir y notificaciones
+                var siguiendo by remember { mutableStateOf(false) }
+                var notificacionesActivas by remember { mutableStateOf(false) }
+
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(12.dp),
+                    modifier = Modifier.padding(top = 4.dp, bottom = 4.dp)
+                ) {
+                    Button(
+                        onClick = { siguiendo = !siguiendo },
+                        modifier = Modifier.height(40.dp)
+                    ) {
+                        Text(if (siguiendo) "Siguiendo" else "Seguir")
+                    }
+
+                    IconButton(
+                        onClick = { notificacionesActivas = !notificacionesActivas }
+                    ) {
+                        Icon(
+                            imageVector = if (notificacionesActivas) Icons.Default.Notifications else Icons.Default.NotificationsNone,
+                            contentDescription = "Notificaciones",
+                            tint = if (notificacionesActivas) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface
+                        )
+                    }
+                }
             }
 
             Text(
