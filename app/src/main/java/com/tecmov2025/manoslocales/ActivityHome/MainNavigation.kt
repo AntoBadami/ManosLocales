@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.tecmov2025.manoslocales.Database.AppDatabase
 import com.tecmov2025.manoslocales.Networking.ApiRepository
 import com.tecmov2025.manoslocales.Networking.RetrofitClient
 import com.tecmov2025.manoslocales.Utils.ExampleProductList
@@ -15,10 +16,9 @@ import com.tecmov2025.manoslocales.Utils.Screens
  * Gestinona la navegacion en la activity Main
  */
 @Composable
-fun MainNavigation()
+fun MainNavigation(viewModel: ProductViewModel)
 {
     val navController = rememberNavController()
-    val viewModel = ProductViewModel(ApiRepository(RetrofitClient.apiService))
     NavHost(
         navController = navController,
         startDestination = Screens.MainScreen.route

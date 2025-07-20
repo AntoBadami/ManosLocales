@@ -9,6 +9,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.tecmov2025.manoslocales.Database.AppDatabase
+import com.tecmov2025.manoslocales.Networking.ApiRepository
+import com.tecmov2025.manoslocales.Networking.RetrofitClient
 import com.tecmov2025.manoslocales.Utils.ProductScreen
 import com.tecmov2025.manoslocales.Utils.ProductViewModel
 import com.tecmov2025.manoslocales.ui.theme.ManosLocalesTheme
@@ -19,7 +22,8 @@ class MainActivity : ComponentActivity()
     {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContent { ManosLocalesTheme { MainNavigation()} }
+        val viewModel = ProductViewModel(ApiRepository(RetrofitClient.apiService,AppDatabase.obtenerInstancia(applicationContext)))
+        setContent { ManosLocalesTheme { MainNavigation(viewModel)} }
     }
 }
 

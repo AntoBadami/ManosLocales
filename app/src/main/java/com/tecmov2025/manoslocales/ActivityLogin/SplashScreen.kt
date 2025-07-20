@@ -15,11 +15,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.tecmov2025.manoslocales.R
+import com.tecmov2025.manoslocales.Utils.ProductViewModel
 import com.tecmov2025.manoslocales.Utils.Screens
 import kotlinx.coroutines.delay
 
 @Composable
-fun SplashScreen(navController: NavHostController)
+fun SplashScreen(navController: NavHostController, viewModel: ProductViewModel)
 {
     Box(modifier = Modifier
             .fillMaxSize()
@@ -37,7 +38,7 @@ fun SplashScreen(navController: NavHostController)
     }
     LaunchedEffect(Unit)
     {
-        delay(500)
+        viewModel.sincronizarProductos()
         navController.navigate(Screens.LoginScreen.route) {
             popUpTo("SplashScreen") { inclusive = true }
         }

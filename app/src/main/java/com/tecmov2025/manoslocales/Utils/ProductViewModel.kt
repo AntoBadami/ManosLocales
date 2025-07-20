@@ -7,6 +7,7 @@ import com.tecmov2025.manoslocales.Networking.ApiRepository
 import com.tecmov2025.manoslocales.Networking.ProductoDTO
 import kotlinx.coroutines.launch
 import androidx.compose.runtime.State
+import kotlinx.coroutines.Dispatchers
 
 
 class ProductViewModel(private val repo: ApiRepository): ViewModel() {
@@ -41,6 +42,12 @@ class ProductViewModel(private val repo: ApiRepository): ViewModel() {
         viewModelScope.launch{
             val lista = repo.obtenerProductos()  // suspend fun que trae datos
             _productos.value = lista  // actualiza
+        }
+    }
+
+    fun sincronizarProductos() {
+        viewModelScope.launch(Dispatchers.IO) {
+            repo.obteneryGuardarProductos()
         }
     }
 
