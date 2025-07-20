@@ -10,6 +10,6 @@ interface ProductosDAO {
     fun getAll(): Flow<List<ProductoEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(productos: List<ProductoEntity>)
+    fun insertAll(productos: List<ProductoEntity>)
 
 }

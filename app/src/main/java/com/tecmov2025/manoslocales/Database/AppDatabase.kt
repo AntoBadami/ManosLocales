@@ -9,7 +9,7 @@ import com.tecmov2025.manoslocales.Database.DAO.ProductosDAO
 import com.tecmov2025.manoslocales.Database.Entity.Converters
 import com.tecmov2025.manoslocales.Database.Entity.ProductoEntity
 
-@Database(entities = [ProductoEntity::class], version = 1)
+@Database(entities = [ProductoEntity::class], version = 1, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun productosDao(): ProductosDAO

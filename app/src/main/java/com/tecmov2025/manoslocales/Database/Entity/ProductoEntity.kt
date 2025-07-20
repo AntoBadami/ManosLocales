@@ -10,7 +10,7 @@ data class ProductoEntity(
     val descripcion: String,
     val precio: Double,
     val ubicacion: String,
-    //val images: List<String>,
+    val images: List<String>,
     val categoria: String,
     val vendedor: String,
     val email: String,
