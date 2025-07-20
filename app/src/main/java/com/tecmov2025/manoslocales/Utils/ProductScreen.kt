@@ -45,8 +45,6 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.tecmov2025.manoslocales.Networking.ProductoDTO
-import androidx.compose.material3.CircularProgressIndicator
-
 
 @Composable
 fun ProductScreen(viewModel: ProductViewModel, navController: NavController) {
@@ -61,8 +59,6 @@ fun ProductScreen(viewModel: ProductViewModel, navController: NavController) {
             viewModel.desapilarProducto()
         }
     }
-
-
 
     // Estado para el favorito
     var isFavorite = remember { mutableStateOf(false) }

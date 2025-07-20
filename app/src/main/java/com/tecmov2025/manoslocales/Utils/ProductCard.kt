@@ -23,7 +23,12 @@ import coil.compose.AsyncImage
 import com.tecmov2025.manoslocales.Networking.ProductoDTO
 
 @Composable
-fun ProductoCard(producto: ProductoDTO, viewModel: ProductViewModel, navController: NavController, isFavoritoView: Boolean = false) {
+fun ProductoCard(
+    producto: ProductoDTO,
+    viewModel: ProductViewModel,
+    navController: NavController,
+    isFavoritoView: Boolean = false
+) {
 
     Card(
         modifier = Modifier

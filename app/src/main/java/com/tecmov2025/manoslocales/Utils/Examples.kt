@@ -13,7 +13,7 @@ class ExampleProductList(
                     "https://http2.mlstatic.com/D_NQ_NP_810338-MLA73177838120_122023-O.webp"),
                 categoria = "mates",
                 vendedor = "Artesanias Cordoba",
-                if (index%2 == 0) true else false,
+                favoritoState = if (index%2 == 0) true else false,
                 email = "manoslocales@gmail.com",
                 telefono = "5491122334455"
             )
@@ -26,7 +26,7 @@ class ExampleProductList(
                     "https://http2.mlstatic.com/D_NQ_NP_848919-MLA83470753618_042025-O.webp"),
                 categoria = "mates",
                 vendedor = "Artesanias Cordoba",
-                if (index%2 == 0) true else false,
+                favoritoState = if (index%2 == 0) true else false,
                 email = "manoslocales@gmail.com",
                 telefono = "5491122334455"
             )
@@ -39,7 +39,7 @@ class ExampleProductList(
                     "https://http2.mlstatic.com/D_NQ_NP_712385-MLA84422424103_052025-O.webp"),
                 categoria = "mates",
                 vendedor = "Artesanias Cordoba",
-                if (index%2 == 0) true else false,
+                favoritoState = if (index%2 == 0) true else false,
                 email = "manoslocales@gmail.com",
                 telefono = "5491122334455"
             )
@@ -52,7 +52,7 @@ class ExampleProductList(
                     "https://http2.mlstatic.com/D_NQ_NP_872179-MLA83587953491_042025-O.webp"),
                 categoria = "alimentos",
                 vendedor = "Artesanias Cordoba",
-                if (index%2 == 0) true else false,
+                favoritoState = if (index%2 == 0) true else false,
                 email = "manoslocales@gmail.com",
                 telefono = "5491122334455"
             )
@@ -66,7 +66,7 @@ class ExampleProductList(
                     "https://http2.mlstatic.com/D_NQ_NP_884664-MLA83128788405_032025-O.webp"),
                 categoria = "velas",
                 vendedor = "Artesanias Cordoba",
-                if (index%2 == 0) true else false,
+                favoritoState = if (index%2 == 0) true else false,
                 email = "manoslocales@gmail.com",
                 telefono = "5491122334455"
             )
@@ -79,7 +79,7 @@ class ExampleProductList(
                     "https://http2.mlstatic.com/D_NQ_NP_686523-MLA83527858824_042025-O.webp"),
                 categoria = "velas",
                 vendedor = "Deco home",
-                if (index%2 == 0) true else false,
+                favoritoState = if (index%2 == 0) true else false,
                 email = "manoslocales@gmail.com",
                 telefono = "5491122334455"
             )
@@ -92,7 +92,7 @@ class ExampleProductList(
                     "https://http2.mlstatic.com/D_NQ_NP_736727-MLA72955537288_112023-O.webp"),
                 categoria = "velas",
                 vendedor = "Deco home",
-                if (index%2 == 0) true else false,
+                favoritoState = if (index%2 == 0) true else false,
                 email = "manoslocales@gmail.com",
                 telefono = "5491122334455"
             )
@@ -106,7 +106,7 @@ class ExampleProductList(
                     "https://http2.mlstatic.com/D_NQ_NP_676540-MLA76516220472_052024-O.webp"),
                 categoria = "canastos",
                 vendedor = "Deco home",
-                if (index%2 == 0) true else false,
+                favoritoState = if (index%2 == 0) true else false,
                 email = "manoslocales@gmail.com",
                 telefono = "5491122334455"
             )
@@ -120,7 +120,7 @@ class ExampleProductList(
                     "https://http2.mlstatic.com/D_NQ_NP_878091-MLA54657882382_032023-O.webp"),
                 categoria = "cocina",
                 vendedor = "Deco home",
-                if (index%2 == 0) true else false,
+                favoritoState = if (index%2 == 0) true else false,
                 email = "manoslocales@gmail.com",
                 telefono = "5491122334455"
             )
@@ -133,7 +133,7 @@ class ExampleProductList(
                     "https://http2.mlstatic.com/D_NQ_NP_730639-MLA74756686742_032024-O.webp"),
                 categoria = "canastos",
                 vendedor = "Deco home",
-                if (index%2 == 0) true else false,
+                favoritoState = if (index%2 == 0) true else false,
                 email = "manoslocales@gmail.com",
                 telefono = "5491122334455"
             )
@@ -146,7 +146,7 @@ class ExampleProductList(
                     "https://http2.mlstatic.com/D_NQ_NP_965545-MLA83492364483_042025-O.webp"),
                 categoria = "cocina",
                 vendedor = "Deco home",
-                if (index%2 == 0) true else false,
+                favoritoState = if (index%2 == 0) true else false,
                 email = "manoslocales@gmail.com",
                 telefono = "5491122334455"
             )
@@ -159,7 +159,7 @@ class ExampleProductList(
                     "https://http2.mlstatic.com/D_NQ_NP_800709-MLA83492051403_042025-O.webp"),
                 categoria = "canastos",
                 vendedor = "Ganga home",
-                if (index%2 == 0) true else false,
+                favoritoState = if (index%2 == 0) true else false,
                 email = "manoslocales@gmail.com",
                 telefono = "5491122334455"
             )
@@ -172,7 +172,7 @@ class ExampleProductList(
                     "https://http2.mlstatic.com/D_NQ_NP_822415-MLA81750594763_012025-O.webp"),
                 categoria = "cocina",
                 vendedor = "Ganga home",
-                if (index%2 == 0) true else false,
+                favoritoState = if (index%2 == 0) true else false,
                 email = "manoslocales@gmail.com",
                 telefono = "5491122334455"
             )
@@ -186,7 +186,7 @@ class ExampleProductList(
                     "https://http2.mlstatic.com/D_NQ_NP_745331-MLA83132462777_032025-O.webp"),
                 categoria = "cocina",
                 vendedor = "Ganga home",
-                if (index%2 == 0) true else false,
+                favoritoState = if (index%2 == 0) true else false,
                 email = "manoslocales@gmail.com",
                 telefono = "5491122334455"
             )
@@ -200,7 +200,7 @@ class ExampleProductList(
                     "https://http2.mlstatic.com/D_NQ_NP_857109-MLA83703925972_042025-O.webp"),
                 categoria = "cocina",
                 vendedor = "Ganga home",
-                if (index%2 == 0) true else false,
+                favoritoState = if (index%2 == 0) true else false,
                 email = "manoslocales@gmail.com",
                 telefono = "5491122334455"
             )
@@ -214,7 +214,7 @@ class ExampleProductList(
                     "https://http2.mlstatic.com/D_NQ_NP_808972-MLA44198155842_112020-O.webp"),
                 categoria = "plantas",
                 vendedor = "Ganga home",
-                if (index%2 == 0) true else false,
+                favoritoState = if (index%2 == 0) true else false,
                 email = "manoslocales@gmail.com",
                 telefono = "5491122334455"
             )
@@ -227,7 +227,7 @@ class ExampleProductList(
                     "https://http2.mlstatic.com/D_NQ_NP_879753-MLA45788839458_052021-O.webp"),
                 categoria = "plantas",
                 vendedor = "Ganga home",
-                if (index%2 == 0) true else false,
+                favoritoState = if (index%2 == 0) true else false,
                 email = "manoslocales@gmail.com",
                 telefono = "5491122334455"
             )
@@ -241,7 +241,7 @@ class ExampleProductList(
                     "https://http2.mlstatic.com/D_NQ_NP_750521-MLA75763161676_042024-O.webp"),
                 categoria = "plantas",
                 vendedor = "Craco",
-                if (index%2 == 0) true else false,
+                favoritoState = if (index%2 == 0) true else false,
                 email = "manoslocales@gmail.com",
                 telefono = "5491122334455"
             )
@@ -255,7 +255,7 @@ class ExampleProductList(
                     "https://http2.mlstatic.com/D_NQ_NP_778379-MLA77606078684_072024-O.webp"),
                 categoria = "velas",
                 vendedor = "Craco",
-                if (index%2 == 0) true else false,
+                favoritoState = if (index%2 == 0) true else false,
                 email = "manoslocales@gmail.com",
                 telefono = "5491122334455"
             )
@@ -268,7 +268,7 @@ class ExampleProductList(
                     "https://http2.mlstatic.com/D_NQ_NP_742857-MLA83435057022_042025-O.webp"),
                 categoria = "mates",
                 vendedor = "Craco",
-                if (index%2 == 0) true else false,
+                favoritoState = if (index%2 == 0) true else false,
                 email = "manoslocales@gmail.com",
                 telefono = "5491122334455"
             )
@@ -283,7 +283,7 @@ class ExampleProductList(
                 ),
                 categoria = "mates",
                 vendedor = "Craco",
-                if (index%2 == 0) true else false,
+                favoritoState = if (index%2 == 0) true else false,
                 email = "manoslocales@gmail.com",
                 telefono = "5491122334455"
             )
