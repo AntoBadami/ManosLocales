@@ -24,3 +24,18 @@ data class ProductoDTO(
     @SerializedName("telefono")
     val telefono: String
 )
+
+data class VendedorDTO(
+    @SerializedName("nombre")
+    val nombre: String,
+    @SerializedName("descripcion")
+    val descripcion: String,
+    @SerializedName("perfilFoto")
+    val perfilFoto: String,
+    @SerializedName("email")
+    val email: String,
+    @SerializedName("telefono")
+    val telefono: String,
+    @SerializedName("ubicacion")
+    val ubicacion: String
+)

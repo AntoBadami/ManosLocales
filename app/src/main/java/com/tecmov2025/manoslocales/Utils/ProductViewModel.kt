@@ -8,6 +8,7 @@ import com.tecmov2025.manoslocales.Networking.ProductoDTO
 import kotlinx.coroutines.launch
 import androidx.compose.runtime.State
 import com.tecmov2025.manoslocales.Database.Entity.ProductoEntity
+import com.tecmov2025.manoslocales.Database.Entity.VendedorEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -30,6 +31,15 @@ class ProductViewModel(private val repo: ApiRepository): ViewModel() {
     val productosState: StateFlow<List<ProductoEntity>> =
         repo
             .obtenerProductosDB()
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.Lazily,
+                initialValue = emptyList()
+            )
+
+    val vendedoresState: StateFlow<List<VendedorEntity>> =
+        repo
+            .obtenerVendedoresDB()
             .stateIn(
                 scope = viewModelScope,
                 started = SharingStarted.Lazily,
@@ -59,9 +69,10 @@ class ProductViewModel(private val repo: ApiRepository): ViewModel() {
         }
     }
 
-    fun sincronizarProductos() {
+    fun sincronizarBaseDeDatos() {
         viewModelScope.launch(Dispatchers.IO) {
             repo.obteneryGuardarProductos()
+            repo.obteneryGuardarVendedores()
         }
     }
 

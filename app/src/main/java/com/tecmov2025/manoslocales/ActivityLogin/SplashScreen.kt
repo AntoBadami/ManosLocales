@@ -38,7 +38,7 @@ fun SplashScreen(navController: NavHostController, viewModel: ProductViewModel)
     }
     LaunchedEffect(Unit)
     {
-        viewModel.sincronizarProductos()
+        viewModel.sincronizarBaseDeDatos()
         navController.navigate(Screens.LoginScreen.route) {
             popUpTo("SplashScreen") { inclusive = true }
         }
