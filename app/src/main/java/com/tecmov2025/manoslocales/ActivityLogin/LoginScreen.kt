@@ -104,19 +104,40 @@ fun LoginButtonAction(
     username: String,
     password: String,
     snackbarHostState: SnackbarHostState
-)
-{
+) {
     val scope: CoroutineScope = MainScope()
 
-    if (username.isBlank() || password.isBlank()) {
-        scope.launch {
-            snackbarHostState.showSnackbar("Por favor, completa todos los campos.")
+    //valida el formato del email
+    fun isValidEmail(email: String): Boolean {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    }
+
+    when {
+        username.isBlank() || password.isBlank() -> {
+            scope.launch {
+                snackbarHostState.showSnackbar("Por favor, completa todos los campos.")
+            }
         }
-    } else {
-        val intent = Intent(context, MainActivity::class.java)
-        context.startActivity(intent)
-        if (context is Activity) {
-            context.finish()
+
+        !isValidEmail(username) -> {
+            scope.launch {
+                snackbarHostState.showSnackbar("El usuario debe tener formato de correo electrónico.")
+            }
+        }
+
+        password.length < 8 -> {
+            scope.launch {
+                snackbarHostState.showSnackbar("La contraseña debe tener al menos 8 caracteres.")
+            }
+        }
+
+        else -> {
+            val intent = Intent(context, MainActivity::class.java)
+            context.startActivity(intent)
+            if (context is Activity) {
+                context.finish()
+            }
         }
     }
 }
+

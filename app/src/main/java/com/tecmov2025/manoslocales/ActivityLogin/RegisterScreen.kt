@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -22,6 +23,8 @@ import androidx.compose.ui.unit.dp
 import com.tecmov2025.manoslocales.Utils.CustomButton
 import com.tecmov2025.manoslocales.Utils.CustomScaffold
 import com.tecmov2025.manoslocales.Utils.CustomTitledInput
+import com.tecmov2025.manoslocales.Utils.CustomTitledPasswordInput
+import kotlinx.coroutines.launch
 
 /**
  * Pantalla de registro en app
@@ -41,6 +44,8 @@ fun RegisterFormBody(padding: PaddingValues)
             .padding(padding)
     ) {
         val scrollState = rememberScrollState()
+        val snackbarHostState = remember { androidx.compose.material3.SnackbarHostState() }
+        val scope = rememberCoroutineScope()
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -56,11 +61,18 @@ fun RegisterFormBody(padding: PaddingValues)
             var name by remember { mutableStateOf("") }
             var lastname by remember { mutableStateOf("") }
             var mail by remember { mutableStateOf("") }
-            var username by remember { mutableStateOf("") }
             var password by remember { mutableStateOf("") }
             var passwordControl by remember { mutableStateOf("") }
 
-            CustomTitledInput(value = name, onValueChange = { name = it }, label = "Nombre")
+            fun isValidEmail(email: String): Boolean {
+                return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
+            }
+
+            CustomTitledInput(
+                value = name,
+                onValueChange = { name = it },
+                label = "Nombre"
+            )
             CustomTitledInput(
                 value = lastname,
                 onValueChange = { lastname = it },
@@ -71,22 +83,65 @@ fun RegisterFormBody(padding: PaddingValues)
                 onValueChange = { mail = it },
                 label = "Correo electrónico"
             )
-            CustomTitledInput(
-                value = username,
-                onValueChange = { username = it },
-                label = "Usuario"
-            )
-            CustomTitledInput(
+            // Campo contraseña
+            CustomTitledPasswordInput(
                 value = password,
                 onValueChange = { password = it },
                 label = "Contraseña"
             )
-            CustomTitledInput(
+            // Campo repetir contraseña
+            CustomTitledPasswordInput(
                 value = passwordControl,
                 onValueChange = { passwordControl = it },
                 label = "Repetir Contraseña"
             )
-            CustomButton({}, "Registrarse")
+
+            CustomButton(
+                onClick = {
+                    when {
+                        name.isBlank() || lastname.isBlank() || mail.isBlank() ||
+                                password.isBlank() || passwordControl.isBlank() -> {
+                            scope.launch {
+                                snackbarHostState.showSnackbar("Por favor, completá todos los campos.")
+                            }
+                        }
+
+                        !isValidEmail(mail) -> {
+                            scope.launch {
+                                snackbarHostState.showSnackbar("El correo no tiene un formato válido.")
+                            }
+                        }
+
+                        password.length < 8 -> {
+                            scope.launch {
+                                snackbarHostState.showSnackbar("La contraseña debe tener al menos 8 caracteres.")
+                            }
+                        }
+
+                        password != passwordControl -> {
+                            scope.launch {
+                                snackbarHostState.showSnackbar("Las contraseñas no coinciden.")
+                            }
+                        }
+
+                        else -> {
+                            scope.launch {
+                                snackbarHostState.showSnackbar("Usuario registrado con éxito.")
+                            }
+                            // logica para registrar el usuario
+                        }
+                    }
+                },
+                text = "Registrarse"
+            )
+
         }
+        // Snackbar visible abajo
+        androidx.compose.material3.SnackbarHost(
+            hostState = snackbarHostState,
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .padding(bottom = 66.dp)
+        )
     }
 }
