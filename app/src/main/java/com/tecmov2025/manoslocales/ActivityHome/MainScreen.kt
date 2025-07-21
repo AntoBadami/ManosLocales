@@ -61,13 +61,13 @@ fun MainScreen(viewModel: ProductViewModel, navController: NavController)
 @Composable
 fun MainScreenBody(paddingBarraDeBusqueda: PaddingValues, viewModel: ProductViewModel, navController: NavController)
 {
-    val productos by viewModel.productosState.collectAsState()
+    val productos by viewModel.productosConVendedorState.collectAsState()
 
 
     val vendedores = remember(productos) {
         buildList {
             add("Todos")
-            addAll(productos.map { it.vendedor }.distinct())
+            addAll(productos.map { it.vendedor.nombre }.distinct())
         }
     }
     var vendedorSeleccionado by rememberSaveable { mutableStateOf("Todos") }
@@ -76,7 +76,7 @@ fun MainScreenBody(paddingBarraDeBusqueda: PaddingValues, viewModel: ProductView
     {
         buildList {
             add("Todas")
-            addAll(productos.map { it.categoria }.distinct())
+            addAll(productos.map { it.producto.categoria }.distinct())
         }
     }
     var categoriaSeleccionada by rememberSaveable { mutableStateOf("Todas") }
@@ -84,8 +84,8 @@ fun MainScreenBody(paddingBarraDeBusqueda: PaddingValues, viewModel: ProductView
     val productosFiltrados = remember(productos, categoriaSeleccionada, vendedorSeleccionado)
     {
         productos.filter {
-            (categoriaSeleccionada == "Todas" || it.categoria == categoriaSeleccionada) &&
-                    (vendedorSeleccionado == "Todos" || it.vendedor == vendedorSeleccionado)
+            (categoriaSeleccionada == "Todas" || it.producto.categoria == categoriaSeleccionada) &&
+                    (vendedorSeleccionado == "Todos" || it.vendedor.nombre == vendedorSeleccionado)
         }
     }
 

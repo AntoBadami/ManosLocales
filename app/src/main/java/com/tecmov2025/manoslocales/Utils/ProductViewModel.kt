@@ -7,8 +7,8 @@ import com.tecmov2025.manoslocales.Networking.ApiRepository
 import com.tecmov2025.manoslocales.Networking.ProductoDTO
 import kotlinx.coroutines.launch
 import androidx.compose.runtime.State
-import com.tecmov2025.manoslocales.Database.Entity.ProductoEntity
 import com.tecmov2025.manoslocales.Database.Entity.VendedorEntity
+import com.tecmov2025.manoslocales.Database.POJO.ProductoConVendedor
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -17,25 +17,26 @@ import kotlinx.coroutines.flow.stateIn
 
 class ProductViewModel(private val repo: ApiRepository): ViewModel() {
 
-    private val _historialProductos = mutableStateOf<List<ProductoEntity>>(emptyList())
-    val historialProductos: State<List<ProductoEntity>> = _historialProductos
+    private val _historialProductos = mutableStateOf<List<ProductoConVendedor>>(emptyList())
+    val historialProductos: State<List<ProductoConVendedor>> = _historialProductos
 
 
     private val _productos = mutableStateOf<List<ProductoDTO>>(emptyList())
     val productos: State<List<ProductoDTO>> = _productos //lectura
 
-    val productoSeleccionado: ProductoEntity?
+    val productoSeleccionado: ProductoConVendedor?
         get() = historialProductos.value.firstOrNull()
 
     // TODO Reemplazar nombre por productos cuando finalice integracion de networking y db
-    val productosState: StateFlow<List<ProductoEntity>> =
+    val productosConVendedorState: StateFlow<List<ProductoConVendedor>> =
         repo
-            .obtenerProductosDB()
+            .obtenerProductosConVendedorDB()
             .stateIn(
                 scope = viewModelScope,
                 started = SharingStarted.Lazily,
                 initialValue = emptyList()
             )
+
 
     val vendedoresState: StateFlow<List<VendedorEntity>> =
         repo
@@ -50,7 +51,7 @@ class ProductViewModel(private val repo: ApiRepository): ViewModel() {
         cargarProductos()
     }
 
-    fun seleccionarProducto(producto: ProductoEntity) {
+    fun seleccionarProducto(producto: ProductoConVendedor) {
         _historialProductos.value = listOf(producto) + _historialProductos.value
     }
 
@@ -71,10 +72,19 @@ class ProductViewModel(private val repo: ApiRepository): ViewModel() {
 
     fun sincronizarBaseDeDatos() {
         viewModelScope.launch(Dispatchers.IO) {
-            repo.obteneryGuardarProductos()
             repo.obteneryGuardarVendedores()
+            repo.obteneryGuardarProductos()
         }
     }
+
+    fun productosDeUnMismoVendedor(vendedorId: Int): StateFlow<List<ProductoConVendedor>> =
+        repo
+            .obtenerProductosPorVendedorDB(vendedorId)
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.Lazily,
+                initialValue = emptyList()
+            )
 
 
 

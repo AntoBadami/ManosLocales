@@ -5,6 +5,7 @@ import com.tecmov2025.manoslocales.Networking.ProductoDTO
 
 fun ProductoDTO.toEntity(): ProductoEntity {
     return ProductoEntity(
+        id = this.id,
         nombre = this.nombre,
         descripcion = this.descripcion,
         precio = this.precio,

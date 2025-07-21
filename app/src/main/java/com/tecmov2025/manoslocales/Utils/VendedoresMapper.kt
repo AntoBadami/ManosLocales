@@ -6,6 +6,7 @@ import com.tecmov2025.manoslocales.Networking.VendedorDTO
 
 fun VendedorDTO.toEntity(): VendedorEntity {
     return VendedorEntity(
+        id = this.id,
         nombre = this.nombre,
         descripcion = this.descripcion,
         ubicacion = this.ubicacion,

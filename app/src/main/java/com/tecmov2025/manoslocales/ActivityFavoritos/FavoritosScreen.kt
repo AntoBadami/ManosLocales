@@ -50,7 +50,7 @@ fun FavoritosScreenBody(padding: PaddingValues, viewModel: ProductViewModel, nav
 {
     //productos ejemplo
 
-    val productos by viewModel.productosState.collectAsState()
+    val productos by viewModel.productosConVendedorState.collectAsState()
 
     Box(
         modifier = Modifier
@@ -77,7 +77,7 @@ fun FavoritosScreenBody(padding: PaddingValues, viewModel: ProductViewModel, nav
             ){
                 items(productos.size) {
                     index ->
-                        if(productos[index].favoritoState)
+                        if(productos[index].producto.favoritoState)
                         { ProductoCard(productos[index], viewModel, navController, true) }}
             }
         }

@@ -4,6 +4,7 @@ import android.util.Log
 import com.tecmov2025.manoslocales.Database.AppDatabase
 import com.tecmov2025.manoslocales.Database.Entity.ProductoEntity
 import com.tecmov2025.manoslocales.Database.Entity.VendedorEntity
+import com.tecmov2025.manoslocales.Database.POJO.ProductoConVendedor
 import com.tecmov2025.manoslocales.Utils.toEntityList
 import kotlinx.coroutines.flow.Flow
 
@@ -27,8 +28,13 @@ class ApiRepository(private val api: ApiService,private val database: AppDatabas
         }
     }
 
+
     fun obtenerProductosDB(): Flow<List<ProductoEntity>> {
         return productosDao.getAll()
+    }
+
+    fun obtenerProductosConVendedorDB(): Flow<List<ProductoConVendedor>> {
+        return productosDao.getAllProductosConVendedor()
     }
 
     suspend fun obteneryGuardarVendedores() {
@@ -41,6 +47,9 @@ class ApiRepository(private val api: ApiService,private val database: AppDatabas
         }
     }
 
+    fun obtenerProductosPorVendedorDB(vendedorID : Int): Flow<List<ProductoConVendedor>> {
+        return productosDao.obtenerProductosPorVendedor(vendedorID)
+    }
     fun obtenerVendedoresDB(): Flow<List<VendedorEntity>> {
         return vendedoresDao.getAll()
     }
