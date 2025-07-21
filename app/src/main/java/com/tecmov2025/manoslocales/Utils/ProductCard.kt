@@ -20,10 +20,11 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import com.tecmov2025.manoslocales.Database.Entity.ProductoEntity
 import com.tecmov2025.manoslocales.Networking.ProductoDTO
 
 @Composable
-fun ProductoCard(producto: ProductoDTO, viewModel: ProductViewModel, navController: NavController, isFavoritoView: Boolean = false) {
+fun ProductoCard(producto: ProductoEntity, viewModel: ProductViewModel, navController: NavController, isFavoritoView: Boolean = false) {
 
     Card(
         modifier = Modifier

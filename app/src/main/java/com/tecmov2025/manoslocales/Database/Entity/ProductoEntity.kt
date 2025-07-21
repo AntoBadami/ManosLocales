@@ -15,5 +15,6 @@ data class ProductoEntity(
     val categoria: String,
     val vendedor: String,
     val email: String,
-    val telefono: String
+    val telefono: String,
+    val favoritoState: Boolean
 )

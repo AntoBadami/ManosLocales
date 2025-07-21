@@ -46,6 +46,9 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.tecmov2025.manoslocales.Networking.ProductoDTO
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import com.tecmov2025.manoslocales.Database.Entity.ProductoEntity
 
 
 @Composable
@@ -76,7 +79,7 @@ fun ProductScreen(viewModel: ProductViewModel, navController: NavController) {
 }
 @Composable
 fun ProductScreenBody(
-    producto: ProductoDTO,
+    producto: ProductoEntity,
     padding: PaddingValues,
     isFavorite: MutableState<Boolean>,
     viewModel: ProductViewModel,
@@ -86,7 +89,8 @@ fun ProductScreenBody(
     val scrollState = rememberScrollState()
     val context = LocalContext.current
 
-    val productosMismoVendedor = viewModel.productos.value
+    val productosMismoVendedor by viewModel.productosState.collectAsState()
+
 
     Column(
         modifier = Modifier
@@ -114,7 +118,8 @@ fun ProductScreenBody(
                     .size(48.dp),
                 onClick = {
                     isFavorite.value = !isFavorite.value
-                    producto.favoritoState = isFavorite.value }
+                //  TODO Implementar logica de favoritos con DB
+                    /*producto.favoritoState = isFavorite.value*/ }
             ){
                 //si está favorito, muestra el ícono relleno
                 val heartIcon = if (isFavorite.value) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder
@@ -218,7 +223,7 @@ fun ProductScreenBody(
 
 }
 
-fun contactarVendedor(context: Context, producto: ProductoDTO) {
+fun contactarVendedor(context: Context, producto: ProductoEntity) {
     if (producto.telefono.isNotEmpty()) {
         val uri = Uri.parse("https://wa.me/${producto.telefono}")
         val intent = Intent(Intent.ACTION_VIEW, uri)

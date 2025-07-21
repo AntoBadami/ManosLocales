@@ -41,6 +41,7 @@ import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.material3.LocalTextStyle
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 
 /**
@@ -60,7 +61,8 @@ fun MainScreen(viewModel: ProductViewModel, navController: NavController)
 @Composable
 fun MainScreenBody(paddingBarraDeBusqueda: PaddingValues, viewModel: ProductViewModel, navController: NavController)
 {
-    val productos = viewModel.productos.value
+    val productos by viewModel.productosState.collectAsState()
+
 
     val vendedores = remember(productos) {
         buildList {
