@@ -14,9 +14,7 @@ fun ProductoDTO.toEntity(): ProductoEntity {
         images = this.images,
         vendedor = this.vendedor,
         email = this.email,
-        telefono = this.telefono,
-        //TODO Eliminar esto
-        favoritoState = this.favoritoState
+        telefono = this.telefono
     )
 }
 

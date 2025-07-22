@@ -2,12 +2,14 @@ package com.tecmov2025.manoslocales.Networking
 
 import android.util.Log
 import com.tecmov2025.manoslocales.Database.AppDatabase
+import com.tecmov2025.manoslocales.Database.Entity.FavoritoEntity
 import com.tecmov2025.manoslocales.Database.Entity.ProductoEntity
 import com.tecmov2025.manoslocales.Database.Entity.VendedorEntity
 import com.tecmov2025.manoslocales.Database.POJO.ProductoConVendedor
 import com.tecmov2025.manoslocales.Database.POJO.ProductoFavorito
 import com.tecmov2025.manoslocales.Utils.toEntityList
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.StateFlow
 
 class ApiRepository(private val api: ApiService,private val database: AppDatabase)
 {
@@ -70,6 +72,22 @@ class ApiRepository(private val api: ApiService,private val database: AppDatabas
     fun obtenerFavoritosDB(): Flow<List<ProductoFavorito>> {
         return favoritosDao.getFavoritos()
     }
+
+    fun productoEsFavorito(productoId : Int): Flow<Boolean>{
+        return  favoritosDao.esFavorito(productoId)
+    }
+
+    suspend fun añadirFavorito(productoId : Int)
+    {
+        favoritosDao.agregarFavorito(FavoritoEntity(productoId))
+    }
+
+    suspend fun eliminarFavorito(productoId: Int)
+    {
+        favoritosDao.eliminarFavorito(productoId)
+    }
+
+
 
 
 }

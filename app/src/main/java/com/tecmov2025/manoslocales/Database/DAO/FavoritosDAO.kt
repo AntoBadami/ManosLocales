@@ -7,6 +7,7 @@ import androidx.room.Query
 import com.tecmov2025.manoslocales.Database.Entity.FavoritoEntity
 import com.tecmov2025.manoslocales.Database.POJO.ProductoFavorito
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.StateFlow
 
 @Dao
 interface FavoritosDAO {
@@ -15,5 +16,20 @@ interface FavoritosDAO {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(favoritos: List<FavoritoEntity>)
+
+    @Query("""
+        SELECT EXISTS(
+            SELECT 1 
+            FROM favoritos 
+            WHERE producto = :productoId
+        )
+    """)
+    suspend  fun esFavorito( productoId: Int): Flow<Boolean>
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun agregarFavorito(favorito: FavoritoEntity)
+
+    @Query("DELETE FROM favoritos WHERE producto = :productoId")
+    suspend fun eliminarFavorito(productoId: Int)
 
 }

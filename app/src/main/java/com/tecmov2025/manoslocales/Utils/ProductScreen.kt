@@ -27,6 +27,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -41,6 +42,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.tecmov2025.manoslocales.Database.POJO.ProductoConVendedor
+import kotlinx.coroutines.flow.Flow
 
 @Composable
 fun ProductScreen(viewModel: ProductViewModel, navController: NavController) {
@@ -57,8 +59,8 @@ fun ProductScreen(viewModel: ProductViewModel, navController: NavController) {
     }
 
     // Estado para el favorito
-    var isFavorite = remember { mutableStateOf(false) }
-    isFavorite.value = producto.producto.favoritoState
+    val isFavorite by viewModel.productoEsFavorito(producto.producto.id).collectAsState(initial = false)
+
 
     Scaffold()
     {
@@ -70,7 +72,7 @@ fun ProductScreen(viewModel: ProductViewModel, navController: NavController) {
 fun ProductScreenBody(
     producto: ProductoConVendedor,
     padding: PaddingValues,
-    isFavorite: MutableState<Boolean>,
+    isFavorite: Boolean,
     viewModel: ProductViewModel,
     navController: NavController
 )
@@ -106,12 +108,15 @@ fun ProductScreenBody(
                     .align(Alignment.CenterEnd)
                     .size(48.dp),
                 onClick = {
-                    isFavorite.value = !isFavorite.value
-                //  TODO Implementar logica de favoritos con DB
-                    /*producto.favoritoState = isFavorite.value*/ }
+                    if (isFavorite) {
+                        viewModel.eliminarFavorito(producto.producto.id)
+                    } else {
+                        viewModel.añadirFavorito(producto.producto.id)
+                    }
+                }
             ){
                 //si está favorito, muestra el ícono relleno
-                val heartIcon = if (isFavorite.value) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder
+                val heartIcon = if (isFavorite) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder
                 Icon(
                     imageVector = heartIcon,
                     contentDescription = "Marcar como favorito",
