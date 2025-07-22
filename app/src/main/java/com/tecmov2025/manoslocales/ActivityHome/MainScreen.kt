@@ -32,6 +32,7 @@ import com.tecmov2025.manoslocales.Utils.ProductoCard
 import androidx.compose.material3.*
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.runtime.collectAsState
 
 
 /**

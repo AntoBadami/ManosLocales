@@ -14,16 +14,17 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
 import androidx.navigation.NavController
-import java.net.URLEncoder
-import java.nio.charset.StandardCharsets
+import coil.compose.AsyncImage
+import com.tecmov2025.manoslocales.Database.Entity.VendedorEntity
+
 
 
 @Composable
 fun VendedorCard(
-    vendedor: Vendedor,
-    navController: NavController
+    vendedor: VendedorEntity,
+    navController: NavController,
+    viewModel: ProductViewModel
 ) {
     Card(
         modifier = Modifier
@@ -32,8 +33,8 @@ fun VendedorCard(
         colors = CardDefaults.cardColors(containerColor = Color.White),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         onClick = {
-            val nombreCodificado = URLEncoder.encode(vendedor.nombre, StandardCharsets.UTF_8.toString())
-            navController.navigate(Screens.VendedorScreen.createRoute(nombreCodificado))
+            viewModel.seleccionarVendedor(vendedor)
+            navController.navigate(Screens.VendedorScreen.route)
         }
 
     ) {

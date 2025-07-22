@@ -27,6 +27,16 @@ class ProductViewModel(private val repo: ApiRepository): ViewModel() {
     val productoSeleccionado: ProductoConVendedor?
         get() = historialProductos.value.firstOrNull()
 
+    private val _vendedorSeleccionado = mutableStateOf<VendedorEntity?>(null)
+
+
+    val vendedorSeleccionado: State<VendedorEntity?> = _vendedorSeleccionado
+
+
+    fun seleccionarVendedor(vendedor: VendedorEntity) {
+        _vendedorSeleccionado.value = vendedor
+    }
+
     // TODO Reemplazar nombre por productos cuando finalice integracion de networking y db
     val productosConVendedorState: StateFlow<List<ProductoConVendedor>> =
         repo

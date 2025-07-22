@@ -16,7 +16,5 @@ sealed class Screens(val route: String)
     object LoginScreen : Screens("LoginScreen")
     object PasswordScreen : Screens("PasswordScreen")
     object VendedoresScreen : Screens("VendedoresScreen")
-    object VendedorScreen : Screens("VendedorScreen/{vendedorNombre}") {
-        fun createRoute(nombre: String) = "VendedorScreen/$nombre"
-    }
+    object VendedorScreen : Screens("VendedorScreen")
 }

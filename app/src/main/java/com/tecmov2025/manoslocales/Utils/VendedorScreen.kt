@@ -6,6 +6,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
@@ -27,29 +28,17 @@ import coil.compose.AsyncImage
 import java.net.URLDecoder
 import java.nio.charset.StandardCharsets
 import androidx.compose.material.icons.filled.Notifications
-import androidx.compose.material.icons.filled.NotificationsNone
+import androidx.compose.runtime.collectAsState
 
 @Composable
 fun VendedorScreen(
-    vendedorNombre: String,
     viewModel: ProductViewModel,
     navController: NavController
 ) {
-    val vendedorNombreDecoded = URLDecoder.decode(vendedorNombre, StandardCharsets.UTF_8.toString())
-    val vendedor: Vendedor? = ExamplesVendedoresList().vendedoresList.find { it.nombre == vendedorNombreDecoded }
-    val productosDelVendedor = viewModel.productos.value.filter { it.vendedor == vendedorNombreDecoded }
-
-    if (vendedor == null) {
-        Text("Vendedor no encontrado")
+    val vendedor = viewModel.vendedorSeleccionado.value
+    if(vendedor == null)
         return
-    }
-
-    val TAG = "VendedorScreen"
-
-    viewModel.productos.value.forEach {
-        Log.d(TAG, "Producto: ${it.nombre}, Vendedor: ${it.vendedor}")
-    }
-    Log.d(TAG, "Buscando productos del vendedor: $vendedorNombreDecoded")
+    val productosDelVendedor = viewModel.productosDeUnMismoVendedor(vendedor.id).collectAsState()
 
     LazyColumn(
         modifier = Modifier
@@ -102,7 +91,7 @@ fun VendedorScreen(
                         onClick = { notificacionesActivas = !notificacionesActivas }
                     ) {
                         Icon(
-                            imageVector = if (notificacionesActivas) Icons.Default.Notifications else Icons.Default.NotificationsNone,
+                            imageVector = if (notificacionesActivas) Icons.Default.Notifications else Icons.Default.Clear,
                             contentDescription = "Notificaciones",
                             tint = if (notificacionesActivas) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface
                         )
@@ -125,7 +114,7 @@ fun VendedorScreen(
         }
 
         // Agrupar productos de a 2
-        val productosAgrupados = productosDelVendedor.chunked(2)
+        val productosAgrupados = productosDelVendedor.value.chunked(2)
 
         items(productosAgrupados) { grupo ->
             Row(

@@ -14,6 +14,8 @@ import com.tecmov2025.manoslocales.Utils.ProductViewModel
 import com.tecmov2025.manoslocales.Utils.Vendedor
 import com.tecmov2025.manoslocales.Utils.VendedorCard
 import androidx.compose.foundation.lazy.items
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 
 @Composable
 fun VendedoresScreen(viewModel: ProductViewModel, navController: NavController) {
@@ -24,14 +26,14 @@ fun VendedoresScreen(viewModel: ProductViewModel, navController: NavController) 
                 .padding(padding) // respeta top bar y bottom bar
                 .padding(16.dp)
         ) {
-            VendedoresScreenBody(padding, navController)
+            VendedoresScreenBody(padding, navController, viewModel)
         }
     }
 }
 
 @Composable
-fun VendedoresScreenBody(paddingBarraDeBusqueda: PaddingValues, navController: NavController) {
-    val vendedoresList: List<Vendedor> = ExamplesVendedoresList().vendedoresList
+fun VendedoresScreenBody(paddingBarraDeBusqueda: PaddingValues, navController: NavController,viewModel: ProductViewModel) {
+    val vendedoresList by viewModel.vendedoresState.collectAsState()
 
     Column(
         modifier = Modifier
@@ -48,7 +50,7 @@ fun VendedoresScreenBody(paddingBarraDeBusqueda: PaddingValues, navController: N
             items(vendedoresList) { vendedor ->
                 VendedorCard(
                     vendedor = vendedor,
-                    navController = navController
+                    navController = navController,viewModel
                 )
             }
         }

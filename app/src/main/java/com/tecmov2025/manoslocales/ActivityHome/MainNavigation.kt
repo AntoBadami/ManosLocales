@@ -30,12 +30,7 @@ fun MainNavigation(viewModel: ProductViewModel)
         composable(Screens.MainScreen.route) { MainScreen(viewModel, navController) }
         composable(Screens.ProductoScreen.route){ProductScreen(viewModel, navController)}
         composable(Screens.VendedoresScreen.route) { VendedoresScreen(viewModel, navController) }
-        composable(
-            route = Screens.VendedorScreen.route
-        ) { backStackEntry ->
-            val vendedorNombre = backStackEntry.arguments?.getString("vendedorNombre") ?: ""
-            VendedorScreen(vendedorNombre, viewModel, navController)
-        }
+        composable(Screens.VendedorScreen.route){VendedorScreen(viewModel, navController) }
 
     }
 }
