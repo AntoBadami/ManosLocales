@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.tecmov2025.manoslocales.Database.Entity.FavoritoEntity
+import com.tecmov2025.manoslocales.Database.POJO.ProductoConVendedor
 import com.tecmov2025.manoslocales.Database.POJO.ProductoFavorito
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
@@ -31,5 +32,14 @@ interface FavoritosDAO {
 
     @Query("DELETE FROM favoritos WHERE producto = :productoId")
     suspend fun eliminarFavorito(productoId: Int)
+
+    @Query("""
+        SELECT p.*, v.*
+        FROM productos p
+        INNER JOIN favoritos f ON p.id = f.producto
+        INNER JOIN vendedores v ON p.vendedor = v.id
+    """)
+    fun getProductosFavoritosConVendedor(): Flow<List<ProductoConVendedor>>
+
 
 }

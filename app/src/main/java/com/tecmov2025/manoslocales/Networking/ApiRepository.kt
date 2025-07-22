@@ -69,8 +69,8 @@ class ApiRepository(private val api: ApiService,private val database: AppDatabas
         return vendedoresDao.getAll()
     }
 
-    fun obtenerFavoritosDB(): Flow<List<ProductoFavorito>> {
-        return favoritosDao.getFavoritos()
+    fun obtenerFavoritosDB(): Flow<List<ProductoConVendedor>> {
+        return favoritosDao.getProductosFavoritosConVendedor()
     }
 
     fun productoEsFavorito(productoId : Int): Flow<Boolean>{

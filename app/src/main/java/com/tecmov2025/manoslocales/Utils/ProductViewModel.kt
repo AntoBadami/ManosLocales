@@ -56,7 +56,7 @@ class ProductViewModel(private val repo: ApiRepository): ViewModel() {
                 initialValue = emptyList()
             )
 
-    val favoritosState: StateFlow<List<ProductoFavorito>> =
+    val favoritosState: StateFlow<List<ProductoConVendedor>> =
         repo
             .obtenerFavoritosDB()
             .stateIn(
