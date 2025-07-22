@@ -4,8 +4,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitClient{
-    private const val BASE_URL = "https://manos-locales.free.beeceptor.com"
-
+    //private const val BASE_URL = "https://manos-locales.free.beeceptor.com"
+    private const val BASE_URL = "https://manoslocalesapp.app.smartmock.io"
 
     val apiService: ApiService by lazy {
         Retrofit.Builder()
