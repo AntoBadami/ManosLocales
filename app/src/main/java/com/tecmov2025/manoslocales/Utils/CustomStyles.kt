@@ -18,6 +18,8 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -26,6 +28,7 @@ import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
@@ -42,10 +45,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 
 /**
  * Campo de texto personalizado que puede ocultar la entrada (para contraseñas).
@@ -150,8 +154,60 @@ fun CustomTitledInput(value: String, onValueChange: (String)-> Unit, label: Stri
         )
     }
 }
+/**
+ * campo de entrada para contraseña
+ * */
+@Composable
+fun CustomTitledPasswordInput(
+    value: String,
+    onValueChange: (String) -> Unit,
+    label: String
+) {
+    Column(
+        modifier = Modifier.widthIn(max = 400.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = label,
+            fontSize = 16.sp,
+            modifier = Modifier.padding(bottom = 4.dp)
+        )
+        var passwordVisible by remember { mutableStateOf(false) }
 
+        OutlinedTextField(
+            value = value,
+            onValueChange = onValueChange,
+            label = { Text(label) },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+            visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+            trailingIcon = {
+                val image = if (passwordVisible)
+                    Icons.Filled.VisibilityOff
+                else
+                    Icons.Filled.Visibility
 
+                val description = if (passwordVisible) "Ocultar contraseña" else "Mostrar contraseña"
+
+                IconButton(onClick = { passwordVisible = !passwordVisible }) {
+                    Icon(imageVector = image, contentDescription = description)
+                }
+            },
+            singleLine = true,
+            modifier = Modifier
+                .width(324.dp)
+                .height(64.dp),
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedTextColor = Color.DarkGray,
+                unfocusedTextColor = Color.DarkGray,
+                focusedLabelColor = Color.DarkGray,
+                unfocusedLabelColor = Color.DarkGray,
+                cursorColor = Color.DarkGray,
+                focusedBorderColor = Color.DarkGray,
+                unfocusedBorderColor = Color.Gray
+            )
+        )
+    }
+}
 /**
  * Composable que representa una tarjeta de opción clickeable.
  *

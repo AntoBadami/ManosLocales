@@ -26,7 +26,6 @@ import com.tecmov2025.manoslocales.Networking.ProductoDTO
 
 @Composable
 fun ProductoCard(producto: ProductoConVendedor, viewModel: ProductViewModel, navController: NavController, isFavoritoView: Boolean = false) {
-
     Card(
         modifier = Modifier
             .fillMaxWidth()

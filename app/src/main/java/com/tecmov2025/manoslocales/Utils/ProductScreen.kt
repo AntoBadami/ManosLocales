@@ -45,12 +45,6 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.tecmov2025.manoslocales.Networking.ProductoDTO
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import com.tecmov2025.manoslocales.Database.Entity.ProductoEntity
-import com.tecmov2025.manoslocales.Database.POJO.ProductoConVendedor
-
 
 @Composable
 fun ProductScreen(viewModel: ProductViewModel, navController: NavController) {
@@ -65,8 +59,6 @@ fun ProductScreen(viewModel: ProductViewModel, navController: NavController) {
             viewModel.desapilarProducto()
         }
     }
-
-
 
     // Estado para el favorito
     var isFavorite = remember { mutableStateOf(false) }
@@ -151,26 +143,9 @@ fun ProductScreenBody(
             }
         }
 
-        Text(text = "Precio: $${String.format("%.2f", producto.producto.precio)}", style = MaterialTheme.typography.titleMedium)
-        // estado de la cantidad seleccionada
-        var cantidad by remember { mutableStateOf(1) }
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-            modifier = Modifier.padding(top = 8.dp)
-        ){
-            Text(text = "Cantidad:", style = MaterialTheme.typography.titleMedium)
-            // disminuir
-            IconButton(
-                onClick = { if (cantidad > 1) cantidad-- }
-            ){ Text("-", style = MaterialTheme.typography.headlineMedium) }
 
-            Text(text = cantidad.toString(), style = MaterialTheme.typography.titleMedium)
-            // aumentar
-            IconButton(
-                onClick = { cantidad++ }
-            ){ Text("+", style = MaterialTheme.typography.headlineMedium) }
-        }
+        Text(text = "Precio: $${String.format("%.2f", producto.precio)}", style = MaterialTheme.typography.titleMedium)
+
         CustomButton(
             onClick = {
                 contactarVendedor(context, producto)
