@@ -62,7 +62,7 @@ fun ProductScreen(viewModel: ProductViewModel, navController: NavController) {
 
     // Estado para el favorito
     var isFavorite = remember { mutableStateOf(false) }
-    isFavorite.value = producto.favoritoState
+    isFavorite.value = producto.producto.favoritoState
 
     Scaffold()
     {
@@ -72,7 +72,7 @@ fun ProductScreen(viewModel: ProductViewModel, navController: NavController) {
 }
 @Composable
 fun ProductScreenBody(
-    producto: ProductoDTO,
+    producto: ProductoConVendedor,
     padding: PaddingValues,
     isFavorite: MutableState<Boolean>,
     viewModel: ProductViewModel,
@@ -82,7 +82,8 @@ fun ProductScreenBody(
     val scrollState = rememberScrollState()
     val context = LocalContext.current
 
-    val productosMismoVendedor = viewModel.productos.value
+    val productosMismoVendedor by viewModel.productosDeUnMismoVendedor(producto.vendedor.id).collectAsState()
+
 
     Column(
         modifier = Modifier
@@ -99,7 +100,7 @@ fun ProductScreenBody(
                 .padding(horizontal = 24.dp, vertical = 8.dp)
         ){
             Text(
-                text = producto.nombre,
+                text = producto.producto.nombre,
                 style = MaterialTheme.typography.headlineSmall.copy(fontSize = 32.sp),
                 modifier = Modifier.align(Alignment.Center)
             )
@@ -110,7 +111,8 @@ fun ProductScreenBody(
                     .size(48.dp),
                 onClick = {
                     isFavorite.value = !isFavorite.value
-                    producto.favoritoState = isFavorite.value }
+                //  TODO Implementar logica de favoritos con DB
+                    /*producto.favoritoState = isFavorite.value*/ }
             ){
                 //si está favorito, muestra el ícono relleno
                 val heartIcon = if (isFavorite.value) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder
@@ -121,7 +123,7 @@ fun ProductScreenBody(
                 )
             }
         }
-        Text(text = "Ubicación: ${producto.ubicacion}", style = MaterialTheme.typography.bodyMedium)
+        Text(text = "Ubicación: ${producto.producto.ubicacion}", style = MaterialTheme.typography.bodyMedium)
 
         LazyRow(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -129,9 +131,9 @@ fun ProductScreenBody(
                 .fillMaxWidth()
                 .height(400.dp)
         ){
-            items(producto.images.size) { index ->
+            items(producto.producto.images.size) { index ->
                 AsyncImage(
-                    model = producto.images[index],
+                    model = producto.producto.images[index],
                     contentDescription = null,
                     modifier = Modifier
                         .height(400.dp)
@@ -140,6 +142,7 @@ fun ProductScreenBody(
                 )
             }
         }
+
 
         Text(text = "Precio: $${String.format("%.2f", producto.precio)}", style = MaterialTheme.typography.titleMedium)
 
@@ -151,7 +154,7 @@ fun ProductScreenBody(
         )
 
         Text(text = "Descripción:", style = MaterialTheme.typography.titleMedium)
-        Text(text = producto.descripcion, style = MaterialTheme.typography.bodyLarge)
+        Text(text = producto.producto.descripcion, style = MaterialTheme.typography.bodyLarge)
         //contactos
         Row(
             horizontalArrangement = Arrangement.spacedBy(16.dp),
@@ -164,7 +167,7 @@ fun ProductScreenBody(
 
 
         Text(
-            text = "Más productos de ${producto.vendedor}:",
+            text = "Más productos de ${producto.vendedor.nombre}:",
             style = MaterialTheme.typography.titleMedium,
             modifier = Modifier
                 .padding(start = 16.dp, top = 24.dp)
@@ -196,15 +199,15 @@ fun ProductScreenBody(
 
 }
 
-fun contactarVendedor(context: Context, producto: ProductoDTO) {
-    if (producto.telefono.isNotEmpty()) {
-        val uri = Uri.parse("https://wa.me/${producto.telefono}")
+fun contactarVendedor(context: Context, producto: ProductoConVendedor) {
+    if (producto.producto.telefono.isNotEmpty()) {
+        val uri = Uri.parse("https://wa.me/${producto.producto.telefono}")
         val intent = Intent(Intent.ACTION_VIEW, uri)
         context.startActivity(intent)
-    } else if (producto.email.isNotEmpty()) {
+    } else if (producto.producto.email.isNotEmpty()) {
         val intent = Intent(Intent.ACTION_SENDTO).apply {
-            data = Uri.parse("mailto:${producto.email}")
-            putExtra(Intent.EXTRA_SUBJECT, "Consulta sobre ${producto.nombre}")
+            data = Uri.parse("mailto:${producto.producto.email}")
+            putExtra(Intent.EXTRA_SUBJECT, "Consulta sobre ${producto.producto.nombre}")
             putExtra(Intent.EXTRA_TEXT, "Hola ${producto.vendedor}, me interesa tu producto.")
         }
         context.startActivity(intent)

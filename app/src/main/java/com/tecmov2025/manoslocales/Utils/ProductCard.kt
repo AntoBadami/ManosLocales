@@ -20,16 +20,12 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import com.tecmov2025.manoslocales.Database.Entity.ProductoEntity
+import com.tecmov2025.manoslocales.Database.POJO.ProductoConVendedor
 import com.tecmov2025.manoslocales.Networking.ProductoDTO
 
 @Composable
-fun ProductoCard(
-    producto: ProductoDTO,
-    viewModel: ProductViewModel,
-    navController: NavController,
-    isFavoritoView: Boolean = false
-) {
-
+fun ProductoCard(producto: ProductoConVendedor, viewModel: ProductViewModel, navController: NavController, isFavoritoView: Boolean = false) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -57,7 +53,7 @@ fun ProductoCard(
                     .background(Color.Transparent)
             ){
                 AsyncImage(
-                    model = producto.images[0],
+                    model = producto.producto.images[0],
                         contentDescription = "Product image",
                     modifier = Modifier
                         .fillMaxSize()
@@ -71,12 +67,12 @@ fun ProductoCard(
                     .padding(start = 3.dp, top = if (isFavoritoView) 20.dp else 5.dp))
             {
                 Text(
-                    text = producto.nombre,
+                    text = producto.producto.nombre,
                     style = titleStyle,
                     color = Color.DarkGray
                 )
                 Text(
-                    text = "Precio: $${String.format("%.2f", producto.precio)}",
+                    text = "Precio: $${String.format("%.2f", producto.producto.precio)}",
                     style = bodyStyle,
                     color = Color.DarkGray
                 )

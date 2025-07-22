@@ -19,10 +19,9 @@ import com.tecmov2025.manoslocales.Utils.Screens
  * Gestinona la navegacion en la activity Favoritos
  */
 @Composable
-fun FavoritosNavigation()
+fun FavoritosNavigation(viewModel: ProductViewModel)
 {
     val navController = rememberNavController()
-    val viewModel = ProductViewModel(ApiRepository(RetrofitClient.apiService))
     NavHost(
         navController = navController,
         startDestination = Screens.FavoritosScreen.route

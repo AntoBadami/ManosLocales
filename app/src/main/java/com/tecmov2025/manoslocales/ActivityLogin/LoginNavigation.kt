@@ -7,17 +7,16 @@ import androidx.navigation.compose.rememberNavController
 import com.tecmov2025.manoslocales.Utils.Screens
 
 @Composable
-fun LoginNavigation()
+fun LoginNavigation(viewModel: ProductViewModel)
 {
     val navController = rememberNavController()
-    //val viewModel = ProductViewModel()
     NavHost(
         navController = navController,
         startDestination = Screens.SplashScreen.route
     )
     {
         composable(Screens.LoginScreen.route) { LoginScreen(navController) }
-        composable(Screens.SplashScreen.route) { SplashScreen(navController) }
+        composable(Screens.SplashScreen.route) { SplashScreen(navController,viewModel) }
         composable(Screens.RegisterScreen.route) { RegisterScreen() }
         composable(Screens.PasswordScreen.route) { PasswordScreen() }
     }
