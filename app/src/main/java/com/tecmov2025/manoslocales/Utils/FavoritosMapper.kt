@@ -5,7 +5,6 @@ import com.tecmov2025.manoslocales.Networking.FavoritoDTO
 
 fun FavoritoDTO.toEntity(): FavoritoEntity {
     return FavoritoEntity(
-        id = this.id,
         producto = this.producto
     )
 }
