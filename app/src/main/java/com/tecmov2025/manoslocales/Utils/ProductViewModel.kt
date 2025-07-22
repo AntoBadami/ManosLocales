@@ -9,6 +9,7 @@ import kotlinx.coroutines.launch
 import androidx.compose.runtime.State
 import com.tecmov2025.manoslocales.Database.Entity.VendedorEntity
 import com.tecmov2025.manoslocales.Database.POJO.ProductoConVendedor
+import com.tecmov2025.manoslocales.Database.POJO.ProductoFavorito
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -57,6 +58,14 @@ class ProductViewModel(private val repo: ApiRepository): ViewModel() {
                 initialValue = emptyList()
             )
 
+    val favoritosState: StateFlow<List<ProductoFavorito>> =
+        repo
+            .obtenerFavoritosDB()
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.Lazily,
+                initialValue = emptyList()
+            )
     init {
         cargarProductos()
     }
@@ -84,6 +93,7 @@ class ProductViewModel(private val repo: ApiRepository): ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             repo.obteneryGuardarVendedores()
             repo.obteneryGuardarProductos()
+            repo.obteneryGuardarFavoritos()
         }
     }
 
