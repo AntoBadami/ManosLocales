@@ -44,7 +44,7 @@ data class VendedorDTO(
     val ubicacion: String
 )
 
-data class FavoritosDTO(
+data class FavoritoDTO(
     @SerializedName("id")
     val id: Int,
     @SerializedName("producto")

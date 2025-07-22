@@ -18,7 +18,7 @@ import androidx.room.PrimaryKey
         )],
     indices = [Index("producto")]           // mejora el rendimiento en joins
 )
-data class FavoritosEntity(
+data class FavoritoEntity(
     @PrimaryKey
     val id: Int,
     val producto: Int
