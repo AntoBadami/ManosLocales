@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -21,10 +20,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.Phone
-import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -36,7 +32,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -46,7 +41,6 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.tecmov2025.manoslocales.Database.POJO.ProductoConVendedor
-import com.tecmov2025.manoslocales.Networking.ProductoDTO
 
 @Composable
 fun ProductScreen(viewModel: ProductViewModel, navController: NavController) {
@@ -157,16 +151,6 @@ fun ProductScreenBody(
 
         Text(text = "Descripción:", style = MaterialTheme.typography.titleMedium)
         Text(text = producto.producto.descripcion, style = MaterialTheme.typography.bodyLarge)
-        //contactos
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(16.dp),
-            modifier = Modifier.align(Alignment.CenterHorizontally)
-        ){
-            IconButton(onClick = { }) { Icon(imageVector = Icons.Default.Email, contentDescription = "Email") }
-            IconButton(onClick = { }) { Icon(imageVector = Icons.Default.Phone, contentDescription = "Teléfono") }
-            IconButton(onClick = { }) { Icon(imageVector = Icons.Default.Share, contentDescription = "Compartir") }
-        }
-
 
         Text(
             text = "Más productos de ${producto.vendedor.nombre}:",

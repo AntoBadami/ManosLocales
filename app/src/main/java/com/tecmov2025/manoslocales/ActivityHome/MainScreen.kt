@@ -55,14 +55,6 @@ fun MainScreenBody(paddingBarraDeBusqueda: PaddingValues, viewModel: ProductView
     val productos by viewModel.productosConVendedorState.collectAsState()
 
 
-    val vendedores = remember(productos) {
-        buildList {
-            add("Todos")
-            addAll(productos.map { it.vendedor.nombre }.distinct())
-        }
-    }
-    var vendedorSeleccionado by rememberSaveable { mutableStateOf("Todos") }
-
     val categorias = remember(productos)
     {
         buildList {
@@ -72,11 +64,10 @@ fun MainScreenBody(paddingBarraDeBusqueda: PaddingValues, viewModel: ProductView
     }
     var categoriaSeleccionada by rememberSaveable { mutableStateOf("Todas") }
 
-    val productosFiltrados = remember(productos, categoriaSeleccionada, vendedorSeleccionado)
+    val productosFiltrados = remember(productos, categoriaSeleccionada)
     {
         productos.filter {
-            (categoriaSeleccionada == "Todas" || it.producto.categoria == categoriaSeleccionada) &&
-                    (vendedorSeleccionado == "Todos" || it.vendedor.nombre == vendedorSeleccionado)
+            (categoriaSeleccionada == "Todas" || it.producto.categoria == categoriaSeleccionada)
         }
     }
 
@@ -99,12 +90,6 @@ fun MainScreenBody(paddingBarraDeBusqueda: PaddingValues, viewModel: ProductView
                 categorias = categorias,
                 categoriaSeleccionada = categoriaSeleccionada,
                 onCategoriaSeleccionada = { categoriaSeleccionada = it },
-                modifier = Modifier.weight(1f)
-            )
-            VendedorFilter(
-                vendedores = vendedores,
-                vendedorSeleccionado = vendedorSeleccionado,
-                onVendedorSeleccionado = { vendedorSeleccionado = it },
                 modifier = Modifier.weight(1f)
             )
         }
@@ -137,51 +122,6 @@ fun MainScreenBody(paddingBarraDeBusqueda: PaddingValues, viewModel: ProductView
                             ProductoCard(grupo[1], viewModel, navController)
                         }
                 }
-            }
-        }
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun VendedorFilter(
-    vendedores: List<String>,
-    vendedorSeleccionado: String,
-    onVendedorSeleccionado: (String) -> Unit,
-    modifier: Modifier = Modifier
-) {
-    var expanded by remember { mutableStateOf(false) }
-
-    ExposedDropdownMenuBox(
-        expanded = expanded,
-        onExpandedChange = { expanded = !expanded },
-        modifier = modifier
-    ) {
-        TextField(
-            value = vendedorSeleccionado,
-            onValueChange = {},
-            readOnly = true,
-            label = { Text("Vendedor") },
-            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
-            singleLine = true,
-            maxLines = 1,
-            modifier = Modifier
-                .menuAnchor()
-                .fillMaxWidth()
-        )
-
-        ExposedDropdownMenu(
-            expanded = expanded,
-            onDismissRequest = { expanded = false }
-        ) {
-            vendedores.forEach { vendedor ->
-                DropdownMenuItem(
-                    text = { Text(vendedor) },
-                    onClick = {
-                        onVendedorSeleccionado(vendedor)
-                        expanded = false
-                    }
-                )
             }
         }
     }
