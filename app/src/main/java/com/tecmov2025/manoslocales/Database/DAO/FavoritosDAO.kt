@@ -24,7 +24,7 @@ interface FavoritosDAO {
             WHERE producto = :productoId
         )
     """)
-    suspend  fun esFavorito( productoId: Int): Flow<Boolean>
+    fun esFavorito( productoId: Int): Flow<Boolean>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun agregarFavorito(favorito: FavoritoEntity)
