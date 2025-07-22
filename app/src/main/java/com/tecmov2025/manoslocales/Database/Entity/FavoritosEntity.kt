@@ -20,6 +20,5 @@ import androidx.room.PrimaryKey
 )
 data class FavoritoEntity(
     @PrimaryKey
-    val id: Int,
     val producto: Int
 )
