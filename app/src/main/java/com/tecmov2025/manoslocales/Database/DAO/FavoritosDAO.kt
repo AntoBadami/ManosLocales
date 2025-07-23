@@ -18,20 +18,14 @@ interface FavoritosDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(favoritos: List<FavoritoEntity>)
 
-    @Query("""
-        SELECT EXISTS(
-            SELECT 1 
-            FROM favoritos 
-            WHERE producto = :productoId
-        )
-    """)
-    fun esFavorito( productoId: Int): Flow<Boolean>
+    @Query("SELECT COUNT(*) FROM favoritos WHERE producto = :productoId")
+    fun esFavorito( productoId: Int): Flow<Int>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun agregarFavorito(favorito: FavoritoEntity)
+    fun agregarFavorito(favorito: FavoritoEntity)
 
     @Query("DELETE FROM favoritos WHERE producto = :productoId")
-    suspend fun eliminarFavorito(productoId: Int)
+    fun eliminarFavorito(productoId: Int):Int
 
     @Query("""
         SELECT p.*, v.*

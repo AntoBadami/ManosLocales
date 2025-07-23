@@ -10,6 +10,8 @@ import com.tecmov2025.manoslocales.Database.POJO.ProductoFavorito
 import com.tecmov2025.manoslocales.Utils.toEntityList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
 
 class ApiRepository(private val api: ApiService,private val database: AppDatabase)
 {
@@ -74,15 +76,17 @@ class ApiRepository(private val api: ApiService,private val database: AppDatabas
     }
 
     fun productoEsFavorito(productoId : Int): Flow<Boolean>{
-        return  favoritosDao.esFavorito(productoId)
+        return favoritosDao.esFavorito(productoId)
+            .map { count -> count > 0 }
+            .distinctUntilChanged()
     }
 
-    suspend fun añadirFavorito(productoId : Int)
+    fun añadirFavorito(productoId : Int)
     {
         favoritosDao.agregarFavorito(FavoritoEntity(productoId))
     }
 
-    suspend fun eliminarFavorito(productoId: Int)
+    fun eliminarFavorito(productoId: Int)
     {
         favoritosDao.eliminarFavorito(productoId)
     }

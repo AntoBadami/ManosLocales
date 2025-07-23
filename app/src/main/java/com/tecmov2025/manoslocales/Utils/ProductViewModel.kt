@@ -99,13 +99,13 @@ class ProductViewModel(private val repo: ApiRepository): ViewModel() {
     }
 
     fun añadirFavorito(productoId: Int) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO){
             repo.añadirFavorito(productoId)
         }
     }
 
     fun eliminarFavorito(productoId: Int) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO){
             repo.eliminarFavorito(productoId)
         }
     }

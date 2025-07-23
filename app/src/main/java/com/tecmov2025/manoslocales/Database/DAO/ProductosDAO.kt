@@ -17,7 +17,7 @@ interface ProductosDAO {
     @Query("SELECT * FROM productos")
     fun getAllProductosConVendedor(): Flow<List<ProductoConVendedor>>
 
-    @Query("SELECT * FROM productos WHERE vendedor = :vendedor")
-    fun obtenerProductosPorVendedor(vendedor: Int): Flow<List<ProductoConVendedor>>
+    @Query("SELECT * FROM productos WHERE vendedor = :vendedorId")
+    fun obtenerProductosPorVendedor(vendedorId: Int): Flow<List<ProductoConVendedor>>
 
 }

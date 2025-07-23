@@ -58,8 +58,10 @@ fun ProductScreen(viewModel: ProductViewModel, navController: NavController) {
         }
     }
 
-    // Estado para el favorito
-    val isFavorite by viewModel.productoEsFavorito(producto.producto.id).collectAsState(initial = false)
+    val isFavorite by remember(producto.producto.id) {
+        viewModel.productoEsFavorito(producto.producto.id)
+    }
+        .collectAsState(initial = false)
 
 
     Scaffold()
