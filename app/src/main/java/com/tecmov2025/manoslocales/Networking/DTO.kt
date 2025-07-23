@@ -19,8 +19,6 @@ data class ProductoDTO(
     val categoria: String,
     @SerializedName("vendedor")
     val vendedor: Int,
-    @SerializedName("esFavorito")
-    var favoritoState : Boolean = false,
     @SerializedName("email")
     val email: String,
     @SerializedName("telefono")
@@ -42,4 +40,9 @@ data class VendedorDTO(
     val telefono: String,
     @SerializedName("ubicacion")
     val ubicacion: String
+)
+
+data class FavoritoDTO(
+    @SerializedName("producto")
+    val producto: Int
 )

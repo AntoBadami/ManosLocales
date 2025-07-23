@@ -10,4 +10,7 @@ interface ApiService {
 
     @GET("vendedores")
     suspend fun getVendedores(): List<VendedorDTO>
+
+    @GET("favoritos")
+    suspend fun getFavoritos(): List<FavoritoDTO>
 }

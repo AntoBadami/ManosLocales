@@ -3,6 +3,7 @@ package com.tecmov2025.manoslocales.Utils
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -27,6 +28,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -41,10 +43,12 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.tecmov2025.manoslocales.Database.POJO.ProductoConVendedor
+import kotlinx.coroutines.flow.Flow
 
 @Composable
 fun ProductScreen(viewModel: ProductViewModel, navController: NavController) {
-    var producto = viewModel.productoSeleccionado
+    val producto = viewModel.productoSeleccionado
+
     if (producto == null) {
         navController.popBackStack()
         return
@@ -56,25 +60,28 @@ fun ProductScreen(viewModel: ProductViewModel, navController: NavController) {
         }
     }
 
-    // Estado para el favorito
-    var isFavorite = remember { mutableStateOf(false) }
-    isFavorite.value = producto.producto.favoritoState
+
+
 
     Scaffold()
     {
         padding ->
-        ProductScreenBody(producto,padding,isFavorite, viewModel, navController)
+        ProductScreenBody(producto,padding, viewModel, navController)
     }
 }
 @Composable
 fun ProductScreenBody(
     producto: ProductoConVendedor,
     padding: PaddingValues,
-    isFavorite: MutableState<Boolean>,
     viewModel: ProductViewModel,
     navController: NavController
 )
 {
+    val isFavorite by remember(producto.producto.id) {
+        viewModel.productoEsFavorito(producto.producto.id)
+    }
+        .collectAsState(initial = false)
+
     val scrollState = rememberScrollState()
     val context = LocalContext.current
 
@@ -106,12 +113,15 @@ fun ProductScreenBody(
                     .align(Alignment.CenterEnd)
                     .size(48.dp),
                 onClick = {
-                    isFavorite.value = !isFavorite.value
-                //  TODO Implementar logica de favoritos con DB
-                    /*producto.favoritoState = isFavorite.value*/ }
+                    if (isFavorite) {
+                        viewModel.eliminarFavorito(producto.producto.id)
+                    } else {
+                        viewModel.añadirFavorito(producto.producto.id)
+                    }
+                }
             ){
                 //si está favorito, muestra el ícono relleno
-                val heartIcon = if (isFavorite.value) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder
+                val heartIcon = if (isFavorite) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder
                 Icon(
                     imageVector = heartIcon,
                     contentDescription = "Marcar como favorito",
