@@ -30,7 +30,9 @@ abstract class AppDatabase : RoomDatabase() {
                     context.applicationContext,
                     AppDatabase::class.java,
                     "manos_locales_database"
-                ).build().also { instancia = it }
+                ).fallbackToDestructiveMigration()
+                    .build()
+                    .also { instancia = it }
             }
         }
     }
