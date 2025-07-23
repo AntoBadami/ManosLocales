@@ -3,6 +3,7 @@ package com.tecmov2025.manoslocales.Utils
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -46,7 +47,8 @@ import kotlinx.coroutines.flow.Flow
 
 @Composable
 fun ProductScreen(viewModel: ProductViewModel, navController: NavController) {
-    var producto = viewModel.productoSeleccionado
+    val producto = viewModel.productoSeleccionado
+
     if (producto == null) {
         navController.popBackStack()
         return
@@ -58,27 +60,28 @@ fun ProductScreen(viewModel: ProductViewModel, navController: NavController) {
         }
     }
 
-    val isFavorite by remember(producto.producto.id) {
-        viewModel.productoEsFavorito(producto.producto.id)
-    }
-        .collectAsState(initial = false)
+
 
 
     Scaffold()
     {
         padding ->
-        ProductScreenBody(producto,padding,isFavorite, viewModel, navController)
+        ProductScreenBody(producto,padding, viewModel, navController)
     }
 }
 @Composable
 fun ProductScreenBody(
     producto: ProductoConVendedor,
     padding: PaddingValues,
-    isFavorite: Boolean,
     viewModel: ProductViewModel,
     navController: NavController
 )
 {
+    val isFavorite by remember(producto.producto.id) {
+        viewModel.productoEsFavorito(producto.producto.id)
+    }
+        .collectAsState(initial = false)
+
     val scrollState = rememberScrollState()
     val context = LocalContext.current
 

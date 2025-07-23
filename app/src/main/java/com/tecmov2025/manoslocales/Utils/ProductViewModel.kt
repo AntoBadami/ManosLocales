@@ -36,7 +36,6 @@ class ProductViewModel(private val repo: ApiRepository): ViewModel() {
         _vendedorSeleccionado.value = vendedor
     }
 
-    // TODO Reemplazar nombre por productos cuando finalice integracion de networking y db
     val productosConVendedorState: StateFlow<List<ProductoConVendedor>> =
         repo
             .obtenerProductosConVendedorDB()

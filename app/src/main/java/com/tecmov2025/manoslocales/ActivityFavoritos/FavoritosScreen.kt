@@ -1,5 +1,6 @@
 package com.tecmov2025.manoslocales.ActivityFavoritos
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -49,7 +50,6 @@ fun FavoritosScreen(navController: NavController,viewModel: ProductViewModel) {
 fun FavoritosScreenBody(padding: PaddingValues, viewModel: ProductViewModel, navController: NavController)
 {
     val productos by viewModel.favoritosState.collectAsState()
-
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -67,16 +67,24 @@ fun FavoritosScreenBody(padding: PaddingValues, viewModel: ProductViewModel, nav
                 color = MaterialTheme.colorScheme.primary
             )
             Spacer(modifier = Modifier.height(24.dp))
-            LazyRow(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(450.dp),
-                horizontalArrangement = Arrangement.spacedBy(10.dp),
-            ){
-                items(productos.size) {
-                    index ->
+            if(!productos.isEmpty())
+            {
+                LazyRow(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(450.dp),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                ){
+                    items(productos.size) {
+                            index ->
                         ProductoCard(productos[index], viewModel, navController, true) }
+                }
             }
+            else
+            {
+                Text("Aún no tienes productos favoritos!")
+            }
+
         }
     }
 
