@@ -13,4 +13,7 @@ interface ApiService {
 
     @GET("favoritos")
     suspend fun getFavoritos(): List<FavoritoDTO>
+
+    @GET("usuario")
+    suspend fun getUsuario(): UsuarioDTO
 }
