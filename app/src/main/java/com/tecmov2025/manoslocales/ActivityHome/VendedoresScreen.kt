@@ -9,9 +9,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.tecmov2025.manoslocales.Utils.BarraDeBusqueda
-import com.tecmov2025.manoslocales.Utils.ExamplesVendedoresList
 import com.tecmov2025.manoslocales.Utils.ProductViewModel
-import com.tecmov2025.manoslocales.Utils.Vendedor
 import com.tecmov2025.manoslocales.Utils.VendedorCard
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.collectAsState

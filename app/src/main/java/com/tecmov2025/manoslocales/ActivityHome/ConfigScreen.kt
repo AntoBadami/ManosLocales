@@ -10,17 +10,19 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import com.tecmov2025.manoslocales.SharedPreferences.CONFIG_TIEMPO
+import com.tecmov2025.manoslocales.SharedPreferences.ConfigNames
+import com.tecmov2025.manoslocales.SharedPreferences.ConfigPreferences
+import com.tecmov2025.manoslocales.Utils.ConfigDropdownCard
+import com.tecmov2025.manoslocales.Utils.ConfigSwitchCard
 import com.tecmov2025.manoslocales.Utils.CustomScaffold
-import com.tecmov2025.manoslocales.Utils.Opcion
-import com.tecmov2025.manoslocales.Utils.OptionCard
-import com.tecmov2025.manoslocales.Utils.OptionDropdownCard
-import com.tecmov2025.manoslocales.Utils.OptionSwitchCard
-import com.tecmov2025.manoslocales.Utils.TipoOpcion
 
 /**
  * Pantalla de configuraciones
@@ -35,14 +37,36 @@ fun ConfigScreen()
 @Composable
 fun ConfiguracionesBody(padding: PaddingValues)
 {
-    val switchesState = remember { mutableStateListOf(true) }
-    val opciones = listOf(
-        Opcion("Registrar historial de busqueda", tipo = TipoOpcion.SWITCH),
-        Opcion("Tiempo de notificaciones")
-    )
+    val config = ConfigPreferences(LocalContext.current)
 
-    val opcionesNotificacion = listOf("6 horas", "1 día", "2 días", "1 sem", "Nunca")
-    val seleccionNotificacion = remember { mutableStateOf(opcionesNotificacion[1]) }
+    // Registrar historial de busqueda
+    var registrarHistorialChecked by remember {
+        mutableStateOf(
+            config.getEstadoDeConfiguracionBoolean(ConfigNames.HistorialBusquedaConfig.config)) }
+
+    fun historialBusquedaOnCheckedChange(new : Boolean)
+    {
+        registrarHistorialChecked = new
+        if(new)
+        { config.activarHistorialDeBusqueda() }
+        else
+        { config.desactivarHistorialDeBusqueda() }
+
+    }
+
+    // Tiempo de notificaciones
+
+    var seleccionNotificacion by remember {
+        mutableStateOf(config.getTiempoNotificacionesConfig().descripcion)
+    }
+    val opcionesNotificacion = CONFIG_TIEMPO.values().map { it.descripcion }
+
+    fun tiempoDeNotificacionesOnSeleccion(new: String)
+    {
+        seleccionNotificacion = new
+        config.setTiempoNotificaciones(CONFIG_TIEMPO.fromDescripcion(new))
+
+    }
 
     Box(
         modifier = Modifier
@@ -61,22 +85,20 @@ fun ConfiguracionesBody(padding: PaddingValues)
                     .padding(top = 40.dp)
                     .fillMaxSize()
             ){
-                items(opciones.size) {
-                    i ->
-                        when (opciones[i].tipo) {
-                            TipoOpcion.SWITCH -> OptionSwitchCard(opciones[i], switchesState, i)
-                            else -> OptionDropdownCard(
-                                opcion = opciones[i],
-                                opcionesLista = opcionesNotificacion,
-                                seleccion = seleccionNotificacion.value,
-                                onSeleccion = { seleccionNotificacion.value = it }
-                            )
-                        }
+                item {
+                    ConfigSwitchCard("Registrar historial de busqueda",
+                        checked = registrarHistorialChecked,
+                        onCheckedChange = ::historialBusquedaOnCheckedChange)
+                }
+                item{
+                    ConfigDropdownCard(
+                        text = "Tiempo de notificaciones",
+                        opcionesLista = opcionesNotificacion,
+                        seleccion = seleccionNotificacion,
+                        onSeleccion = ::tiempoDeNotificacionesOnSeleccion)
 
                 }
             }
         }
     }
 }
-
-

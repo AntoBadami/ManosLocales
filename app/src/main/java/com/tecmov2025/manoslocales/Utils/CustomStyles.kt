@@ -50,6 +50,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import com.tecmov2025.manoslocales.SharedPreferences.ConfigPreferences
 
 /**
  * Campo de texto personalizado que puede ocultar la entrada (para contraseñas).
@@ -228,7 +229,7 @@ fun OptionCard(opcion :Opcion)
     {
         Row (modifier = Modifier
             .fillMaxSize()
-            .clickable{opcion.onclicick() }
+            .clickable{ opcion.onclick() }
             .padding(start = 16.dp, end = 16.dp),
             verticalAlignment = Alignment.CenterVertically
         )
@@ -249,118 +250,6 @@ fun OptionCard(opcion :Opcion)
     }
 
 }
-/**
- * Muestra una opción de configuración con un interruptor (Switch) que puede ser activado o desactivado.
- *
- * @param opcion La opción a mostrar, contiene el texto y el tipo.
- * @param switchesMutableListOf Lista mutable de estados booleanos para los switches.
- * @param index Índice de esta opción en la lista, usado para acceder al estado correspondiente.
- */
-@Composable
-fun OptionSwitchCard(opcion :Opcion,switchesMutableListOf : MutableList<Boolean>,
-                     index : Int)
-{
-    Card(modifier = Modifier
-        .fillMaxWidth()
-        .padding(top = 5.dp)
-        .height(60.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp))
-    {
-        Row (modifier = Modifier
-            .fillMaxSize()
-            .clickable{}
-            .padding(start = 30.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween)
-        {
-            Text(
-                modifier = Modifier
-                    .wrapContentHeight(Alignment.Bottom)
-                    .weight(3f),
-                fontSize = 20.sp, text = opcion.text, color = Color.DarkGray)
-
-            Switch(
-                modifier = Modifier.weight(1f)
-                .fillMaxWidth()
-                .padding(3.dp),
-                checked = switchesMutableListOf[index],
-                onCheckedChange = { switchesMutableListOf[index] = it },
-                colors = SwitchDefaults.colors(
-                    checkedThumbColor = Color.White
-                )
-            )
-        }
-    }
-}
-/**
- * opcion con lista desplegable
- */
-@Composable
-fun OptionDropdownCard(
-    opcion: Opcion,
-    opcionesLista: List<String>,
-    seleccion: String,
-    onSeleccion: (String) -> Unit
-) {
-    val expanded = remember { mutableStateOf(false) }
-
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 5.dp)
-            .height(60.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
-    ) {
-        Box(
-            modifier = Modifier.fillMaxSize()
-        ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .clickable { expanded.value = true }
-                    .padding(start = 30.dp, end = 16.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(
-                    modifier = Modifier.weight(1f),
-                    fontSize = 20.sp,
-                    text = "${opcion.text}: $seleccion",
-                    color = Color.DarkGray,
-                    softWrap = true
-                )
-                Icon(
-                    modifier = Modifier.padding(start = 8.dp),
-                    imageVector = Icons.Default.ArrowDropDown,
-                    contentDescription = "Desplegar",
-                    tint = Color.Gray
-                )
-            }
-
-            DropdownMenu(
-                modifier = Modifier
-                    .align(Alignment.TopEnd)
-                    .background(Color.White),
-                expanded = expanded.value,
-                onDismissRequest = { expanded.value = false },
-                offset = DpOffset(x = 270.dp, y = -10.dp)
-            ) {
-                opcionesLista.forEach { texto ->
-                    DropdownMenuItem(
-                        text = { Text(texto) },
-                        onClick = {
-                            onSeleccion(texto)
-                            expanded.value = false
-                        }
-                    )
-                }
-            }
-        }
-    }
-}
-
 /**
  * Scaffold basico para pestañas
  * @param body funcion composable cuerpo de la pantalla en cuestion
