@@ -23,7 +23,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.tecmov2025.manoslocales.Utils.BarraDeBusqueda
-import com.tecmov2025.manoslocales.Utils.ExampleProductList
 import com.tecmov2025.manoslocales.Utils.ProductViewModel
 import com.tecmov2025.manoslocales.Utils.ProductoCard
 

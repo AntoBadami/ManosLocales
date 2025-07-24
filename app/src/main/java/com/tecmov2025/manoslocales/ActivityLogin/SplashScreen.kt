@@ -11,10 +11,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.tecmov2025.manoslocales.R
+import com.tecmov2025.manoslocales.SharedPreferences.ConfigPreferences
 import com.tecmov2025.manoslocales.Utils.ProductViewModel
 import com.tecmov2025.manoslocales.Utils.Screens
 import kotlinx.coroutines.delay
@@ -22,6 +24,7 @@ import kotlinx.coroutines.delay
 @Composable
 fun SplashScreen(navController: NavHostController, viewModel: ProductViewModel)
 {
+    val context = LocalContext.current
     Box(modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
@@ -39,6 +42,7 @@ fun SplashScreen(navController: NavHostController, viewModel: ProductViewModel)
     LaunchedEffect(Unit)
     {
         viewModel.sincronizarBaseDeDatos()
+        ConfigPreferences(context)
         navController.navigate(Screens.LoginScreen.route) {
             popUpTo("SplashScreen") { inclusive = true }
         }

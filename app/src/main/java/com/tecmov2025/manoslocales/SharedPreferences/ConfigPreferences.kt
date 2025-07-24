@@ -1,6 +1,5 @@
 package com.tecmov2025.manoslocales.SharedPreferences
 
-import android.content.ClipDescription
 import android.content.Context
 sealed class ConfigNames(val config: String)
 {
@@ -14,13 +13,36 @@ enum class CONFIG_TIEMPO(val descripcion: String)
     D1("1 día"),
     D2("2 días"),
     S1("1 semana"),
-    NUNCA("Nunca")
+    NUNCA("Nunca");
+
+    companion object {
+
+        private val byDescripcion = values().associateBy { it.descripcion }
+
+        /** Devuelve el enum cuyo `descripcion` coincide, o `NUNCA` (o nulo) si no existe */
+
+        fun fromDescripcion(desc: String): CONFIG_TIEMPO =
+            byDescripcion[desc] ?: NUNCA
+    }
 }
 
 class ConfigPreferences(context: Context) {
 
     private val sharedPreferences = context.getSharedPreferences("ConfigPref", Context.MODE_PRIVATE)
     private val editor = sharedPreferences.edit()
+
+    init {
+        // Establecer valores por defecto solo si no existen
+        if (!sharedPreferences.contains(ConfigNames.HistorialBusquedaConfig.config)) {
+            editor.putBoolean(ConfigNames.HistorialBusquedaConfig.config, true)
+        }
+
+        if (!sharedPreferences.contains(ConfigNames.TiempoDeNotificacionesConfig.config)) {
+            editor.putString(ConfigNames.TiempoDeNotificacionesConfig.config, CONFIG_TIEMPO.H6.name)
+        }
+
+        editor.apply() // Aplicar los cambios si hizo falta
+    }
 
     fun activarHistorialDeBusqueda()
     {
