@@ -5,6 +5,7 @@ sealed class ConfigNames(val config: String)
 {
     object HistorialBusquedaConfig : ConfigNames("HistorialBusqueda")
     object TiempoDeNotificacionesConfig: ConfigNames("TiempoNotificacion")
+    object MantenerSesionAbiertaConfig : ConfigNames("MantenerSesionAbierta")
 }
 
 enum class CONFIG_TIEMPO(val descripcion: String)
@@ -36,12 +37,27 @@ class ConfigPreferences(context: Context) {
         if (!sharedPreferences.contains(ConfigNames.HistorialBusquedaConfig.config)) {
             editor.putBoolean(ConfigNames.HistorialBusquedaConfig.config, true)
         }
+        if (!sharedPreferences.contains(ConfigNames.MantenerSesionAbiertaConfig.config)) {
+            editor.putBoolean(ConfigNames.MantenerSesionAbiertaConfig.config, true)
+        }
 
         if (!sharedPreferences.contains(ConfigNames.TiempoDeNotificacionesConfig.config)) {
             editor.putString(ConfigNames.TiempoDeNotificacionesConfig.config, CONFIG_TIEMPO.H6.name)
         }
 
-        editor.apply() // Aplicar los cambios si hizo falta
+        editor.apply()
+    }
+
+    fun activarMantenerSesionAbierta()
+    {
+        editor.putBoolean(ConfigNames.MantenerSesionAbiertaConfig.config,true)
+        editor.apply()
+    }
+
+    fun desactivarMantenerSesionAbierta()
+    {
+        editor.putBoolean(ConfigNames.MantenerSesionAbiertaConfig.config,false)
+        editor.apply()
     }
 
     fun activarHistorialDeBusqueda()

@@ -1,5 +1,6 @@
 package com.tecmov2025.manoslocales.ActivityHome
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -38,6 +39,21 @@ fun ConfigScreen()
 fun ConfiguracionesBody(padding: PaddingValues)
 {
     val config = ConfigPreferences(LocalContext.current)
+
+    // Mantener sesion de usuario abierta
+    var sesionAbiertaChecked by remember {
+        mutableStateOf(
+            config.getEstadoDeConfiguracionBoolean(ConfigNames.MantenerSesionAbiertaConfig.config)) }
+
+    fun mantenerSesionAbiertaOnCheckedChange(new : Boolean)
+    {
+        sesionAbiertaChecked = new
+        if(new)
+        {config.activarMantenerSesionAbierta()}
+        else
+        {config.desactivarMantenerSesionAbierta()}
+
+    }
 
     // Registrar historial de busqueda
     var registrarHistorialChecked by remember {
@@ -85,6 +101,11 @@ fun ConfiguracionesBody(padding: PaddingValues)
                     .padding(top = 40.dp)
                     .fillMaxSize()
             ){
+                item {
+                    ConfigSwitchCard("Mantener sesión abierta",
+                        checked = sesionAbiertaChecked,
+                        onCheckedChange = ::mantenerSesionAbiertaOnCheckedChange)
+                }
                 item {
                     ConfigSwitchCard("Registrar historial de busqueda",
                         checked = registrarHistorialChecked,
