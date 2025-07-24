@@ -38,10 +38,16 @@ import kotlinx.coroutines.launch
  * @param viewModel necesario para la seleccion de productos
  */
 @Composable
-fun BarraDeBusqueda(navController: NavController, viewModel: ProductViewModel,
-                    body : @Composable (padding : PaddingValues, viewModel : ProductViewModel,
-                                        navController: NavController) -> Unit)
-{
+fun BarraDeBusqueda(
+    navController: NavController,
+    viewModel: ProductViewModel,
+    mostrarBottomBar: Boolean = true,
+    body : @Composable (
+        padding : PaddingValues,
+        viewModel : ProductViewModel,
+        navController: NavController
+    ) -> Unit
+) {
     val context = LocalContext.current
     val scaffoldState = rememberScaffoldState()
     val coroutineScope = rememberCoroutineScope()
@@ -54,7 +60,11 @@ fun BarraDeBusqueda(navController: NavController, viewModel: ProductViewModel,
         scaffoldState = scaffoldState,
         drawerContent ={ CustomDrawer(navController,context)},
         topBar = { CustomTopAppBar(coroutineScope,scaffoldState,context)},
-        bottomBar = { BottomNavigationBar(navController) },
+        bottomBar = {
+            if (mostrarBottomBar) {
+                BottomNavigationBar(navController)
+            }
+        },
         backgroundColor = MaterialTheme.colorScheme.background
 
     ){ paddingValues -> body(paddingValues,viewModel,navController)}

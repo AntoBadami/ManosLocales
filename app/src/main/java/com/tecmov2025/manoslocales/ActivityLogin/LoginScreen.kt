@@ -107,25 +107,28 @@ fun LoginButtonAction(
 ) {
     val scope: CoroutineScope = MainScope()
 
+    val trimmedUsername = username.trim()
+    val trimmedPassword = password.trim()
+
     //valida el formato del email
     fun isValidEmail(email: String): Boolean {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 
     when {
-        username.isBlank() || password.isBlank() -> {
+        trimmedUsername.isBlank() || trimmedPassword.isBlank() -> {
             scope.launch {
-                snackbarHostState.showSnackbar("Por favor, completa todos los campos.")
+                snackbarHostState.showSnackbar("Por favor, completá todos los campos sin espacios.")
             }
         }
 
-        !isValidEmail(username) -> {
+        !isValidEmail(trimmedUsername) -> {
             scope.launch {
                 snackbarHostState.showSnackbar("El usuario debe tener formato de correo electrónico.")
             }
         }
 
-        password.length < 8 -> {
+        trimmedPassword.length < 8 -> {
             scope.launch {
                 snackbarHostState.showSnackbar("La contraseña debe tener al menos 8 caracteres.")
             }

@@ -1,6 +1,5 @@
 package com.tecmov2025.manoslocales.ActivityFavoritos
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -11,7 +10,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.SentimentDissatisfied
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,7 +26,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.tecmov2025.manoslocales.Utils.BarraDeBusqueda
-import com.tecmov2025.manoslocales.Utils.ExampleProductList
 import com.tecmov2025.manoslocales.Utils.ProductViewModel
 import com.tecmov2025.manoslocales.Utils.ProductoCard
 
@@ -35,10 +37,13 @@ import com.tecmov2025.manoslocales.Utils.ProductoCard
 @Composable
 fun FavoritosScreen(navController: NavController,viewModel: ProductViewModel) {
 
-    BarraDeBusqueda(navController,viewModel){ padding,viewModel,navController ->
-        FavoritosScreenBody(padding,viewModel,navController) }
-
-
+    BarraDeBusqueda(
+        navController = navController,
+        viewModel = viewModel,
+        mostrarBottomBar = false // Oculta la BottomBar solo en Favoritos
+    ) { padding, viewModel, navController ->
+        FavoritosScreenBody(padding, viewModel, navController)
+    }
 }
 /**
  * Cuerpo de favoritos
@@ -80,9 +85,33 @@ fun FavoritosScreenBody(padding: PaddingValues, viewModel: ProductViewModel, nav
                         ProductoCard(productos[index], viewModel, navController, true) }
                 }
             }
-            else
-            {
-                Text("Aún no tienes productos favoritos!")
+            else {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(32.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Icon(
+                        imageVector = Icons.Outlined.SentimentDissatisfied,
+                        contentDescription = "Sin productos favoritos",
+                        tint = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.2f),
+                        modifier = Modifier.size(160.dp)
+                    )
+                    Spacer(modifier = Modifier.height(24.dp))
+                    Text(
+                        text = "¡Todavía no marcaste favoritos!",
+                        style = MaterialTheme.typography.bodyLarge.copy(fontSize = 20.sp),
+                        color = MaterialTheme.colorScheme.onBackground
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text(
+                        text = "Toca el corazón en un producto para agregarlo aquí.",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f)
+                    )
+                }
             }
 
         }
