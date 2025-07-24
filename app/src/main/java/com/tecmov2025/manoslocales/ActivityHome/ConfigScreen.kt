@@ -1,6 +1,5 @@
 package com.tecmov2025.manoslocales.ActivityHome
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -12,7 +11,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -25,7 +23,6 @@ import com.tecmov2025.manoslocales.SharedPreferences.ConfigPreferences
 import com.tecmov2025.manoslocales.Utils.ConfigDropdownCard
 import com.tecmov2025.manoslocales.Utils.ConfigSwitchCard
 import com.tecmov2025.manoslocales.Utils.CustomScaffold
-import com.tecmov2025.manoslocales.Utils.Opcion
 
 /**
  * Pantalla de configuraciones
@@ -55,7 +52,6 @@ fun ConfiguracionesBody(padding: PaddingValues)
         else
         { config.desactivarHistorialDeBusqueda() }
 
-        Log.d("ConfigScreen","Historial de busqueda: " + config.getEstadoDeConfiguracionBoolean(ConfigNames.HistorialBusquedaConfig.config))
     }
 
     // Tiempo de notificaciones
@@ -70,7 +66,6 @@ fun ConfiguracionesBody(padding: PaddingValues)
         seleccionNotificacion = new
         config.setTiempoNotificaciones(CONFIG_TIEMPO.fromDescripcion(new))
 
-        Log.d("ConfigScreen","Tiempo Notificaciones: " + config.getTiempoNotificacionesConfig())
     }
 
     Box(
