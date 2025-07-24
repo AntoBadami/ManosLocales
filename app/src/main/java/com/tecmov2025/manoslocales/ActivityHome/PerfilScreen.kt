@@ -84,7 +84,6 @@ fun PerfilFormBody(padding: PaddingValues, editable : MutableState<Boolean>, sna
     var name by remember { mutableStateOf("Juan") }
     var lastname by remember { mutableStateOf("Pérez") }
     var mail by remember { mutableStateOf("juanperez@mail.com") }
-    var username by remember { mutableStateOf("juan123") }
     var password by remember { mutableStateOf("123456") }
     var passwordControl by remember { mutableStateOf("123456") }
 
@@ -111,7 +110,6 @@ fun PerfilFormBody(padding: PaddingValues, editable : MutableState<Boolean>, sna
             PerfilField("Nombre", name, editable, fieldModifier) { name = it }
             PerfilField("Apellido", lastname, editable, fieldModifier) { lastname = it }
             PerfilField("Correo electrónico", mail, editable, fieldModifier) { mail = it }
-            PerfilField("Usuario", username, editable, fieldModifier) { username = it }
             PerfilField("Contraseña", password, editable, fieldModifier, isPassword = true) { password = it }
 
             if (editable.value)
@@ -125,7 +123,7 @@ fun PerfilFormBody(padding: PaddingValues, editable : MutableState<Boolean>, sna
                     onClick = {
                         /* TODO(Cambiar funcion por objeto perfil)*/
                         perfilFormControl(
-                            name, lastname, mail, username, password,
+                            name, lastname, mail, password,
                             passwordControl, coroutineScope, snackbarHostState, editable
                         )},
                     text = "Guardar cambios")
@@ -181,10 +179,10 @@ fun PerfilField(label: String, value: String, editable: MutableState<Boolean>, m
  * Funcion auxiliar para validacion de campos en formulario
  */
 fun perfilFormControl(name: String, lastname : String, mail: String,
-                      username: String,password: String,passwordControl: String,
+                      password: String,passwordControl: String,
                       coroutineScope: CoroutineScope,snackbarHostState: SnackbarHostState,editable: MutableState<Boolean>)
 {
-    if (name.isEmpty() || lastname.isEmpty() || mail.isEmpty() || username.isEmpty() || password.isEmpty() || passwordControl.isEmpty())
+    if (name.isEmpty() || lastname.isEmpty() || mail.isEmpty() || password.isEmpty() || passwordControl.isEmpty())
     {
         coroutineScope.launch { snackbarHostState.showSnackbar("Por favor, complete todos los campos.") }
     }else if (password != passwordControl)
