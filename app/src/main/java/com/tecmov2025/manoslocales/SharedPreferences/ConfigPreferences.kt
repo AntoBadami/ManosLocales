@@ -1,12 +1,26 @@
 package com.tecmov2025.manoslocales.SharedPreferences
 
+import android.content.ClipDescription
 import android.content.Context
+sealed class ConfigNames(val config: String)
+{
+    object HistorialBusquedaConfig : ConfigNames("HistorialBusqueda")
+    object TiempoDeNotificacionesConfig: ConfigNames("TiempoNotificacion")
+}
+
+enum class CONFIG_TIEMPO(val descripcion: String)
+{
+    H6("6 horas"),
+    D1("1 día"),
+    D2("2 días"),
+    S1("1 semana"),
+    NUNCA("Nunca")
+}
 
 class ConfigPreferences(context: Context) {
 
     private val sharedPreferences = context.getSharedPreferences("ConfigPref", Context.MODE_PRIVATE)
     private val editor = sharedPreferences.edit()
-
 
     fun activarHistorialDeBusqueda()
     {
@@ -18,6 +32,18 @@ class ConfigPreferences(context: Context) {
     {
         editor.putBoolean(ConfigNames.HistorialBusquedaConfig.config,false)
         editor.apply()
+    }
+
+    fun setTiempoNotificaciones(tiempo : CONFIG_TIEMPO)
+    {
+        editor.putString(ConfigNames.TiempoDeNotificacionesConfig.config,tiempo.name)
+        editor.apply()
+    }
+
+    fun getTiempoNotificacionesConfig(): CONFIG_TIEMPO
+    {
+        return CONFIG_TIEMPO.valueOf(sharedPreferences.getString(ConfigNames.TiempoDeNotificacionesConfig.config,
+            CONFIG_TIEMPO.NUNCA.name)?: CONFIG_TIEMPO.NUNCA.name)
     }
 
     /** Retorna el estado de una configuracion booleana
