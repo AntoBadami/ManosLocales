@@ -15,6 +15,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -30,7 +32,10 @@ import com.tecmov2025.manoslocales.Utils.CustomButton
 import com.tecmov2025.manoslocales.Utils.CustomTextField
 import com.tecmov2025.manoslocales.Utils.LinkText
 import com.tecmov2025.manoslocales.ActivityHome.MainActivity
+import com.tecmov2025.manoslocales.Networking.ApiRepository
 import com.tecmov2025.manoslocales.R
+import com.tecmov2025.manoslocales.SharedPreferences.ConfigPreferences
+import com.tecmov2025.manoslocales.Utils.ProductViewModel
 import com.tecmov2025.manoslocales.Utils.Screens
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
@@ -41,12 +46,47 @@ import kotlinx.coroutines.launch
  * @param navController permite la navegacion entre pantallas compose
  */
 @Composable
-fun LoginScreen(navController: NavController)
+fun LoginScreen(navController: NavController, viewModel: ProductViewModel)
 {
     val context = LocalContext.current
+
     val snackbarHostState = remember { SnackbarHostState() }
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+
+    //observa si la sesion ya estaba abierta
+    val  sesionEstaAbierta = viewModel.sesionEstaAbierta
+    viewModel.verificarSesion(context)
+    LaunchedEffect(sesionEstaAbierta)
+    {
+        if(sesionEstaAbierta == true)
+        {
+            //TODO PEDIR GUELLA O PIN ANTES DE INICIAR HOME
+            goToHome(context)
+        }
+    }
+
+    //observa estados de mensajes
+    val message by viewModel.snackbarMessage.collectAsState(initial = "")
+    LaunchedEffect(message) {
+        if (message.isNotEmpty()) {
+            snackbarHostState.showSnackbar(message)
+            viewModel.clearSnackbarMessage()
+        }
+    }
+
+    //observa estado de la solicitud login
+    val loginStatus = viewModel.loginStatus
+    LaunchedEffect(loginStatus)
+    {
+        if (loginStatus == true)
+        {
+            viewModel.establecerSesionIniciada(context)
+            goToHome(context)
+        }
+        else if (loginStatus == false)
+        {  viewModel.showMessage("Usuario o contraseña invalidos")}
+    }
 
     Box(
         modifier = Modifier
@@ -77,10 +117,9 @@ fun LoginScreen(navController: NavController)
             CustomButton(
                 onClick = {
                     LoginButtonAction(
-                        context,
                         username = username,
                         password = password,
-                        snackbarHostState = snackbarHostState
+                        viewModel
                     )
                 },
                 text = "Iniciar Sesión"
@@ -99,13 +138,13 @@ fun LoginScreen(navController: NavController)
     }
 }
 
+
+
 fun LoginButtonAction(
-    context: Context,
     username: String,
     password: String,
-    snackbarHostState: SnackbarHostState
-) {
-    val scope: CoroutineScope = MainScope()
+    viewModel: ProductViewModel
+){
 
     val trimmedUsername = username.trim()
     val trimmedPassword = password.trim()
@@ -117,30 +156,26 @@ fun LoginButtonAction(
 
     when {
         trimmedUsername.isBlank() || trimmedPassword.isBlank() -> {
-            scope.launch {
-                snackbarHostState.showSnackbar("Por favor, completá todos los campos sin espacios.")
-            }
+            viewModel.showMessage("Por favor, completá todos los campos sin espacios.")
         }
 
         !isValidEmail(trimmedUsername) -> {
-            scope.launch {
-                snackbarHostState.showSnackbar("El usuario debe tener formato de correo electrónico.")
-            }
+            viewModel.showMessage("El usuario debe tener formato de correo electrónico.")
         }
 
         trimmedPassword.length < 8 -> {
-            scope.launch {
-                snackbarHostState.showSnackbar("La contraseña debe tener al menos 8 caracteres.")
-            }
+            viewModel.showMessage("La contraseña debe tener al menos 8 caracteres.")
         }
 
-        else -> {
-            val intent = Intent(context, MainActivity::class.java)
-            context.startActivity(intent)
-            if (context is Activity) {
-                context.finish()
-            }
-        }
+        else -> { viewModel.login(email = username,pass=password) }
     }
 }
 
+fun goToHome(context: Context)
+{
+    val intent = Intent(context, MainActivity::class.java)
+    context.startActivity(intent)
+    if (context is Activity) {
+        context.finish()
+    }
+}

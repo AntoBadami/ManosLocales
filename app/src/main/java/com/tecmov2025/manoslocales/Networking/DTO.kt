@@ -46,3 +46,17 @@ data class FavoritoDTO(
     @SerializedName("producto")
     val producto: Int
 )
+
+
+data class UsuarioDTO(
+    @SerializedName("id")
+    val id: Int = 0,
+    @SerializedName("nombre")
+    val nombre: String = "",
+    @SerializedName("apellido")
+    val apellido: String = "",
+    @SerializedName("email")
+    val email: String,
+    @SerializedName("pass")
+    val pass: String
+)

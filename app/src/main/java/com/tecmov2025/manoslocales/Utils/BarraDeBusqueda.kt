@@ -58,7 +58,7 @@ fun BarraDeBusqueda(
             .background(MaterialTheme.colorScheme.primary)
             .navigationBarsPadding(),
         scaffoldState = scaffoldState,
-        drawerContent ={ CustomDrawer(navController,context)},
+        drawerContent ={ CustomDrawer(navController,context,viewModel)},
         topBar = { CustomTopAppBar(coroutineScope,scaffoldState,context)},
         bottomBar = {
             if (mostrarBottomBar) {
@@ -139,13 +139,17 @@ fun CustomTopAppBar(coroutineScope: CoroutineScope, scaffoldState: ScaffoldState
  * @param context permite iniciar activity Login por opcion "Cerrar Sesion"
  */
 @Composable
-fun CustomDrawer(navController: NavController,context: Context)
+fun CustomDrawer(navController: NavController,context: Context,viewModel: ProductViewModel)
 {
     val opciones = listOf<Opcion>(
         Opcion("Mi perfil", { navController.navigate(Screens.PerfilScreen.route) }, icon = Icons.Default.Person),
         Opcion("Configuracion", { navController.navigate(Screens.ConfigScreen.route) }, icon = Icons.Default.Settings),
         Opcion("Enviar mail al desarrollador", { EnviarMailAlDesarrollador(context)  }, icon = Icons.Default.Email),
-        Opcion("Cerrar Sesion", {context.startActivity(Intent(context, LoginActivity::class.java)) }, icon = Icons.Default.Close)
+        Opcion("Cerrar Sesion",
+            {
+                viewModel.cerrarSesion(context)
+                context.startActivity(Intent(context, LoginActivity::class.java)) },
+                icon = Icons.Default.Close)
     )
     Column(
         modifier = Modifier

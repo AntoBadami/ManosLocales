@@ -5,6 +5,7 @@ sealed class ConfigNames(val config: String)
 {
     object HistorialBusquedaConfig : ConfigNames("HistorialBusqueda")
     object TiempoDeNotificacionesConfig: ConfigNames("TiempoNotificacion")
+    object SesionStateConfig : ConfigNames("SesionState")
 }
 
 enum class CONFIG_TIEMPO(val descripcion: String)
@@ -36,13 +37,13 @@ class ConfigPreferences(context: Context) {
         if (!sharedPreferences.contains(ConfigNames.HistorialBusquedaConfig.config)) {
             editor.putBoolean(ConfigNames.HistorialBusquedaConfig.config, true)
         }
-
         if (!sharedPreferences.contains(ConfigNames.TiempoDeNotificacionesConfig.config)) {
             editor.putString(ConfigNames.TiempoDeNotificacionesConfig.config, CONFIG_TIEMPO.H6.name)
         }
 
-        editor.apply() // Aplicar los cambios si hizo falta
+        editor.apply()
     }
+
 
     fun activarHistorialDeBusqueda()
     {
@@ -74,5 +75,20 @@ class ConfigPreferences(context: Context) {
     fun getEstadoDeConfiguracionBoolean(nombreConfiguracionBoolean : String): Boolean
     {
         return sharedPreferences.getBoolean(nombreConfiguracionBoolean,false)
+    }
+
+    fun setLoggedIn() {
+            editor.putBoolean(ConfigNames.SesionStateConfig.config, true)
+            editor.apply()
+    }
+
+
+    fun isLoggedIn(): Boolean {
+        return sharedPreferences.getBoolean(ConfigNames.SesionStateConfig.config, false)
+    }
+
+    fun clearSession() {
+        editor.putBoolean(ConfigNames.SesionStateConfig.config, false)
+            .apply()
     }
 }
