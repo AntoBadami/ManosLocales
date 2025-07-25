@@ -1,5 +1,6 @@
 package com.tecmov2025.manoslocales.Networking
 
+import android.content.Context
 import android.util.Log
 import androidx.compose.ui.input.pointer.PointerEventPass
 import com.tecmov2025.manoslocales.Database.AppDatabase
@@ -9,6 +10,8 @@ import com.tecmov2025.manoslocales.Database.Entity.UsuarioEntity
 import com.tecmov2025.manoslocales.Database.Entity.VendedorEntity
 import com.tecmov2025.manoslocales.Database.POJO.ProductoConVendedor
 import com.tecmov2025.manoslocales.Database.POJO.ProductoFavorito
+import com.tecmov2025.manoslocales.SharedPreferences.ConfigNames
+import com.tecmov2025.manoslocales.SharedPreferences.ConfigPreferences
 import com.tecmov2025.manoslocales.Utils.toEntity
 import com.tecmov2025.manoslocales.Utils.toEntityList
 import kotlinx.coroutines.flow.Flow
@@ -121,7 +124,21 @@ class ApiRepository(private val api: ApiService,private val database: AppDatabas
         favoritosDao.eliminarFavorito(productoId)
     }
 
+    fun sesionEstaAbierta(context: Context): Boolean
+    {
+        val config = ConfigPreferences(context)
+        return config.isLoggedIn()
+    }
 
-
+    fun cerrarSesion(context: Context)
+    {
+        val config = ConfigPreferences(context)
+        config.clearSession()
+    }
+    fun establecerSesionIniciada(context: Context)
+    {
+        val config = ConfigPreferences(context)
+        config.setLoggedIn()
+    }
 
 }

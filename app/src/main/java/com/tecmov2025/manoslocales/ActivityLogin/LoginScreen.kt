@@ -34,6 +34,7 @@ import com.tecmov2025.manoslocales.Utils.LinkText
 import com.tecmov2025.manoslocales.ActivityHome.MainActivity
 import com.tecmov2025.manoslocales.Networking.ApiRepository
 import com.tecmov2025.manoslocales.R
+import com.tecmov2025.manoslocales.SharedPreferences.ConfigPreferences
 import com.tecmov2025.manoslocales.Utils.ProductViewModel
 import com.tecmov2025.manoslocales.Utils.Screens
 import kotlinx.coroutines.CoroutineScope
@@ -49,10 +50,21 @@ fun LoginScreen(navController: NavController, viewModel: ProductViewModel)
 {
     val context = LocalContext.current
 
-
     val snackbarHostState = remember { SnackbarHostState() }
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+
+    //observa si la sesion ya estaba abierta
+    val  sesionEstaAbierta = viewModel.sesionEstaAbierta
+    viewModel.verificarSesion(context)
+    LaunchedEffect(sesionEstaAbierta)
+    {
+        if(sesionEstaAbierta == true)
+        {
+            //TODO PEDIR GUELLA O PIN ANTES DE INICIAR HOME
+            goToHome(context)
+        }
+    }
 
     //observa estados de mensajes
     val message by viewModel.snackbarMessage.collectAsState(initial = "")
@@ -63,19 +75,16 @@ fun LoginScreen(navController: NavController, viewModel: ProductViewModel)
         }
     }
 
-    //observa estado de
+    //observa estado de la solicitud login
     val loginStatus = viewModel.loginStatus
     LaunchedEffect(loginStatus)
     {
         if (loginStatus == true)
         {
-            val intent = Intent(context, MainActivity::class.java)
-            context.startActivity(intent)
-            if (context is Activity) {
-                context.finish()
-            }
+            viewModel.establecerSesionIniciada(context)
+            goToHome(context)
         }
-        else
+        else if (loginStatus == false)
         {  viewModel.showMessage("Usuario o contraseña invalidos")}
     }
 
@@ -162,3 +171,11 @@ fun LoginButtonAction(
     }
 }
 
+fun goToHome(context: Context)
+{
+    val intent = Intent(context, MainActivity::class.java)
+    context.startActivity(intent)
+    if (context is Activity) {
+        context.finish()
+    }
+}

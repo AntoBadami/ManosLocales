@@ -1,5 +1,6 @@
 package com.tecmov2025.manoslocales.Utils
 
+import android.content.Context
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -12,6 +13,7 @@ import androidx.compose.runtime.setValue
 import com.tecmov2025.manoslocales.Database.Entity.VendedorEntity
 import com.tecmov2025.manoslocales.Database.POJO.ProductoConVendedor
 import com.tecmov2025.manoslocales.Database.POJO.ProductoFavorito
+import com.tecmov2025.manoslocales.SharedPreferences.ConfigPreferences
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,6 +24,9 @@ import kotlinx.coroutines.flow.stateIn
 
 
 class ProductViewModel(private val repo: ApiRepository): ViewModel() {
+
+    var sesionEstaAbierta by mutableStateOf<Boolean?>(null)
+        private set
 
     private val _historialProductos = mutableStateOf<List<ProductoConVendedor>>(emptyList())
     val historialProductos: State<List<ProductoConVendedor>> = _historialProductos
@@ -113,30 +118,43 @@ class ProductViewModel(private val repo: ApiRepository): ViewModel() {
                 initialValue = emptyList()
             )
 
-    fun productoEsFavorito(productoId: Int): Flow<Boolean>
-    {
-       return repo.productoEsFavorito(productoId)
+    fun productoEsFavorito(productoId: Int): Flow<Boolean> {
+        return repo.productoEsFavorito(productoId)
     }
 
     fun añadirFavorito(productoId: Int) {
-        viewModelScope.launch(Dispatchers.IO){
+        viewModelScope.launch(Dispatchers.IO) {
             repo.añadirFavorito(productoId)
         }
     }
 
     fun eliminarFavorito(productoId: Int) {
-        viewModelScope.launch(Dispatchers.IO){
+        viewModelScope.launch(Dispatchers.IO) {
             repo.eliminarFavorito(productoId)
         }
     }
 
-    fun login(email : String, pass: String)
-    {
+    fun login(email: String, pass: String) {
         viewModelScope.launch(Dispatchers.IO)
         {
-            loginStatus = repo.loginyGuardarUsuario(email,pass)
+            loginStatus = repo.loginyGuardarUsuario(email, pass)
         }
     }
+
+    fun establecerSesionIniciada(context: Context) {
+        viewModelScope.launch(Dispatchers.IO){ repo.establecerSesionIniciada(context) }
+    }
+
+    fun cerrarSesion(context: Context) {
+        viewModelScope.launch(Dispatchers.IO){ repo.cerrarSesion(context) }
+    }
+
+    fun verificarSesion(context: Context) {
+        viewModelScope.launch(Dispatchers.IO){
+            sesionEstaAbierta = repo.sesionEstaAbierta(context)
+        }
+    }
+
 
 
 }
