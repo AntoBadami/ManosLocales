@@ -16,6 +16,6 @@ interface ApiService {
     @GET("favoritos")
     suspend fun getFavoritos(): List<FavoritoDTO>
 
-    @POST("/usuario")
+    @POST("/login")
     suspend fun postUsuario(@Body usuario: UsuarioDTO): Response<UsuarioDTO>
 }

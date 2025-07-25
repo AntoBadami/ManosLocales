@@ -16,7 +16,7 @@ fun LoginNavigation(viewModel: ProductViewModel)
         startDestination = Screens.SplashScreen.route
     )
     {
-        composable(Screens.LoginScreen.route) { LoginScreen(navController) }
+        composable(Screens.LoginScreen.route) { LoginScreen(navController,viewModel) }
         composable(Screens.SplashScreen.route) { SplashScreen(navController,viewModel) }
         composable(Screens.RegisterScreen.route) { RegisterScreen() }
         composable(Screens.PasswordScreen.route) { PasswordScreen() }

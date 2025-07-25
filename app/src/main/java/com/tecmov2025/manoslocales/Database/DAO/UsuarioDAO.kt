@@ -1,6 +1,8 @@
 package com.tecmov2025.manoslocales.Database.DAO
 
 import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.tecmov2025.manoslocales.Database.Entity.UsuarioEntity
 
@@ -9,6 +11,9 @@ interface UsuarioDAO {
 
     @Query("SELECT * FROM UsuarioEntity LIMIT 1")
     fun getUsuario(): UsuarioEntity
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun guardarUsuario(usuario: UsuarioEntity)
 
     // Cambiar contraseña
     @Query("UPDATE UsuarioEntity SET pass = :nuevaPass WHERE id = :id")

@@ -50,11 +50,11 @@ data class FavoritoDTO(
 
 data class UsuarioDTO(
     @SerializedName("id")
-    val id: Int,
+    val id: Int = 0,
     @SerializedName("nombre")
-    val nombre: String,
+    val nombre: String = "",
     @SerializedName("apellido")
-    val apellido: String,
+    val apellido: String = "",
     @SerializedName("email")
     val email: String,
     @SerializedName("pass")

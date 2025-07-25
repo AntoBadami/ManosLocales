@@ -7,13 +7,17 @@ import com.tecmov2025.manoslocales.Networking.ApiRepository
 import com.tecmov2025.manoslocales.Networking.ProductoDTO
 import kotlinx.coroutines.launch
 import androidx.compose.runtime.State
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import com.tecmov2025.manoslocales.Database.Entity.VendedorEntity
 import com.tecmov2025.manoslocales.Database.POJO.ProductoConVendedor
 import com.tecmov2025.manoslocales.Database.POJO.ProductoFavorito
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.stateIn
 
 
@@ -32,9 +36,12 @@ class ProductViewModel(private val repo: ApiRepository): ViewModel() {
     val vendedorSeleccionado: State<VendedorEntity?> = _vendedorSeleccionado
 
 
-    fun seleccionarVendedor(vendedor: VendedorEntity) {
-        _vendedorSeleccionado.value = vendedor
-    }
+    private val _snackbarMessage = MutableStateFlow("")
+    val snackbarMessage: StateFlow<String> = _snackbarMessage.asStateFlow()
+
+
+    var loginStatus by mutableStateOf<Boolean?>(null)
+        private set
 
     val productosConVendedorState: StateFlow<List<ProductoConVendedor>> =
         repo
@@ -63,6 +70,20 @@ class ProductViewModel(private val repo: ApiRepository): ViewModel() {
                 started = SharingStarted.Lazily,
                 initialValue = emptyList()
             )
+
+    fun clearSnackbarMessage() {
+        _snackbarMessage.value = ""
+    }
+
+    fun showMessage(msg: String) {
+        _snackbarMessage.value = msg
+    }
+
+
+    fun seleccionarVendedor(vendedor: VendedorEntity) {
+        _vendedorSeleccionado.value = vendedor
+    }
+
 
     fun seleccionarProducto(producto: ProductoConVendedor) {
         _historialProductos.value = listOf(producto) + _historialProductos.value
@@ -106,6 +127,14 @@ class ProductViewModel(private val repo: ApiRepository): ViewModel() {
     fun eliminarFavorito(productoId: Int) {
         viewModelScope.launch(Dispatchers.IO){
             repo.eliminarFavorito(productoId)
+        }
+    }
+
+    fun login(email : String, pass: String)
+    {
+        viewModelScope.launch(Dispatchers.IO)
+        {
+            loginStatus = repo.loginyGuardarUsuario(email,pass)
         }
     }
 
