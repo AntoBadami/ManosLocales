@@ -43,6 +43,9 @@ android {
 
 dependencies {
 
+    // Sensor biometrico
+    implementation("androidx.biometric:biometric:1.1.0")
+
     // Room
     implementation ("androidx.room:room-runtime:2.5.0")
     kapt("androidx.room:room-compiler:2.5.0")

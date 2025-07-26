@@ -46,7 +46,7 @@ import kotlinx.coroutines.launch
  * @param navController permite la navegacion entre pantallas compose
  */
 @Composable
-fun LoginScreen(navController: NavController, viewModel: ProductViewModel)
+fun LoginScreen(navController: NavController, viewModel: ProductViewModel,requireAuth : ()-> Unit)
 {
     val context = LocalContext.current
 
@@ -61,8 +61,7 @@ fun LoginScreen(navController: NavController, viewModel: ProductViewModel)
     {
         if(sesionEstaAbierta == true)
         {
-            //TODO PEDIR GUELLA O PIN ANTES DE INICIAR HOME
-            goToHome(context)
+            requireAuth()
         }
     }
 

@@ -8,7 +8,7 @@ import com.tecmov2025.manoslocales.Utils.ProductViewModel
 import com.tecmov2025.manoslocales.Utils.Screens
 
 @Composable
-fun LoginNavigation(viewModel: ProductViewModel)
+fun LoginNavigation(viewModel: ProductViewModel,requireAuth: ()-> Unit)
 {
     val navController = rememberNavController()
     NavHost(
@@ -16,7 +16,7 @@ fun LoginNavigation(viewModel: ProductViewModel)
         startDestination = Screens.SplashScreen.route
     )
     {
-        composable(Screens.LoginScreen.route) { LoginScreen(navController,viewModel) }
+        composable(Screens.LoginScreen.route) { LoginScreen(navController,viewModel,requireAuth) }
         composable(Screens.SplashScreen.route) { SplashScreen(navController,viewModel) }
         composable(Screens.RegisterScreen.route) { RegisterScreen() }
         composable(Screens.PasswordScreen.route) { PasswordScreen() }
