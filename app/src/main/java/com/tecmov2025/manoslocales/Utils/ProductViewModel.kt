@@ -152,6 +152,7 @@ class ProductViewModel(private val repo: ApiRepository): ViewModel() {
     }
 
     fun cerrarSesion(context: Context) {
+        sesionEstaAbierta = false
         viewModelScope.launch(Dispatchers.IO){ repo.cerrarSesion(context) }
     }
 

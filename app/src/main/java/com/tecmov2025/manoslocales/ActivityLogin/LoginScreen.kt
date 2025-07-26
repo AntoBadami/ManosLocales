@@ -3,6 +3,7 @@ package com.tecmov2025.manoslocales.ActivityLogin
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -32,6 +33,7 @@ import com.tecmov2025.manoslocales.Utils.CustomButton
 import com.tecmov2025.manoslocales.Utils.CustomTextField
 import com.tecmov2025.manoslocales.Utils.LinkText
 import com.tecmov2025.manoslocales.ActivityHome.MainActivity
+import com.tecmov2025.manoslocales.BiometricSensor.BiometricHandler
 import com.tecmov2025.manoslocales.Networking.ApiRepository
 import com.tecmov2025.manoslocales.R
 import com.tecmov2025.manoslocales.SharedPreferences.ConfigPreferences
@@ -46,24 +48,15 @@ import kotlinx.coroutines.launch
  * @param navController permite la navegacion entre pantallas compose
  */
 @Composable
-fun LoginScreen(navController: NavController, viewModel: ProductViewModel,requireAuth : ()-> Unit)
+fun LoginScreen(navController: NavController, viewModel: ProductViewModel)
 {
     val context = LocalContext.current
+
+
 
     val snackbarHostState = remember { SnackbarHostState() }
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
-
-    //observa si la sesion ya estaba abierta
-    val  sesionEstaAbierta = viewModel.sesionEstaAbierta
-    viewModel.verificarSesion(context)
-    LaunchedEffect(sesionEstaAbierta)
-    {
-        if(sesionEstaAbierta == true)
-        {
-            requireAuth()
-        }
-    }
 
     //observa estados de mensajes
     val message by viewModel.snackbarMessage.collectAsState(initial = "")
@@ -73,6 +66,30 @@ fun LoginScreen(navController: NavController, viewModel: ProductViewModel,requir
             viewModel.clearSnackbarMessage()
         }
     }
+
+    //observa si la sesion ya estaba abierta
+    val  sesionEstaAbierta = viewModel.sesionEstaAbierta
+    viewModel.verificarSesion(context)
+    LaunchedEffect(sesionEstaAbierta)
+    {
+        if(sesionEstaAbierta == true)
+        {
+            if(BiometricHandler.canAuthenticate(context))
+            {
+                BiometricHandler.requireAuth(
+                    onSuccess =
+                        { goToHome(context) },
+                    onError =
+                        {errStr, errorCode ->  viewModel.cerrarSesion(context)})
+            }
+            else // el dispositivo no es capaz de autenticarse
+            {
+                viewModel.cerrarSesion(context)
+            }
+        }
+    }
+
+
 
     //observa estado de la solicitud login
     val loginStatus = viewModel.loginStatus
