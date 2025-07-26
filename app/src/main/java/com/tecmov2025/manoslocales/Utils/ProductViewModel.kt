@@ -10,6 +10,7 @@ import kotlinx.coroutines.launch
 import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import com.tecmov2025.manoslocales.Database.Entity.UsuarioEntity
 import com.tecmov2025.manoslocales.Database.Entity.VendedorEntity
 import com.tecmov2025.manoslocales.Database.POJO.ProductoConVendedor
 import com.tecmov2025.manoslocales.Database.POJO.ProductoFavorito
@@ -36,8 +37,6 @@ class ProductViewModel(private val repo: ApiRepository): ViewModel() {
         get() = historialProductos.value.firstOrNull()
 
     private val _vendedorSeleccionado = mutableStateOf<VendedorEntity?>(null)
-
-
     val vendedorSeleccionado: State<VendedorEntity?> = _vendedorSeleccionado
 
 
@@ -47,6 +46,13 @@ class ProductViewModel(private val repo: ApiRepository): ViewModel() {
 
     var loginStatus by mutableStateOf<Boolean?>(null)
         private set
+
+    val usuario: StateFlow<UsuarioEntity?> = repo.obtenerUsuarioDB()
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.Lazily,
+            initialValue = null
+        )
 
     val productosConVendedorState: StateFlow<List<ProductoConVendedor>> =
         repo
@@ -154,6 +160,21 @@ class ProductViewModel(private val repo: ApiRepository): ViewModel() {
             sesionEstaAbierta = repo.sesionEstaAbierta(context)
         }
     }
+
+    fun actualizarUsuario(nombre: String, apellido: String, email: String, pass: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            usuario.value?.let { actual ->
+                val actualizado = actual.copy(
+                    nombre = nombre,
+                    apellido = apellido,
+                    email = email,
+                    pass = pass
+                )
+                repo.actualizarUsuarioDB(actualizado)
+            }
+        }
+    }
+
 
 
 
