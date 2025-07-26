@@ -38,17 +38,19 @@ import kotlinx.coroutines.launch
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.VisualTransformation
 import com.tecmov2025.manoslocales.Utils.CustomButton
-import com.tecmov2025.manoslocales.Utils.CustomScaffold
 import com.tecmov2025.manoslocales.Utils.CustomTextField
+import com.tecmov2025.manoslocales.Utils.ProductViewModel
 import kotlinx.coroutines.CoroutineScope
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PerfilScreen()
+fun PerfilScreen(viewModel: ProductViewModel)
 {
     var editable = remember { mutableStateOf(false) }
     val snackbarHostState = remember { SnackbarHostState() }
@@ -70,22 +72,28 @@ fun PerfilScreen()
                 }
             )
         }
-    ){ padding -> PerfilFormBody(padding, editable, snackbarHostState) }
+    ){ padding -> PerfilFormBody(viewModel,padding, editable, snackbarHostState) }
 }
 
-/**
- *  TODO(Cambiar a implementacion usando clase perfil)
- *
- */
 @Composable
-fun PerfilFormBody(padding: PaddingValues, editable : MutableState<Boolean>, snackbarHostState: SnackbarHostState)
+fun PerfilFormBody(viewModel: ProductViewModel,padding: PaddingValues, editable : MutableState<Boolean>, snackbarHostState: SnackbarHostState)
 {
-    //datos de ejemplo
-    var name by remember { mutableStateOf("Juan") }
-    var lastname by remember { mutableStateOf("Pérez") }
-    var mail by remember { mutableStateOf("juanperez@mail.com") }
-    var password by remember { mutableStateOf("123456") }
-    var passwordControl by remember { mutableStateOf("123456") }
+    val usuario = viewModel.usuario.collectAsState().value
+
+    var name by remember { mutableStateOf("") }
+    var lastname by remember { mutableStateOf("") }
+    var mail by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+    var passwordControl by remember { mutableStateOf("") }
+
+    LaunchedEffect(usuario) {
+        usuario?.let {
+            name = it.nombre
+            lastname = it.apellido
+            mail = it.email
+            password = it.pass
+        }
+    }
 
     val coroutineScope = rememberCoroutineScope()
     val scrollState = rememberScrollState()
@@ -121,21 +129,17 @@ fun PerfilFormBody(padding: PaddingValues, editable : MutableState<Boolean>, sna
             {
                 CustomButton(
                     onClick = {
-                        /* TODO(Cambiar funcion por objeto perfil)*/
                         perfilFormControl(
                             name, lastname, mail, password,
                             passwordControl, coroutineScope, snackbarHostState, editable
-                        )},
+                        )
+                        viewModel.actualizarUsuario(name,lastname,mail,password) },
                     text = "Guardar cambios")
             }
         }
     }
 }
 
-
-/**
- * TODO(Cambiar a implementacion usando clase perfil)
- */
 @Composable
 fun PerfilField(label: String, value: String, editable: MutableState<Boolean>, modifier: Modifier, isPassword: Boolean = false, onValueChange: (String) -> Unit)
 {
