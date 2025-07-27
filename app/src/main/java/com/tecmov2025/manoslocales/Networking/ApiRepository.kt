@@ -10,6 +10,7 @@ import com.tecmov2025.manoslocales.Database.Entity.UsuarioEntity
 import com.tecmov2025.manoslocales.Database.Entity.VendedorEntity
 import com.tecmov2025.manoslocales.Database.POJO.ProductoConVendedor
 import com.tecmov2025.manoslocales.Database.POJO.ProductoFavorito
+import com.tecmov2025.manoslocales.SharedPreferences.CONFIG_TIEMPO
 import com.tecmov2025.manoslocales.SharedPreferences.ConfigNames
 import com.tecmov2025.manoslocales.SharedPreferences.ConfigPreferences
 import com.tecmov2025.manoslocales.Utils.toEntity
@@ -132,6 +133,9 @@ class ApiRepository(private val api: ApiService,private val database: AppDatabas
         favoritosDao.eliminarFavorito(productoId)
     }
 
+
+    // Funciones de configuracion
+
     fun sesionEstaAbierta(context: Context): Boolean
     {
         val config = ConfigPreferences(context)
@@ -147,6 +151,17 @@ class ApiRepository(private val api: ApiService,private val database: AppDatabas
     {
         val config = ConfigPreferences(context)
         config.setLoggedIn()
+    }
+
+    fun establecerTiempoNotificaciones(context: Context, tiempo: CONFIG_TIEMPO)
+    {
+        val config = ConfigPreferences(context)
+        config.setTiempoNotificaciones(tiempo)
+    }
+    fun getTiempoNotificaciones(context: Context): CONFIG_TIEMPO
+    {
+        val config = ConfigPreferences(context)
+        return config.getTiempoNotificacionesConfig()
     }
 
 }

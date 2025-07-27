@@ -21,7 +21,7 @@ fun MainNavigation(viewModel: ProductViewModel)
         startDestination = Screens.MainScreen.route
     )
     {
-        composable(Screens.ConfigScreen.route){ConfigScreen()}
+        composable(Screens.ConfigScreen.route){ConfigScreen(viewModel)}
         composable(Screens.PerfilScreen.route){ PerfilScreen(viewModel)}
         composable(Screens.MainScreen.route) { MainScreen(viewModel, navController) }
         composable(Screens.ProductoScreen.route){ProductScreen(viewModel, navController)}
