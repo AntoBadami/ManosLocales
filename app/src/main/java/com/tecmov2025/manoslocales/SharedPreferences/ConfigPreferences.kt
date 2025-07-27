@@ -6,6 +6,7 @@ sealed class ConfigNames(val config: String)
     object HistorialBusquedaConfig : ConfigNames("HistorialBusqueda")
     object TiempoDeNotificacionesConfig: ConfigNames("TiempoNotificacion")
     object SesionStateConfig : ConfigNames("SesionState")
+    object PermisosConfiguradosState : ConfigNames("PermisosConfigurados")
 }
 
 enum class CONFIG_TIEMPO(val descripcion: String)
@@ -91,5 +92,15 @@ class ConfigPreferences(context: Context) {
     fun clearSession() {
         editor.putBoolean(ConfigNames.SesionStateConfig.config, false)
             .apply()
+    }
+
+    fun establecerInicializadosLosPermisos()
+    {
+        editor.putBoolean(ConfigNames.PermisosConfiguradosState.config,true)
+            .apply()
+    }
+    fun permisosInicializados(): Boolean
+    {
+        return sharedPreferences.getBoolean(ConfigNames.PermisosConfiguradosState.config,false)
     }
 }

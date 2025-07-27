@@ -163,5 +163,15 @@ class ApiRepository(private val api: ApiService,private val database: AppDatabas
         val config = ConfigPreferences(context)
         return config.getTiempoNotificacionesConfig()
     }
+    fun permisosInicializados(context: Context): Boolean
+    {
+        val config = ConfigPreferences(context)
+        return config.permisosInicializados()
+    }
 
+    fun establecerPermisosInicializados(context: Context)
+    {
+        val config = ConfigPreferences(context)
+        return config.establecerInicializadosLosPermisos()
+    }
 }

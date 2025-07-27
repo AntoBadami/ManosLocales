@@ -34,9 +34,7 @@ class LoginActivity : AppCompatActivity() {
             checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS)
             != PackageManager.PERMISSION_GRANTED
         ) { requestPermissions(arrayOf(Manifest.permission.POST_NOTIFICATIONS), REQ_NOTIF) }
-        else{ // Permiso existente
-            NotificationHandler.createChannel(this)
-            viewModel.establecerTiempoNotificaciones(this)}
+        else{ viewModel.InicializarNotificacionesSiEsNecesario(this)}
 
 
         // Sensor biometrico
@@ -62,13 +60,9 @@ class LoginActivity : AppCompatActivity() {
             if ((grantResults.firstOrNull() ?: PackageManager.PERMISSION_DENIED)
                 == PackageManager.PERMISSION_GRANTED)
             { // Permiso concedido
-                NotificationHandler.createChannel(this)
-                viewModel.establecerTiempoNotificaciones(this)
-            }
+                viewModel.InicializarNotificaciones(this) }
             else
-            {
-                viewModel.establecerTiempoNotificaciones(this, CONFIG_TIEMPO.NUNCA)
-            }
+            { viewModel.InicializarNotificaciones(this, autorizacionUsuario = false) }
         }
     }
 

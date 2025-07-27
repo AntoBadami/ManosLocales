@@ -203,5 +203,33 @@ class ProductViewModel(private val repo: ApiRepository): ViewModel() {
 
     }
 
+    fun InicializarNotificacionesSiEsNecesario(context: Context)
+    {
+        viewModelScope.launch(Dispatchers.IO)
+        {
+            if(!repo.permisosInicializados(context))
+            {
+                repo.establecerPermisosInicializados(context)
+                NotificationHandler.createChannel(context)
+                establecerTiempoNotificaciones(context)
+            }
+        }
+    }
+
+    fun InicializarNotificaciones(context: Context, autorizacionUsuario : Boolean = true)
+    {
+        if(autorizacionUsuario)
+        {
+            NotificationHandler.createChannel(context)
+            establecerTiempoNotificaciones(context)
+        }
+        else
+        {
+            NotificationHandler.createChannel(context)
+            establecerTiempoNotificaciones(context, CONFIG_TIEMPO.NUNCA)
+        }
+        repo.establecerPermisosInicializados(context)
+    }
+
 
 }
