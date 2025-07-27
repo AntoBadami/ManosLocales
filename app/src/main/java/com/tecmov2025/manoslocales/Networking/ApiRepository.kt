@@ -10,6 +10,7 @@ import com.tecmov2025.manoslocales.Database.Entity.UsuarioEntity
 import com.tecmov2025.manoslocales.Database.Entity.VendedorEntity
 import com.tecmov2025.manoslocales.Database.POJO.ProductoConVendedor
 import com.tecmov2025.manoslocales.Database.POJO.ProductoFavorito
+import com.tecmov2025.manoslocales.Database.POJO.VendedorSeguido
 import com.tecmov2025.manoslocales.SharedPreferences.CONFIG_TIEMPO
 import com.tecmov2025.manoslocales.SharedPreferences.ConfigNames
 import com.tecmov2025.manoslocales.SharedPreferences.ConfigPreferences
@@ -27,6 +28,7 @@ class ApiRepository(private val api: ApiService,private val database: AppDatabas
     private val vendedoresDao = database.vendedoresDao()
     private val favoritosDao = database.favoritosDao()
     private val usuarioDao = database.usuarioDao()
+    private val seguidosDao = database.seguidosDao()
 
     suspend fun obtenerProductos(): List<ProductoDTO>
     {
@@ -173,5 +175,10 @@ class ApiRepository(private val api: ApiService,private val database: AppDatabas
     {
         val config = ConfigPreferences(context)
         return config.establecerInicializadosLosPermisos()
+    }
+
+    fun obtenerVendedoresSeguidosDB(): Flow<List<VendedorSeguido>>
+    {
+        return seguidosDao.obtenerVendedoresSeguidos()
     }
 }

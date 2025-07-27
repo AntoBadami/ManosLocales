@@ -14,6 +14,7 @@ import com.tecmov2025.manoslocales.Database.Entity.UsuarioEntity
 import com.tecmov2025.manoslocales.Database.Entity.VendedorEntity
 import com.tecmov2025.manoslocales.Database.POJO.ProductoConVendedor
 import com.tecmov2025.manoslocales.Database.POJO.ProductoFavorito
+import com.tecmov2025.manoslocales.Database.POJO.VendedorSeguido
 import com.tecmov2025.manoslocales.Notifications.NotificationHandler
 import com.tecmov2025.manoslocales.SharedPreferences.CONFIG_TIEMPO
 import com.tecmov2025.manoslocales.SharedPreferences.ConfigPreferences
@@ -66,6 +67,14 @@ class ProductViewModel(private val repo: ApiRepository): ViewModel() {
             .stateIn(
                 scope = viewModelScope,
                 started = SharingStarted.Lazily,
+                initialValue = emptyList()
+            )
+
+    val vendedoresSeguidosState: StateFlow<List<VendedorSeguido>> =
+        repo.obtenerVendedoresSeguidosDB()
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(5000),
                 initialValue = emptyList()
             )
 
