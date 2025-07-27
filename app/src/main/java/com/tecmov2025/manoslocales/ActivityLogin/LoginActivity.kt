@@ -34,6 +34,9 @@ class LoginActivity : AppCompatActivity() {
             checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS)
             != PackageManager.PERMISSION_GRANTED
         ) { requestPermissions(arrayOf(Manifest.permission.POST_NOTIFICATIONS), REQ_NOTIF) }
+        else{ // Permiso existente
+            NotificationHandler.createChannel(this)
+            viewModel.establecerTiempoNotificaciones(this)}
 
 
         // Sensor biometrico
