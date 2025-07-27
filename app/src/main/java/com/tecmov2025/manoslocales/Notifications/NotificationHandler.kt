@@ -86,8 +86,8 @@ object NotificationHandler {
         )
 
         val notification = NotificationCompat.Builder(context, CHANNEL_ID)
-            .setSmallIcon(android.R.drawable.ic_notification_clear_all)              // Icono que verá el usuario
-            .setContentTitle("¡Productos nuevos te estan esperando!")                     // Título principal
+            .setSmallIcon(android.R.drawable.ic_notification_clear_all)  // Icono que verá el usuario
+            .setContentTitle("¡Productos nuevos te estan esperando!")   // Título principal
             .setContentText("Es hora de revisar la tienda!") // Texto descriptivo
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)      // Prioridad (API < 26)
             .setContentIntent(clickPI)                             // Asocia el PendingIntent al toque
@@ -106,6 +106,7 @@ object NotificationHandler {
     {
         return when(periodo)
         {
+            CONFIG_TIEMPO.TEST->5_000L
             CONFIG_TIEMPO.H6 -> TimeUnit.HOURS.toMillis(6)
             CONFIG_TIEMPO.D1 -> TimeUnit.DAYS.toMillis(1)
             CONFIG_TIEMPO.D2 -> TimeUnit.DAYS.toMillis(2)

@@ -12,34 +12,35 @@ import com.tecmov2025.manoslocales.Database.AppDatabase
 import com.tecmov2025.manoslocales.Networking.ApiRepository
 import com.tecmov2025.manoslocales.Networking.RetrofitClient
 import com.tecmov2025.manoslocales.Notifications.NotificationHandler
+import com.tecmov2025.manoslocales.SharedPreferences.CONFIG_TIEMPO
 import com.tecmov2025.manoslocales.Utils.ProductViewModel
 import com.tecmov2025.manoslocales.ui.theme.ManosLocalesTheme
 
 
 class LoginActivity : AppCompatActivity() {
     companion object { private const val REQ_NOTIF = 100 }
+    private lateinit var viewModel: ProductViewModel
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        viewModel = ProductViewModel(
+            ApiRepository(
+                RetrofitClient.apiService,AppDatabase.obtenerInstancia(applicationContext)))
 
         // Comprueba y pide permiso de notificaciones si hace falta
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
             checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS)
             != PackageManager.PERMISSION_GRANTED
-        ) {
-            requestPermissions(arrayOf(Manifest.permission.POST_NOTIFICATIONS), REQ_NOTIF)
-        } else {
+        ) { requestPermissions(arrayOf(Manifest.permission.POST_NOTIFICATIONS), REQ_NOTIF) }
 
-            // Si ya esta concedido o no es necesario
-            onNotificationPermissionGranted()
-        }
 
         // Sensor biometrico
         BiometricHandler.setBaseActivity(this)
 
 
         enableEdgeToEdge()
-        val viewModel = ProductViewModel(ApiRepository(RetrofitClient.apiService,AppDatabase.obtenerInstancia(applicationContext)))
 
         setContent {
             ManosLocalesTheme {LoginNavigation(viewModel)}
@@ -58,16 +59,14 @@ class LoginActivity : AppCompatActivity() {
             if ((grantResults.firstOrNull() ?: PackageManager.PERMISSION_DENIED)
                 == PackageManager.PERMISSION_GRANTED)
             { // Permiso concedido
-                onNotificationPermissionGranted()
-            } else {
-                // Permiso no concedido
+                NotificationHandler.createChannel(this)
+                viewModel.establecerTiempoNotificaciones(this)
+            }
+            else
+            {
+                viewModel.establecerTiempoNotificaciones(this, CONFIG_TIEMPO.NUNCA)
             }
         }
-    }
-
-    fun onNotificationPermissionGranted() {
-        NotificationHandler.createChannel(this)
-        NotificationHandler.setPeriodicNotificationTime(this)
     }
 
 }

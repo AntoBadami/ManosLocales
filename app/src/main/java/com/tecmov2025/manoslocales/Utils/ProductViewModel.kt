@@ -14,6 +14,8 @@ import com.tecmov2025.manoslocales.Database.Entity.UsuarioEntity
 import com.tecmov2025.manoslocales.Database.Entity.VendedorEntity
 import com.tecmov2025.manoslocales.Database.POJO.ProductoConVendedor
 import com.tecmov2025.manoslocales.Database.POJO.ProductoFavorito
+import com.tecmov2025.manoslocales.Notifications.NotificationHandler
+import com.tecmov2025.manoslocales.SharedPreferences.CONFIG_TIEMPO
 import com.tecmov2025.manoslocales.SharedPreferences.ConfigPreferences
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -46,6 +48,10 @@ class ProductViewModel(private val repo: ApiRepository): ViewModel() {
 
     var loginStatus by mutableStateOf<Boolean?>(null)
         private set
+
+
+    private val _tiempoNotificaciones = MutableStateFlow(CONFIG_TIEMPO.NUNCA)
+    val tiempoNotificaciones = _tiempoNotificaciones.asStateFlow()
 
     val usuario: StateFlow<UsuarioEntity?> = repo.obtenerUsuarioDB()
         .stateIn(
@@ -177,6 +183,25 @@ class ProductViewModel(private val repo: ApiRepository): ViewModel() {
     }
 
 
+    fun establecerTiempoNotificaciones(context: Context, tiempo: CONFIG_TIEMPO = CONFIG_TIEMPO.H6)
+    {
+        NotificationHandler.setPeriodicNotificationTime(context, tiempo)
+        _tiempoNotificaciones.value = tiempo
+        viewModelScope.launch(Dispatchers.IO)
+        {
+            repo.establecerTiempoNotificaciones(context,tiempo)
+        }
+    }
+
+    fun obtenerTiempoNotificaciones(context: Context)
+    {
+        viewModelScope.launch(Dispatchers.IO)
+        {
+            val tiempo = repo.getTiempoNotificaciones(context)
+            _tiempoNotificaciones.value = tiempo
+        }
+
+    }
 
 
 }

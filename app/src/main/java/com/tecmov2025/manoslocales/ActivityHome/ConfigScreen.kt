@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -24,20 +25,22 @@ import com.tecmov2025.manoslocales.SharedPreferences.ConfigPreferences
 import com.tecmov2025.manoslocales.Utils.ConfigDropdownCard
 import com.tecmov2025.manoslocales.Utils.ConfigSwitchCard
 import com.tecmov2025.manoslocales.Utils.CustomScaffold
+import com.tecmov2025.manoslocales.Utils.ProductViewModel
 
 /**
  * Pantalla de configuraciones
  */
 @Composable
-fun ConfigScreen()
-{ CustomScaffold("Configuracion"){ padding -> ConfiguracionesBody(padding)} }
+fun ConfigScreen(viewModel: ProductViewModel)
+{ CustomScaffold("Configuracion"){ padding -> ConfiguracionesBody(padding,viewModel)} }
 
 /**
  * Cuerpo de la interfaz de configuraciones
  */
 @Composable
-fun ConfiguracionesBody(padding: PaddingValues)
+fun ConfiguracionesBody(padding: PaddingValues, viewmodel: ProductViewModel)
 {
+    val context = LocalContext.current
     val config = ConfigPreferences(LocalContext.current)
 
     // Registrar historial de busqueda
@@ -56,18 +59,13 @@ fun ConfiguracionesBody(padding: PaddingValues)
     }
 
     // Tiempo de notificaciones
+    viewmodel.obtenerTiempoNotificaciones(context)
+    val seleccionNotificacion by viewmodel.tiempoNotificaciones.collectAsState()
 
-    var seleccionNotificacion by remember {
-        mutableStateOf(config.getTiempoNotificacionesConfig().descripcion)
-    }
     val opcionesNotificacion = CONFIG_TIEMPO.values().map { it.descripcion }
 
     fun tiempoDeNotificacionesOnSeleccion(new: String)
-    {
-        seleccionNotificacion = new
-        config.setTiempoNotificaciones(CONFIG_TIEMPO.fromDescripcion(new))
-
-    }
+    { viewmodel.establecerTiempoNotificaciones(context,CONFIG_TIEMPO.fromDescripcion(new)) }
 
     Box(
         modifier = Modifier
@@ -95,7 +93,7 @@ fun ConfiguracionesBody(padding: PaddingValues)
                     ConfigDropdownCard(
                         text = "Tiempo de notificaciones",
                         opcionesLista = opcionesNotificacion,
-                        seleccion = seleccionNotificacion,
+                        seleccion = seleccionNotificacion.descripcion,
                         onSeleccion = ::tiempoDeNotificacionesOnSeleccion)
 
                 }

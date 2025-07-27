@@ -10,6 +10,7 @@ sealed class ConfigNames(val config: String)
 
 enum class CONFIG_TIEMPO(val descripcion: String)
 {
+    TEST("5 segundos"),
     H6("6 horas"),
     D1("1 día"),
     D2("2 días"),
