@@ -163,16 +163,16 @@ class ProductViewModel(private val repo: ApiRepository): ViewModel() {
     }
 
     fun establecerSesionIniciada(context: Context) {
-        viewModelScope.launch(Dispatchers.IO){ repo.establecerSesionIniciada(context) }
+        viewModelScope.launch(Dispatchers.IO) { repo.establecerSesionIniciada(context) }
     }
 
     fun cerrarSesion(context: Context) {
         sesionEstaAbierta = false
-        viewModelScope.launch(Dispatchers.IO){ repo.cerrarSesion(context) }
+        viewModelScope.launch(Dispatchers.IO) { repo.cerrarSesion(context) }
     }
 
     fun verificarSesion(context: Context) {
-        viewModelScope.launch(Dispatchers.IO){
+        viewModelScope.launch(Dispatchers.IO) {
             sesionEstaAbierta = repo.sesionEstaAbierta(context)
         }
     }
@@ -192,18 +192,16 @@ class ProductViewModel(private val repo: ApiRepository): ViewModel() {
     }
 
 
-    fun establecerTiempoNotificaciones(context: Context, tiempo: CONFIG_TIEMPO = CONFIG_TIEMPO.H6)
-    {
+    fun establecerTiempoNotificaciones(context: Context, tiempo: CONFIG_TIEMPO = CONFIG_TIEMPO.H6) {
         NotificationHandler.setPeriodicNotificationTime(context, tiempo)
         _tiempoNotificaciones.value = tiempo
         viewModelScope.launch(Dispatchers.IO)
         {
-            repo.establecerTiempoNotificaciones(context,tiempo)
+            repo.establecerTiempoNotificaciones(context, tiempo)
         }
     }
 
-    fun obtenerTiempoNotificaciones(context: Context)
-    {
+    fun obtenerTiempoNotificaciones(context: Context) {
         viewModelScope.launch(Dispatchers.IO)
         {
             val tiempo = repo.getTiempoNotificaciones(context)
@@ -212,12 +210,10 @@ class ProductViewModel(private val repo: ApiRepository): ViewModel() {
 
     }
 
-    fun InicializarNotificacionesSiEsNecesario(context: Context)
-    {
+    fun InicializarNotificacionesSiEsNecesario(context: Context) {
         viewModelScope.launch(Dispatchers.IO)
         {
-            if(!repo.permisosInicializados(context))
-            {
+            if (!repo.permisosInicializados(context)) {
                 repo.establecerPermisosInicializados(context)
                 NotificationHandler.createChannel(context)
                 establecerTiempoNotificaciones(context)
@@ -225,20 +221,18 @@ class ProductViewModel(private val repo: ApiRepository): ViewModel() {
         }
     }
 
-    fun InicializarNotificaciones(context: Context, autorizacionUsuario : Boolean = true)
-    {
-        if(autorizacionUsuario)
-        {
+    fun InicializarNotificaciones(context: Context, autorizacionUsuario: Boolean = true) {
+        if (autorizacionUsuario) {
             NotificationHandler.createChannel(context)
             establecerTiempoNotificaciones(context)
-        }
-        else
-        {
+        } else {
             NotificationHandler.createChannel(context)
             establecerTiempoNotificaciones(context, CONFIG_TIEMPO.NUNCA)
         }
         repo.establecerPermisosInicializados(context)
     }
 
+    fun seguirVendedor(vendedorSeguido: VendedorSeguido)
+    { repo.seguirVendedor(vendedorSeguido) }
 
 }

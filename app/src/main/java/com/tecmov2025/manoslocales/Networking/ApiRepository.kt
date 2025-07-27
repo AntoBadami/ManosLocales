@@ -181,4 +181,8 @@ class ApiRepository(private val api: ApiService,private val database: AppDatabas
     {
         return seguidosDao.obtenerVendedoresSeguidos()
     }
+    fun seguirVendedor(vendedor: VendedorSeguido)
+    {
+        seguidosDao.seguirVendedor(vendedor.followingdata)
+    }
 }
