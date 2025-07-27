@@ -12,9 +12,11 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.PeopleAlt
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.ShoppingBag
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -27,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.tecmov2025.manoslocales.ActivityLogin.LoginActivity
 import com.tecmov2025.manoslocales.ActivityFavoritos.FavoritosActivity
 import kotlinx.coroutines.CoroutineScope
@@ -210,7 +213,8 @@ fun EnviarMailAlDesarrollador(context: Context) {
 
 @Composable
 fun BottomNavigationBar(navController: NavController) {
-    val currentRoute = remember { mutableStateOf(Screens.MainScreen.route) }
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
 
     BottomAppBar(
         backgroundColor = MaterialTheme.colorScheme.primary,
@@ -225,33 +229,64 @@ fun BottomNavigationBar(navController: NavController) {
                 .padding(vertical = 8.dp),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
+            // Productos
             TextButton(
                 onClick = {
-                    currentRoute.value = Screens.MainScreen.route
-                    navController.navigate(Screens.MainScreen.route)
+                    if (currentRoute != Screens.MainScreen.route) {
+                        navController.navigate(Screens.MainScreen.route)
+                    }
                 }
             ) {
-                Text(
-                    "Productos",
-                    color = if (currentRoute.value == Screens.MainScreen.route)
-                        MaterialTheme.colorScheme.onPrimary
-                    else
-                        MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.5f)
-                )
+                Row(
+                    verticalAlignment = androidx.compose.ui.Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(4.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.ShoppingBag,
+                        contentDescription = "Productos",
+                        tint = if (currentRoute == Screens.MainScreen.route)
+                            MaterialTheme.colorScheme.onPrimary
+                        else
+                            MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.5f)
+                    )
+                    Text(
+                        "Productos",
+                        color = if (currentRoute == Screens.MainScreen.route)
+                            MaterialTheme.colorScheme.onPrimary
+                        else
+                            MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.5f)
+                    )
+                }
             }
+
+            // Vendedores
             TextButton(
                 onClick = {
-                    currentRoute.value = Screens.VendedoresScreen.route
-                    navController.navigate(Screens.VendedoresScreen.route)
+                    if (currentRoute != Screens.VendedoresScreen.route) {
+                        navController.navigate(Screens.VendedoresScreen.route)
+                    }
                 }
             ) {
-                Text(
-                    "Vendedores",
-                    color = if (currentRoute.value == Screens.VendedoresScreen.route)
-                        MaterialTheme.colorScheme.onPrimary
-                    else
-                        MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.5f)
-                )
+                Row(
+                    verticalAlignment = androidx.compose.ui.Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(4.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.PeopleAlt,
+                        contentDescription = "Vendedores",
+                        tint = if (currentRoute == Screens.VendedoresScreen.route)
+                            MaterialTheme.colorScheme.onPrimary
+                        else
+                            MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.5f)
+                    )
+                    Text(
+                        "Vendedores",
+                        color = if (currentRoute == Screens.VendedoresScreen.route)
+                            MaterialTheme.colorScheme.onPrimary
+                        else
+                            MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.5f)
+                    )
+                }
             }
         }
     }
