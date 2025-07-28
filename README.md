@@ -28,6 +28,7 @@ Permitir que los usuarios:
 ## 🧪 Estado de la Entrega
 
 Primera entrega ✅  
+
 Incluye:
 - Pantalla de bienvenida (splash screen).
 - Pantalla de login.
@@ -39,6 +40,7 @@ Incluye:
 - Navegación funcional entre pantallas.
 
 Segunda entrega ✅ 
+
 Incluye:
 - Bases de datos Room
 - Networking
