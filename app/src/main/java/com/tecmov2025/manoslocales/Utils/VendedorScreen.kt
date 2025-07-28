@@ -95,6 +95,7 @@ fun VendedorScreen(
                     }
 
                     IconButton(
+                        enabled = siguiendo,
                         onClick = {
                             if(notificacionesActivas)
                             { viewModel.desactivarNotificaciones(vendedor,context)}
@@ -108,7 +109,14 @@ fun VendedorScreen(
                         Icon(
                             imageVector = if (notificacionesActivas) Icons.Default.Notifications else Icons.Default.AddAlert,
                             contentDescription = "Notificaciones",
-                            tint = if (notificacionesActivas) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface
+                            tint = if (!siguiendo) {
+                                // Grisado si no lo seguís
+                                MaterialTheme.colorScheme.onSurface.copy(alpha = 0.4f)
+                            } else if (notificacionesActivas) {
+                                MaterialTheme.colorScheme.primary
+                            } else {
+                                MaterialTheme.colorScheme.onSurface
+                            }
                         )
                     }
                 }
