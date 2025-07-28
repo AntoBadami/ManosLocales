@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import androidx.compose.ui.input.pointer.PointerEventPass
 import com.tecmov2025.manoslocales.Database.AppDatabase
+import com.tecmov2025.manoslocales.Database.Entity.BusquedaEntity
 import com.tecmov2025.manoslocales.Database.Entity.FavoritoEntity
 import com.tecmov2025.manoslocales.Database.Entity.ProductoEntity
 import com.tecmov2025.manoslocales.Database.Entity.SeguidoEntity
@@ -30,6 +31,7 @@ class ApiRepository(private val api: ApiService,private val database: AppDatabas
     private val favoritosDao = database.favoritosDao()
     private val usuarioDao = database.usuarioDao()
     private val seguidosDao = database.seguidosDao()
+    private val busquedasDao = database.busquedasDao()
 
     suspend fun obtenerProductos(): List<ProductoDTO>
     {
@@ -188,5 +190,23 @@ class ApiRepository(private val api: ApiService,private val database: AppDatabas
     fun dejarDeSeguirVendedor(seguido : SeguidoEntity)
     {
         seguidosDao.eliminarSeguido(seguido)
+    }
+
+    fun buscarProductoPorNombre(busqueda: String): Flow<List<ProductoConVendedor>>
+    {
+        return productosDao.buscarPorNombre(busqueda)
+    }
+    fun buscarVendedorPorNombre(busqueda: String): Flow<List<VendedorEntity>>
+    {
+        return vendedoresDao.buscarPorNombre(busqueda)
+    }
+    fun registrarBusqueda(busqueda: BusquedaEntity)
+    {
+        busquedasDao.insertar(busqueda)
+    }
+
+    fun obtenerHistorialReciente(): Flow<List<BusquedaEntity>>
+    {
+       return busquedasDao.obtenerUltimos()
     }
 }

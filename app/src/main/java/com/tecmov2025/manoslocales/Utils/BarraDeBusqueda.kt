@@ -6,6 +6,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
@@ -19,19 +21,30 @@ import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.ShoppingBag
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.text.input.ImeAction
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.tecmov2025.manoslocales.ActivityLogin.LoginActivity
 import com.tecmov2025.manoslocales.ActivityFavoritos.FavoritosActivity
+import com.tecmov2025.manoslocales.Database.Entity.BusquedaEntity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -62,7 +75,7 @@ fun BarraDeBusqueda(
             .navigationBarsPadding(),
         scaffoldState = scaffoldState,
         drawerContent ={ CustomDrawer(navController,context,viewModel)},
-        topBar = { CustomTopAppBar(coroutineScope,scaffoldState,context)},
+        topBar = { CustomTopAppBar(coroutineScope,scaffoldState,context,viewModel)},
         bottomBar = {
             if (mostrarBottomBar) {
                 BottomNavigationBar(navController)
@@ -78,9 +91,12 @@ fun BarraDeBusqueda(
  * acceder al Drawer lateral y el boton para acceder a favoritos
  */
 @Composable
-fun CustomTopAppBar(coroutineScope: CoroutineScope, scaffoldState: ScaffoldState, context : Context)
+fun CustomTopAppBar(coroutineScope: CoroutineScope, scaffoldState: ScaffoldState, context : Context,
+                    viewModel: ProductViewModel)
 {
-    var textoBusqueda by remember { mutableStateOf("") }
+
+    var busqueda by rememberSaveable { mutableStateOf("") }
+
 
     Column(modifier = Modifier.background(MaterialTheme.colorScheme.background)) {
         TopAppBar(
@@ -90,21 +106,31 @@ fun CustomTopAppBar(coroutineScope: CoroutineScope, scaffoldState: ScaffoldState
                 .height(80.dp),
             title = {
                 TextField(
-                    modifier =Modifier
+                    modifier = Modifier
                         .heightIn(min = 48.dp)
                         .fillMaxWidth()
                         .background(MaterialTheme.colorScheme.background,
-                                    shape = RoundedCornerShape(50.dp)),
-                    value = textoBusqueda,
-                    onValueChange = { textoBusqueda = it },
+                            shape = RoundedCornerShape(50.dp)),
+                    value = busqueda,
+                    onValueChange = { busqueda = it
+                                        if(it.isBlank())
+                                        viewModel.actualizarBusqueda(it)},
                     placeholder = { Text("Buscar...") },
+                    keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Search),
+                    keyboardActions = KeyboardActions(
+                        onSearch = {
+                            if (busqueda.isNotBlank())
+                            {  viewModel.actualizarBusqueda(busqueda)
+                                viewModel.guardarBusqueda()}}
+                    ),
                     singleLine = true,
                     leadingIcon = {
                         Icon(
                             imageVector = Icons.Default.Search,
                             contentDescription = "Buscar",
                             tint = Color.Gray
-                        )},
+                        )}
+                        ,
                     colors = TextFieldDefaults
                         .textFieldColors(textColor = Color.DarkGray,
                                         cursorColor = MaterialTheme.colorScheme.primary,
@@ -134,6 +160,28 @@ fun CustomTopAppBar(coroutineScope: CoroutineScope, scaffoldState: ScaffoldState
             backgroundColor = MaterialTheme.colorScheme.primary
         )
     }
+}
+
+@Composable
+fun HistorialBusqueda(expanded : Boolean,
+                      viewModel: ProductViewModel,
+                      onclick: (BusquedaEntity)-> Unit,
+                      onDismiss: ()-> Unit)
+{
+    val historial by viewModel.historial.collectAsState()
+
+    DropdownMenu(modifier = Modifier.fillMaxWidth(),
+        expanded = expanded && historial.isNotEmpty(),
+        onDismissRequest = onDismiss
+    ) {
+        historial.forEach { item ->
+            DropdownMenuItem(
+                content = { Text(item.termino) },
+                onClick ={onclick(item)}
+            )
+        }
+    }
+
 }
 
 /**

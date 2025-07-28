@@ -20,4 +20,7 @@ interface ProductosDAO {
     @Query("SELECT * FROM productos WHERE vendedor = :vendedorId")
     fun obtenerProductosPorVendedor(vendedorId: Int): Flow<List<ProductoConVendedor>>
 
+    @Query("SELECT * FROM productos WHERE nombre LIKE '%' || :busqueda || '%'")
+    fun buscarPorNombre(busqueda: String): Flow<List<ProductoConVendedor>>
+
 }
