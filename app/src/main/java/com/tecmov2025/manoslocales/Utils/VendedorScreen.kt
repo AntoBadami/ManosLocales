@@ -28,6 +28,7 @@ import coil.compose.AsyncImage
 import java.net.URLDecoder
 import java.nio.charset.StandardCharsets
 import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material.icons.filled.NotificationsNone
 import androidx.compose.runtime.collectAsState
 
 @Composable
@@ -91,7 +92,7 @@ fun VendedorScreen(
                         onClick = { notificacionesActivas = !notificacionesActivas }
                     ) {
                         Icon(
-                            imageVector = if (notificacionesActivas) Icons.Default.Notifications else Icons.Default.Clear,
+                            imageVector = if (notificacionesActivas) Icons.Default.Notifications else Icons.Default.NotificationsNone,
                             contentDescription = "Notificaciones",
                             tint = if (notificacionesActivas) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface
                         )
