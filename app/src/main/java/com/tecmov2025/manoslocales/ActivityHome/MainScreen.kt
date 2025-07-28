@@ -117,13 +117,16 @@ fun MainScreenBody(paddingBarraDeBusqueda: PaddingValues, viewModel: ProductView
                         ProductoCard(grupo[0], viewModel, navController)
                     }
                     //segundo producto
-                    if (grupo.size > 1)
-                        Box(modifier = Modifier
+                    Box(
+                        modifier = Modifier
                             .weight(1f)
                             .height(200.dp)
-                        ){
+                    ) {
+                        if (grupo.size > 1) {
                             ProductoCard(grupo[1], viewModel, navController)
                         }
+                    }
+
                 }
             }
         }
