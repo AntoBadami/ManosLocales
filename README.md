@@ -37,6 +37,14 @@ Incluye:
 - Pantalla de favoritos
 - Pantalla de producto
 - Navegación funcional entre pantallas.
+Segunda entrega ✅ 
+Incluye:
+- Bases de datos Room
+- Networking
+- Logica funcional de la App
+- Configuraciones de App
+- Buscador Basico 
+
 
 ## 📸 Capturas / Gif
 
