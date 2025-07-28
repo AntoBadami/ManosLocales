@@ -1,13 +1,11 @@
 package com.tecmov2025.manoslocales.Utils
 
-import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddAlert
-import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
@@ -25,8 +23,6 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.platform.LocalContext
-import com.tecmov2025.manoslocales.Database.POJO.VendedorSeguido
-import com.tecmov2025.manoslocales.Notifications.NotificationHandler
 
 @Composable
 fun VendedorScreen(
