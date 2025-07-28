@@ -2,27 +2,22 @@ package com.tecmov2025.manoslocales.Networking
 
 import android.content.Context
 import android.util.Log
-import androidx.compose.ui.input.pointer.PointerEventPass
 import com.tecmov2025.manoslocales.Database.AppDatabase
 import com.tecmov2025.manoslocales.Database.Entity.FavoritoEntity
 import com.tecmov2025.manoslocales.Database.Entity.ProductoEntity
 import com.tecmov2025.manoslocales.Database.Entity.UsuarioEntity
 import com.tecmov2025.manoslocales.Database.Entity.VendedorEntity
 import com.tecmov2025.manoslocales.Database.POJO.ProductoConVendedor
-import com.tecmov2025.manoslocales.Database.POJO.ProductoFavorito
 import com.tecmov2025.manoslocales.SharedPreferences.CONFIG_TIEMPO
-import com.tecmov2025.manoslocales.SharedPreferences.ConfigNames
 import com.tecmov2025.manoslocales.SharedPreferences.ConfigPreferences
 import com.tecmov2025.manoslocales.Utils.toEntity
 import com.tecmov2025.manoslocales.Utils.toEntityList
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 
 class ApiRepository(private val api: ApiService,private val database: AppDatabase)
 {
-
     private val productosDao = database.productosDao()
     private val vendedoresDao = database.vendedoresDao()
     private val favoritosDao = database.favoritosDao()
@@ -116,7 +111,6 @@ class ApiRepository(private val api: ApiService,private val database: AppDatabas
         return usuarioDao.guardarUsuario(usuarioEntity)
     }
 
-
     fun productoEsFavorito(productoId : Int): Flow<Boolean>{
         return favoritosDao.esFavorito(productoId)
             .map { count -> count > 0 }
@@ -132,7 +126,6 @@ class ApiRepository(private val api: ApiService,private val database: AppDatabas
     {
         favoritosDao.eliminarFavorito(productoId)
     }
-
 
     // Funciones de configuracion
 

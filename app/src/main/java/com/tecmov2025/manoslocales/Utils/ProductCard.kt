@@ -1,6 +1,5 @@
 package com.tecmov2025.manoslocales.Utils
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -21,9 +20,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
-import com.tecmov2025.manoslocales.Database.Entity.ProductoEntity
 import com.tecmov2025.manoslocales.Database.POJO.ProductoConVendedor
-import com.tecmov2025.manoslocales.Networking.ProductoDTO
 
 @Composable
 fun ProductoCard(producto: ProductoConVendedor, viewModel: ProductViewModel, navController: NavController, isFavoritoView: Boolean = false) {

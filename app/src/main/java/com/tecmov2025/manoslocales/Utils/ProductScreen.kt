@@ -28,11 +28,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -43,7 +40,6 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.tecmov2025.manoslocales.Database.POJO.ProductoConVendedor
-import kotlinx.coroutines.flow.Flow
 
 @Composable
 fun ProductScreen(viewModel: ProductViewModel, navController: NavController) {
@@ -60,15 +56,13 @@ fun ProductScreen(viewModel: ProductViewModel, navController: NavController) {
         }
     }
 
-
-
-
     Scaffold()
     {
         padding ->
         ProductScreenBody(producto,padding, viewModel, navController)
     }
 }
+
 @Composable
 fun ProductScreenBody(
     producto: ProductoConVendedor,
@@ -86,7 +80,6 @@ fun ProductScreenBody(
     val context = LocalContext.current
 
     val productosMismoVendedor by viewModel.productosDeUnMismoVendedor(producto.vendedor.id).collectAsState()
-
 
     Column(
         modifier = Modifier
@@ -148,7 +141,6 @@ fun ProductScreenBody(
                 )
             }
         }
-
 
         Text(text = "Precio: $${String.format("%.2f", producto.producto.precio)}", style = MaterialTheme.typography.titleMedium)
 

@@ -46,7 +46,6 @@ class ConfigPreferences(context: Context) {
         editor.apply()
     }
 
-
     fun activarHistorialDeBusqueda()
     {
         editor.putBoolean(ConfigNames.HistorialBusquedaConfig.config,true)
@@ -83,7 +82,6 @@ class ConfigPreferences(context: Context) {
             editor.putBoolean(ConfigNames.SesionStateConfig.config, true)
             editor.apply()
     }
-
 
     fun isLoggedIn(): Boolean {
         return sharedPreferences.getBoolean(ConfigNames.SesionStateConfig.config, false)

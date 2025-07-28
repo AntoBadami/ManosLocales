@@ -11,16 +11,12 @@ import com.tecmov2025.manoslocales.BiometricSensor.BiometricHandler
 import com.tecmov2025.manoslocales.Database.AppDatabase
 import com.tecmov2025.manoslocales.Networking.ApiRepository
 import com.tecmov2025.manoslocales.Networking.RetrofitClient
-import com.tecmov2025.manoslocales.Notifications.NotificationHandler
-import com.tecmov2025.manoslocales.SharedPreferences.CONFIG_TIEMPO
 import com.tecmov2025.manoslocales.Utils.ProductViewModel
 import com.tecmov2025.manoslocales.ui.theme.ManosLocalesTheme
-
 
 class LoginActivity : AppCompatActivity() {
     companion object { private const val REQ_NOTIF = 100 }
     private lateinit var viewModel: ProductViewModel
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,10 +32,8 @@ class LoginActivity : AppCompatActivity() {
         ) { requestPermissions(arrayOf(Manifest.permission.POST_NOTIFICATIONS), REQ_NOTIF) }
         else{ viewModel.InicializarNotificacionesSiEsNecesario(this)}
 
-
         // Sensor biometrico
         BiometricHandler.setBaseActivity(this)
-
 
         enableEdgeToEdge()
 

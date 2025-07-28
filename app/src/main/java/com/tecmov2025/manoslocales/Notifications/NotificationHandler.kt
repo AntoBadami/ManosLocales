@@ -17,17 +17,12 @@ import com.tecmov2025.manoslocales.SharedPreferences.CONFIG_TIEMPO
 import java.util.concurrent.TimeUnit
 import kotlin.jvm.java
 
-
 object NotificationHandler {
-
 
     // Canales
     private val CHANNEL_ID = "general"
     private val CHANNEL_NAME = "Canal General"
     private val CHANNEL_DESC = "Notificaciones generales de la app"
-
-
-
 
     fun createChannel(context : Context)
     {
@@ -113,7 +108,6 @@ object NotificationHandler {
             CONFIG_TIEMPO.S1 -> TimeUnit.DAYS.toMillis(7)
             else -> return 0
         }
-
 
     }
 }

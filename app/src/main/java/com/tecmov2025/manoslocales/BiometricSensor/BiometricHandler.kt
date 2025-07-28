@@ -11,9 +11,6 @@ object BiometricHandler {
 
     private var baseActivity: FragmentActivity? = null
 
-
-
-
     fun canAuthenticate(context: Context): Boolean {
         val bm = BiometricManager.from(context)
         val flags = BiometricManager.Authenticators.BIOMETRIC_STRONG or
@@ -42,7 +39,6 @@ object BiometricHandler {
                 object : BiometricPrompt.AuthenticationCallback() {
                     override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                         onSuccess()
-
                     }
                     override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
                         onError(errString.toString(),errorCode)

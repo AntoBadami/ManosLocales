@@ -1,6 +1,5 @@
 package com.tecmov2025.manoslocales.Utils
 
-
 /**
  * Clase sellada para navegacion entre pantallas
  */
