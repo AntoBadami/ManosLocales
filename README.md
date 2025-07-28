@@ -43,7 +43,9 @@ Incluye:
 - Networking
 - Logica funcional de la App
 - Configuraciones de App
-- Buscador Basico 
+- Buscador Basico
+- Permisos
+- Notificaciones
 
 
 ## 📸 Capturas / Gif
