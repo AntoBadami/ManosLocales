@@ -86,31 +86,34 @@ fun FavoritosScreenBody(padding: PaddingValues, viewModel: ProductViewModel, nav
                 }
             }
             else {
-                Column(
+                Box(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(32.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center
+                    contentAlignment = Alignment.Center
                 ) {
-                    Icon(
-                        imageVector = Icons.Outlined.SentimentDissatisfied,
-                        contentDescription = "Sin productos favoritos",
-                        tint = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.2f),
-                        modifier = Modifier.size(160.dp)
-                    )
-                    Spacer(modifier = Modifier.height(24.dp))
-                    Text(
-                        text = "¡Todavía no marcaste favoritos!",
-                        style = MaterialTheme.typography.bodyLarge.copy(fontSize = 20.sp),
-                        color = MaterialTheme.colorScheme.onBackground
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(
-                        text = "Toca el corazón en un producto para agregarlo aquí.",
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f)
-                    )
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Icon(
+                            imageVector = Icons.Outlined.SentimentDissatisfied,
+                            contentDescription = "Sin productos favoritos",
+                            tint = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.2f),
+                            modifier = Modifier.size(160.dp)
+                        )
+                        Spacer(modifier = Modifier.height(24.dp))
+                        Text(
+                            text = "¡Todavía no marcaste favoritos!",
+                            style = MaterialTheme.typography.bodyLarge.copy(fontSize = 20.sp),
+                            color = MaterialTheme.colorScheme.onBackground
+                        )
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text(
+                            text = "Toca el corazón en un producto para agregarlo aquí.",
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f)
+                        )
+                    }
                 }
             }
 

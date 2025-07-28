@@ -47,7 +47,6 @@ data class FavoritoDTO(
     val producto: Int
 )
 
-
 data class UsuarioDTO(
     @SerializedName("id")
     val id: Int = 0,

@@ -9,7 +9,6 @@ import com.tecmov2025.manoslocales.Database.Entity.FavoritoEntity
 import com.tecmov2025.manoslocales.Database.POJO.ProductoConVendedor
 import com.tecmov2025.manoslocales.Database.POJO.ProductoFavorito
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.StateFlow
 
 @Dao
 interface FavoritosDAO {
@@ -31,6 +30,5 @@ interface FavoritosDAO {
     @Transaction
     @Query("SELECT * FROM productos WHERE id IN (SELECT producto FROM favoritos)")
     fun getProductosFavoritosConVendedor(): Flow<List<ProductoConVendedor>>
-
 
 }

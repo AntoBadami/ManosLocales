@@ -1,16 +1,11 @@
 package com.tecmov2025.manoslocales.ActivityFavoritos
 
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.tecmov2025.manoslocales.ActivityHome.ConfigScreen
-import com.tecmov2025.manoslocales.ActivityHome.MainScreen
 import com.tecmov2025.manoslocales.ActivityHome.PerfilScreen
-import com.tecmov2025.manoslocales.Networking.ApiRepository
-import com.tecmov2025.manoslocales.Networking.ApiService
-import com.tecmov2025.manoslocales.Networking.RetrofitClient
 import com.tecmov2025.manoslocales.Utils.ProductScreen
 import com.tecmov2025.manoslocales.Utils.ProductViewModel
 import com.tecmov2025.manoslocales.Utils.Screens

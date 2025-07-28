@@ -302,5 +302,4 @@ class  ExamplesVendedoresList
             perfilFoto = "https://http2.mlstatic.com/D_NQ_NP_2X_856367-MLA80340685464_112024-F.webp"))
 }
 
-
 */

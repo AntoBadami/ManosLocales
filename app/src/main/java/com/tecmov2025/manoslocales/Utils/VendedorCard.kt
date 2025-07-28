@@ -18,8 +18,6 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.tecmov2025.manoslocales.Database.Entity.VendedorEntity
 
-
-
 @Composable
 fun VendedorCard(
     vendedor: VendedorEntity,

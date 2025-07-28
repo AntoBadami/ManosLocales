@@ -19,7 +19,6 @@ import com.tecmov2025.manoslocales.R
 import com.tecmov2025.manoslocales.SharedPreferences.ConfigPreferences
 import com.tecmov2025.manoslocales.Utils.ProductViewModel
 import com.tecmov2025.manoslocales.Utils.Screens
-import kotlinx.coroutines.delay
 
 @Composable
 fun SplashScreen(navController: NavHostController, viewModel: ProductViewModel)
