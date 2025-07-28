@@ -1,6 +1,7 @@
 package com.tecmov2025.manoslocales.Utils
 
 import android.content.Context
+import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -10,6 +11,7 @@ import kotlinx.coroutines.launch
 import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import com.tecmov2025.manoslocales.Database.Entity.SeguidoEntity
 import com.tecmov2025.manoslocales.Database.Entity.UsuarioEntity
 import com.tecmov2025.manoslocales.Database.Entity.VendedorEntity
 import com.tecmov2025.manoslocales.Database.POJO.ProductoConVendedor
@@ -24,6 +26,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 
 
@@ -74,7 +77,7 @@ class ProductViewModel(private val repo: ApiRepository): ViewModel() {
         repo.obtenerVendedoresSeguidosDB()
             .stateIn(
                 scope = viewModelScope,
-                started = SharingStarted.WhileSubscribed(5000),
+                started = SharingStarted.Lazily,
                 initialValue = emptyList()
             )
 
@@ -232,7 +235,75 @@ class ProductViewModel(private val repo: ApiRepository): ViewModel() {
         repo.establecerPermisosInicializados(context)
     }
 
-    fun seguirVendedor(vendedorSeguido: VendedorSeguido)
-    { repo.seguirVendedor(vendedorSeguido) }
+    fun seguirVendedor(vendedor: VendedorEntity, notification : Boolean = false)
+    {
+        viewModelScope.launch(Dispatchers.IO)
+        {
+            val seguido = SeguidoEntity(vendedor.id,notification)
+            repo.seguirVendedor(seguido)
+        }
+    }
+    fun dejarDeSeguirVendedor(vendedor: VendedorEntity)
+    {
+        viewModelScope.launch(Dispatchers.IO)
+        {
+            val seguidoActual = vendedoresSeguidosState.value
+                .firstOrNull { it.vendedor.id == vendedor.id }
+                ?.followingdata
+
+            if (seguidoActual != null) {
+                repo.dejarDeSeguirVendedor(seguidoActual)
+            }
+
+        }
+    }
+    fun activarNotificaciones(vendedor: VendedorEntity) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val seguidoActual = vendedoresSeguidosState.value
+                .firstOrNull { it.vendedor.id == vendedor.id }
+                ?.followingdata
+
+            if (seguidoActual != null && !seguidoActual.notificacion) {
+                val actualizado = seguidoActual.copy(notificacion = true)
+                repo.seguirVendedor(actualizado)
+            }
+        }
+    }
+
+    fun desactivarNotificaciones(vendedor: VendedorEntity) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val seguidoActual = vendedoresSeguidosState.value
+                .firstOrNull { it.vendedor.id == vendedor.id }
+                ?.followingdata
+
+            if (seguidoActual != null && seguidoActual.notificacion) {
+                val actualizado = seguidoActual.copy(notificacion = false)
+                repo.seguirVendedor(actualizado)
+            }
+        }
+    }
+
+    fun vendedorEstaEnSeguidos(idVendedor: Int): StateFlow<Boolean> {
+        return vendedoresSeguidosState
+            .map { lista -> lista.any { it.vendedor.id == idVendedor } }
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.Lazily,
+                initialValue = false
+            )
+    }
+
+    fun notificacionesDeVendedorActivadas(idVendedor: Int): StateFlow<Boolean> {
+        return vendedoresSeguidosState
+            .map { lista ->
+                lista.firstOrNull { it.vendedor.id == idVendedor }?.followingdata?.notificacion ?: false
+            }
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.Lazily,
+                initialValue = false
+            )
+    }
+
 
 }

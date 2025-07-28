@@ -6,6 +6,7 @@ import androidx.compose.ui.input.pointer.PointerEventPass
 import com.tecmov2025.manoslocales.Database.AppDatabase
 import com.tecmov2025.manoslocales.Database.Entity.FavoritoEntity
 import com.tecmov2025.manoslocales.Database.Entity.ProductoEntity
+import com.tecmov2025.manoslocales.Database.Entity.SeguidoEntity
 import com.tecmov2025.manoslocales.Database.Entity.UsuarioEntity
 import com.tecmov2025.manoslocales.Database.Entity.VendedorEntity
 import com.tecmov2025.manoslocales.Database.POJO.ProductoConVendedor
@@ -136,7 +137,6 @@ class ApiRepository(private val api: ApiService,private val database: AppDatabas
     }
 
 
-    // Funciones de configuracion
 
     fun sesionEstaAbierta(context: Context): Boolean
     {
@@ -181,8 +181,12 @@ class ApiRepository(private val api: ApiService,private val database: AppDatabas
     {
         return seguidosDao.obtenerVendedoresSeguidos()
     }
-    fun seguirVendedor(vendedor: VendedorSeguido)
+    fun seguirVendedor(seguido : SeguidoEntity)
     {
-        seguidosDao.seguirVendedor(vendedor.followingdata)
+        seguidosDao.seguirVendedor(seguido)
+    }
+    fun dejarDeSeguirVendedor(seguido : SeguidoEntity)
+    {
+        seguidosDao.eliminarSeguido(seguido)
     }
 }

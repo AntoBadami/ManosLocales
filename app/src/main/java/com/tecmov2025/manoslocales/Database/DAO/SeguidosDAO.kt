@@ -1,6 +1,7 @@
 package com.tecmov2025.manoslocales.Database.DAO
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -18,5 +19,9 @@ interface SeguidosDAO {
     @Transaction
     @Query("SELECT * FROM seguidos")
     fun obtenerVendedoresSeguidos(): Flow<List<VendedorSeguido>>
+
+    @Delete
+    fun eliminarSeguido(seguido: SeguidoEntity)
+
 
 }

@@ -16,9 +16,10 @@ import com.tecmov2025.manoslocales.Database.Entity.ProductoEntity
 import com.tecmov2025.manoslocales.Database.Entity.SeguidoEntity
 import com.tecmov2025.manoslocales.Database.Entity.UsuarioEntity
 import com.tecmov2025.manoslocales.Database.Entity.VendedorEntity
+import java.util.concurrent.Executors
 
 @Database(entities = [ProductoEntity::class,VendedorEntity::class, FavoritoEntity::class,
-    UsuarioEntity::class, SeguidoEntity::class], version = 4, exportSchema = false)
+    UsuarioEntity::class, SeguidoEntity::class], version = 5, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun productosDao(): ProductosDAO
@@ -36,7 +37,8 @@ abstract class AppDatabase : RoomDatabase() {
                     context.applicationContext,
                     AppDatabase::class.java,
                     "manos_locales_database"
-                ).fallbackToDestructiveMigration()
+                )
+                    .fallbackToDestructiveMigration()
                     .build()
                     .also { instancia = it }
             }
