@@ -57,7 +57,7 @@ Incluye:
 
 ## 📦 APK
 
-[Descargar APK](https://github.com/AntoBadami/ManosLocales/releases/tag/apk) 
+[Descargar APK](}https://github.com/AntoBadami/ManosLocales/releases/tag/ManosLocales) 
 
 ## 👨‍💻 Autores
 
