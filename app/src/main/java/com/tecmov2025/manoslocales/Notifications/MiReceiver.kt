@@ -9,6 +9,6 @@ import androidx.annotation.RequiresPermission
 class MiReceiver: BroadcastReceiver() {
     @RequiresPermission(Manifest.permission.POST_NOTIFICATIONS)
     override fun onReceive(ctx: Context, intent: Intent) {
-        NotificationHandler.buildGeneralNotification(ctx)
+        NotificationHandler.mostrarNotificacionRandom(ctx)
     }
 }

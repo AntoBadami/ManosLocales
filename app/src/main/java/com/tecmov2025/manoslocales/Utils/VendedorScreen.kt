@@ -24,7 +24,9 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.platform.LocalContext
 import com.tecmov2025.manoslocales.Database.POJO.VendedorSeguido
+import com.tecmov2025.manoslocales.Notifications.NotificationHandler
 
 @Composable
 fun VendedorScreen(
@@ -32,6 +34,7 @@ fun VendedorScreen(
     navController: NavController
 ) {
     val vendedor = viewModel.vendedorSeleccionado.value
+    val context = LocalContext.current
     if(vendedor == null)
         return
     val productosDelVendedor = viewModel.productosDeUnMismoVendedor(vendedor.id).collectAsState()
@@ -70,7 +73,6 @@ fun VendedorScreen(
                 // Botones Seguir y notificaciones
                 val siguiendo by viewModel.vendedorEstaEnSeguidos(vendedor.id).collectAsState()
 
-                Log.d("Debug","siguiendo: " + siguiendo)
 
                 val notificacionesActivas by viewModel.notificacionesDeVendedorActivadas(vendedor.id).collectAsState()
 
@@ -95,9 +97,12 @@ fun VendedorScreen(
                     IconButton(
                         onClick = {
                             if(notificacionesActivas)
-                            {viewModel.desactivarNotificaciones(vendedor)}
+                            { viewModel.desactivarNotificaciones(vendedor,context)}
                             else
-                            {viewModel.activarNotificaciones(vendedor)}
+                            {
+                                viewModel.activarNotificaciones(vendedor,
+                                    "¡"+ vendedor.nombre + " y más vendedores te esperan!",
+                                    "¿Qué esperas para darte una vuelta por la App?",context = context)}
                         }
                     ) {
                         Icon(

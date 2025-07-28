@@ -2,6 +2,7 @@ package com.tecmov2025.manoslocales.Notifications
 
 import android.Manifest
 import android.app.AlarmManager
+import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -16,6 +17,7 @@ import com.tecmov2025.manoslocales.ActivityLogin.LoginActivity
 import com.tecmov2025.manoslocales.SharedPreferences.CONFIG_TIEMPO
 import java.util.concurrent.TimeUnit
 import kotlin.jvm.java
+import kotlin.random.Random
 
 
 object NotificationHandler {
@@ -26,7 +28,32 @@ object NotificationHandler {
     private val CHANNEL_NAME = "Canal General"
     private val CHANNEL_DESC = "Notificaciones generales de la app"
 
+    private val notificacionesPersonalizadas =  mutableListOf<Pair<Int, Notification>>()
 
+    fun addNotification(title: String,text: String, context: Context, id: Int)
+    {
+        val clickIntent = Intent(context, LoginActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+        val clickPI = PendingIntent.getActivity(
+            context,
+            0,
+            clickIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+
+        val nuevaNotificacion = NotificationCompat.Builder(context, CHANNEL_ID)
+            .setSmallIcon(android.R.drawable.ic_notification_clear_all)  // Icono que verá el usuario
+            .setContentTitle(title)   // Título principal
+            .setContentText(text) // Texto descriptivo
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)      // Prioridad (API < 26)
+            .setContentIntent(clickPI)                             // Asocia el PendingIntent al toque
+            .setAutoCancel(true)                                   // Se cierra al tocarla
+            .build()
+
+        notificacionesPersonalizadas.add(id to nuevaNotificacion)
+
+    }
 
 
     fun createChannel(context : Context)
@@ -94,12 +121,30 @@ object NotificationHandler {
             .setAutoCancel(true)                                   // Se cierra al tocarla
             .build()
 
-        // 3. Mostrarla en pantalla
         NotificationManagerCompat.from(context)
             .notify(1001, notification)  // 1001 es el ID único de esta notificación
 
-        Log.d("NotificationHandler", "Enviada notificacion")
+    }
 
+    /**
+     * Funcion auxiliar de muestra de app
+     */
+    @RequiresPermission(Manifest.permission.POST_NOTIFICATIONS)
+    fun mostrarNotificacionRandom(context: Context) {
+        Log.d("Debug","Intentando enviar notificaciones")
+        if (notificacionesPersonalizadas.isEmpty()) buildGeneralNotification(context)
+        else
+        {
+            val (id, notification) = notificacionesPersonalizadas.random()
+
+            val notificationManager = NotificationManagerCompat.from(context)
+            notificationManager.notify(id, notification)
+        }
+    }
+
+    fun cancelarNotificacion(context: Context, id: Int) {
+        NotificationManagerCompat.from(context).cancel(id)
+        notificacionesPersonalizadas.removeIf { it.first == id }
     }
 
     fun calcularTiempoNotificaciones(periodo: CONFIG_TIEMPO):Long

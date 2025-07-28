@@ -257,7 +257,14 @@ class ProductViewModel(private val repo: ApiRepository): ViewModel() {
 
         }
     }
-    fun activarNotificaciones(vendedor: VendedorEntity) {
+    fun activarNotificaciones(vendedor: VendedorEntity, title : String, text : String,context: Context) {
+
+        NotificationHandler.addNotification(
+            title,
+            text,
+            context,
+            vendedor.id)
+
         viewModelScope.launch(Dispatchers.IO) {
             val seguidoActual = vendedoresSeguidosState.value
                 .firstOrNull { it.vendedor.id == vendedor.id }
@@ -270,7 +277,8 @@ class ProductViewModel(private val repo: ApiRepository): ViewModel() {
         }
     }
 
-    fun desactivarNotificaciones(vendedor: VendedorEntity) {
+    fun desactivarNotificaciones(vendedor: VendedorEntity,context: Context) {
+        NotificationHandler.cancelarNotificacion(context,vendedor.id)
         viewModelScope.launch(Dispatchers.IO) {
             val seguidoActual = vendedoresSeguidosState.value
                 .firstOrNull { it.vendedor.id == vendedor.id }
