@@ -1,26 +1,34 @@
 package com.tecmov2025.manoslocales.Utils
 
 import android.content.Context
+import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tecmov2025.manoslocales.Networking.ApiRepository
+import com.tecmov2025.manoslocales.Networking.ProductoDTO
 import kotlinx.coroutines.launch
 import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import com.tecmov2025.manoslocales.Database.Entity.SeguidoEntity
 import com.tecmov2025.manoslocales.Database.Entity.UsuarioEntity
 import com.tecmov2025.manoslocales.Database.Entity.VendedorEntity
 import com.tecmov2025.manoslocales.Database.POJO.ProductoConVendedor
+import com.tecmov2025.manoslocales.Database.POJO.ProductoFavorito
+import com.tecmov2025.manoslocales.Database.POJO.VendedorSeguido
 import com.tecmov2025.manoslocales.Notifications.NotificationHandler
 import com.tecmov2025.manoslocales.SharedPreferences.CONFIG_TIEMPO
+import com.tecmov2025.manoslocales.SharedPreferences.ConfigPreferences
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+
 
 class ProductViewModel(private val repo: ApiRepository): ViewModel() {
 
@@ -30,17 +38,21 @@ class ProductViewModel(private val repo: ApiRepository): ViewModel() {
     private val _historialProductos = mutableStateOf<List<ProductoConVendedor>>(emptyList())
     val historialProductos: State<List<ProductoConVendedor>> = _historialProductos
 
+
     val productoSeleccionado: ProductoConVendedor?
         get() = historialProductos.value.firstOrNull()
 
     private val _vendedorSeleccionado = mutableStateOf<VendedorEntity?>(null)
     val vendedorSeleccionado: State<VendedorEntity?> = _vendedorSeleccionado
 
+
     private val _snackbarMessage = MutableStateFlow("")
     val snackbarMessage: StateFlow<String> = _snackbarMessage.asStateFlow()
 
+
     var loginStatus by mutableStateOf<Boolean?>(null)
         private set
+
 
     private val _tiempoNotificaciones = MutableStateFlow(CONFIG_TIEMPO.NUNCA)
     val tiempoNotificaciones = _tiempoNotificaciones.asStateFlow()
@@ -60,6 +72,15 @@ class ProductViewModel(private val repo: ApiRepository): ViewModel() {
                 started = SharingStarted.Lazily,
                 initialValue = emptyList()
             )
+
+    val vendedoresSeguidosState: StateFlow<List<VendedorSeguido>> =
+        repo.obtenerVendedoresSeguidosDB()
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.Lazily,
+                initialValue = emptyList()
+            )
+
 
     val vendedoresState: StateFlow<List<VendedorEntity>> =
         repo
@@ -87,9 +108,11 @@ class ProductViewModel(private val repo: ApiRepository): ViewModel() {
         _snackbarMessage.value = msg
     }
 
+
     fun seleccionarVendedor(vendedor: VendedorEntity) {
         _vendedorSeleccionado.value = vendedor
     }
+
 
     fun seleccionarProducto(producto: ProductoConVendedor) {
         _historialProductos.value = listOf(producto) + _historialProductos.value
@@ -100,6 +123,7 @@ class ProductViewModel(private val repo: ApiRepository): ViewModel() {
             _historialProductos.value = _historialProductos.value.drop(1)
         }
     }
+
 
     fun sincronizarBaseDeDatos() {
         viewModelScope.launch(Dispatchers.IO) {
@@ -142,16 +166,16 @@ class ProductViewModel(private val repo: ApiRepository): ViewModel() {
     }
 
     fun establecerSesionIniciada(context: Context) {
-        viewModelScope.launch(Dispatchers.IO){ repo.establecerSesionIniciada(context) }
+        viewModelScope.launch(Dispatchers.IO) { repo.establecerSesionIniciada(context) }
     }
 
     fun cerrarSesion(context: Context) {
         sesionEstaAbierta = false
-        viewModelScope.launch(Dispatchers.IO){ repo.cerrarSesion(context) }
+        viewModelScope.launch(Dispatchers.IO) { repo.cerrarSesion(context) }
     }
 
     fun verificarSesion(context: Context) {
-        viewModelScope.launch(Dispatchers.IO){
+        viewModelScope.launch(Dispatchers.IO) {
             sesionEstaAbierta = repo.sesionEstaAbierta(context)
         }
     }
@@ -170,18 +194,17 @@ class ProductViewModel(private val repo: ApiRepository): ViewModel() {
         }
     }
 
-    fun establecerTiempoNotificaciones(context: Context, tiempo: CONFIG_TIEMPO = CONFIG_TIEMPO.H6)
-    {
+
+    fun establecerTiempoNotificaciones(context: Context, tiempo: CONFIG_TIEMPO = CONFIG_TIEMPO.H6) {
         NotificationHandler.setPeriodicNotificationTime(context, tiempo)
         _tiempoNotificaciones.value = tiempo
         viewModelScope.launch(Dispatchers.IO)
         {
-            repo.establecerTiempoNotificaciones(context,tiempo)
+            repo.establecerTiempoNotificaciones(context, tiempo)
         }
     }
 
-    fun obtenerTiempoNotificaciones(context: Context)
-    {
+    fun obtenerTiempoNotificaciones(context: Context) {
         viewModelScope.launch(Dispatchers.IO)
         {
             val tiempo = repo.getTiempoNotificaciones(context)
@@ -190,12 +213,10 @@ class ProductViewModel(private val repo: ApiRepository): ViewModel() {
 
     }
 
-    fun InicializarNotificacionesSiEsNecesario(context: Context)
-    {
+    fun InicializarNotificacionesSiEsNecesario(context: Context) {
         viewModelScope.launch(Dispatchers.IO)
         {
-            if(!repo.permisosInicializados(context))
-            {
+            if (!repo.permisosInicializados(context)) {
                 repo.establecerPermisosInicializados(context)
                 NotificationHandler.createChannel(context)
                 establecerTiempoNotificaciones(context)
@@ -203,19 +224,94 @@ class ProductViewModel(private val repo: ApiRepository): ViewModel() {
         }
     }
 
-    fun InicializarNotificaciones(context: Context, autorizacionUsuario : Boolean = true)
-    {
-        if(autorizacionUsuario)
-        {
+    fun InicializarNotificaciones(context: Context, autorizacionUsuario: Boolean = true) {
+        if (autorizacionUsuario) {
             NotificationHandler.createChannel(context)
             establecerTiempoNotificaciones(context)
-        }
-        else
-        {
+        } else {
             NotificationHandler.createChannel(context)
             establecerTiempoNotificaciones(context, CONFIG_TIEMPO.NUNCA)
         }
         repo.establecerPermisosInicializados(context)
     }
+
+    fun seguirVendedor(vendedor: VendedorEntity, notification : Boolean = false)
+    {
+        viewModelScope.launch(Dispatchers.IO)
+        {
+            val seguido = SeguidoEntity(vendedor.id,notification)
+            repo.seguirVendedor(seguido)
+        }
+    }
+    fun dejarDeSeguirVendedor(vendedor: VendedorEntity)
+    {
+        viewModelScope.launch(Dispatchers.IO)
+        {
+            val seguidoActual = vendedoresSeguidosState.value
+                .firstOrNull { it.vendedor.id == vendedor.id }
+                ?.followingdata
+
+            if (seguidoActual != null) {
+                repo.dejarDeSeguirVendedor(seguidoActual)
+            }
+
+        }
+    }
+    fun activarNotificaciones(vendedor: VendedorEntity, title : String, text : String,context: Context) {
+
+        NotificationHandler.addNotification(
+            title,
+            text,
+            context,
+            vendedor.id)
+
+        viewModelScope.launch(Dispatchers.IO) {
+            val seguidoActual = vendedoresSeguidosState.value
+                .firstOrNull { it.vendedor.id == vendedor.id }
+                ?.followingdata
+
+            if (seguidoActual != null && !seguidoActual.notificacion) {
+                val actualizado = seguidoActual.copy(notificacion = true)
+                repo.seguirVendedor(actualizado)
+            }
+        }
+    }
+
+    fun desactivarNotificaciones(vendedor: VendedorEntity,context: Context) {
+        NotificationHandler.cancelarNotificacion(context,vendedor.id)
+        viewModelScope.launch(Dispatchers.IO) {
+            val seguidoActual = vendedoresSeguidosState.value
+                .firstOrNull { it.vendedor.id == vendedor.id }
+                ?.followingdata
+
+            if (seguidoActual != null && seguidoActual.notificacion) {
+                val actualizado = seguidoActual.copy(notificacion = false)
+                repo.seguirVendedor(actualizado)
+            }
+        }
+    }
+
+    fun vendedorEstaEnSeguidos(idVendedor: Int): StateFlow<Boolean> {
+        return vendedoresSeguidosState
+            .map { lista -> lista.any { it.vendedor.id == idVendedor } }
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.Lazily,
+                initialValue = false
+            )
+    }
+
+    fun notificacionesDeVendedorActivadas(idVendedor: Int): StateFlow<Boolean> {
+        return vendedoresSeguidosState
+            .map { lista ->
+                lista.firstOrNull { it.vendedor.id == idVendedor }?.followingdata?.notificacion ?: false
+            }
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.Lazily,
+                initialValue = false
+            )
+    }
+
 
 }
