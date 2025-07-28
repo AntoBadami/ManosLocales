@@ -15,4 +15,7 @@ interface VendedoresDAO {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(vendedores: List<VendedorEntity>)
+
+    @Query("SELECT * FROM vendedores WHERE nombre LIKE '%' || :query || '%'")
+    fun buscarPorNombre(query: String): Flow<List<VendedorEntity>>
 }

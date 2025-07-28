@@ -6,12 +6,16 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.SentimentDissatisfied
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -32,6 +36,7 @@ import androidx.compose.material3.*
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.unit.sp
 
 
 /**
@@ -51,7 +56,11 @@ fun MainScreen(viewModel: ProductViewModel, navController: NavController)
 @Composable
 fun MainScreenBody(paddingBarraDeBusqueda: PaddingValues, viewModel: ProductViewModel, navController: NavController)
 {
-    val productos by viewModel.productosConVendedorState.collectAsState()
+    val productosFiltradosPorBusqueda by viewModel.productosBuscados.collectAsState()
+    val todosLosProductos by viewModel.productosConVendedorState.collectAsState()
+    val busqueda by viewModel.busqueda.collectAsState()
+
+    val productos = if (busqueda.isBlank()) todosLosProductos else productosFiltradosPorBusqueda
 
 
     val categorias = remember(productos)
@@ -103,6 +112,30 @@ fun MainScreenBody(paddingBarraDeBusqueda: PaddingValues, viewModel: ProductView
                 ),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ){
+            if (productosAgrupados.isEmpty()) {
+                item {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp)
+                    ) {
+
+                        Icon(
+                            imageVector = Icons.Outlined.SentimentDissatisfied,
+                            contentDescription = "No encontramos el producto",
+                            tint = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.2f),
+                            modifier = Modifier.size(160.dp)
+                        )
+                        Spacer(modifier = Modifier.height(24.dp))
+                        Text(
+                            text = "¡No encotramos el producto!",
+                            style = MaterialTheme.typography.bodyLarge.copy(fontSize = 20.sp),
+                            color = MaterialTheme.colorScheme.onBackground
+                        )
+                    }
+                }
+            }
+
             items(productosAgrupados){ grupo ->
                 Row(
                     modifier = Modifier

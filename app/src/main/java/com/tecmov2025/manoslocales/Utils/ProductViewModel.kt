@@ -11,6 +11,7 @@ import kotlinx.coroutines.launch
 import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import com.tecmov2025.manoslocales.Database.Entity.BusquedaEntity
 import com.tecmov2025.manoslocales.Database.Entity.SeguidoEntity
 import com.tecmov2025.manoslocales.Database.Entity.UsuarioEntity
 import com.tecmov2025.manoslocales.Database.Entity.VendedorEntity
@@ -26,10 +27,41 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 
 class ProductViewModel(private val repo: ApiRepository): ViewModel() {
+
+    private val _busqueda = MutableStateFlow("")
+    val busqueda: StateFlow<String> = _busqueda
+
+
+    // Productos encontrados
+    val productosBuscados: StateFlow<List<ProductoConVendedor>> = _busqueda
+        .debounce(700)
+        .distinctUntilChanged()
+        .flatMapLatest {
+            if (it.isBlank()) flowOf(emptyList())
+            else repo.buscarProductoPorNombre(it)
+        }.stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
+
+    // Vendedores encontrados
+    val vendedoresBuscados: StateFlow<List<VendedorEntity>> = _busqueda
+        .debounce(700)
+        .distinctUntilChanged()
+        .flatMapLatest {
+            if (it.isBlank()) flowOf(emptyList())
+            else repo.buscarVendedorPorNombre(it)
+        }.stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
+
+    val historial: StateFlow<List<BusquedaEntity>> = repo
+        .obtenerHistorialReciente()
+        .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
+
 
     var sesionEstaAbierta by mutableStateOf<Boolean?>(null)
         private set
@@ -301,6 +333,18 @@ class ProductViewModel(private val repo: ApiRepository): ViewModel() {
                 started = SharingStarted.Lazily,
                 initialValue = false
             )
+    }
+
+    fun actualizarBusqueda(nuevoTexto: String) {
+        _busqueda.value = nuevoTexto
+    }
+    fun guardarBusqueda() {
+        val texto = _busqueda.value.trim()
+        if (texto.isNotBlank()) {
+            viewModelScope.launch(Dispatchers.IO) {
+                repo.registrarBusqueda(BusquedaEntity(termino = texto))
+            }
+        }
     }
 
 }
